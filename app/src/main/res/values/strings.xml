@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Breeding Assistant 18</string>
+    <string name="goals_activity_label">Your Goals</string>
+    <string name="cd_target_board">Target board.</string>
+</resources>

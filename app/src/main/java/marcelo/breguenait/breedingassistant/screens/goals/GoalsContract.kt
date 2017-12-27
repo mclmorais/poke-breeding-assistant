@@ -7,7 +7,9 @@ interface GoalsContract {
     }
 
     interface Presenter {
+        fun setGoalsView(view: View)
 
+        fun addNewGoal()
     }
 
 }

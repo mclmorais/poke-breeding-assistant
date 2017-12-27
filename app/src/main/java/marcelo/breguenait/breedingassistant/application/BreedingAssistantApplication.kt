@@ -11,9 +11,8 @@ class BreedingAssistantApplication : Application() {
     lateinit var component: AppComponent
 
     companion object {
-        fun get(activity: Activity): BreedingAssistantApplication {
-            return activity.application as BreedingAssistantApplication
-        }
+        fun get(activity: Activity): BreedingAssistantApplication =
+                activity.application as BreedingAssistantApplication
     }
 
     override fun onCreate() {
@@ -21,10 +20,11 @@ class BreedingAssistantApplication : Application() {
         initDagger(this)
     }
 
-    fun initDagger(app: BreedingAssistantApplication) {
-        DaggerAppComponent
+    private fun initDagger(app: BreedingAssistantApplication) {
+        component = DaggerAppComponent
                 .builder()
                 .appModule(AppModule(app))
                 .build()
     }
+
 }

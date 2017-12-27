@@ -14,9 +14,12 @@ class GoalsActivity : AppCompatActivity() {
 
     @Inject lateinit var goalsPresenter: GoalsPresenter
 
+    private var goalsFragment: GoalsFragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.goals_activity)
+
         //Sets the custom XML toolbar as the action bar
         setSupportActionBar(toolbar)
 
@@ -27,9 +30,20 @@ class GoalsActivity : AppCompatActivity() {
             ""
         }
 
+        goalsFragment = supportFragmentManager.findFragmentById(R.id.content_frame) as GoalsFragment?
+        if (goalsFragment == null) {
+            goalsFragment = GoalsFragment.newInstance()
+            val fragmentManager = supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.add(R.id.content_frame, goalsFragment)
+            transaction.commit()
+        }
+
+        //Builds Dagger injection components
         DaggerGoalsComponent.builder()
                 .appComponent(BreedingAssistantApplication.get(this).component)
                 .build()
                 .inject(this)
+
     }
 }

@@ -2,4 +2,7 @@
     <string name="app_name">Breeding Assistant 18</string>
     <string name="goals_activity_label">Your Goals</string>
     <string name="cd_target_board">Target board.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

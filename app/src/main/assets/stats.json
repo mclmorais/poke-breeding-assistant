@@ -1,0 +1,204 @@
+{
+  "stats": [
+    {
+      "names": [
+        {
+          "id": 5,
+          "name": "PV"
+        },
+        {
+          "id": 6,
+          "name": "KP"
+        },
+        {
+          "id": 7,
+          "name": "PS"
+        },
+        {
+          "id": 8,
+          "name": "PS"
+        },
+        {
+          "id": 9,
+          "name": "HP"
+        }
+      ],
+      "stat_id": 0
+    },
+    {
+      "names": [
+        {
+          "id": 5,
+          "name": "Attaque"
+        },
+        {
+          "id": 6,
+          "name": "Angriff"
+        },
+        {
+          "id": 7,
+          "name": "Ataque"
+        },
+        {
+          "id": 8,
+          "name": "Attacco"
+        },
+        {
+          "id": 9,
+          "name": "Attack"
+        }
+      ],
+      "stat_id": 1
+    },
+    {
+      "names": [
+        {
+          "id": 5,
+          "name": "D\u00c3\u00a9fense"
+        },
+        {
+          "id": 6,
+          "name": "Verteidigung"
+        },
+        {
+          "id": 7,
+          "name": "Defensa"
+        },
+        {
+          "id": 8,
+          "name": "Difesa"
+        },
+        {
+          "id": 9,
+          "name": "Defense"
+        }
+      ],
+      "stat_id": 2
+    },
+    {
+      "names": [
+        {
+          "id": 5,
+          "name": "Attaque Sp\u00c3\u00a9ciale"
+        },
+        {
+          "id": 6,
+          "name": "Spezialangriff"
+        },
+        {
+          "id": 7,
+          "name": "Ataque Especial"
+        },
+        {
+          "id": 8,
+          "name": "Attacco Speciale"
+        },
+        {
+          "id": 9,
+          "name": "Sp. Attack"
+        }
+      ],
+      "stat_id": 3
+    },
+    {
+      "names": [
+        {
+          "id": 5,
+          "name": "D\u00c3\u00a9fense Sp\u00c3\u00a9ciale"
+        },
+        {
+          "id": 6,
+          "name": "Spezialverteidigung"
+        },
+        {
+          "id": 7,
+          "name": "Defensa Especial"
+        },
+        {
+          "id": 8,
+          "name": "Difesa Speciale"
+        },
+        {
+          "id": 9,
+          "name": "Sp. Defense"
+        }
+      ],
+      "stat_id": 4
+    },
+    {
+      "names": [
+        {
+          "id": 5,
+          "name": "Vitesse"
+        },
+        {
+          "id": 6,
+          "name": "Initiative"
+        },
+        {
+          "id": 7,
+          "name": "Velocidad"
+        },
+        {
+          "id": 8,
+          "name": "Velocit\u00c3\u00a0"
+        },
+        {
+          "id": 9,
+          "name": "Speed"
+        }
+      ],
+      "stat_id": 5
+    },
+    {
+      "names": [
+        {
+          "id": 5,
+          "name": "Pr\u00c3\u00a9cision"
+        },
+        {
+          "id": 6,
+          "name": "Genauigkeit"
+        },
+        {
+          "id": 7,
+          "name": "Precisi\u00c3\u00b3n"
+        },
+        {
+          "id": 8,
+          "name": "precisione"
+        },
+        {
+          "id": 9,
+          "name": "accuracy"
+        }
+      ],
+      "stat_id": 6
+    },
+    {
+      "names": [
+        {
+          "id": 5,
+          "name": "Esquive"
+        },
+        {
+          "id": 6,
+          "name": "Fluchtwert"
+        },
+        {
+          "id": 7,
+          "name": "Evasi\u00c3\u00b3n"
+        },
+        {
+          "id": 8,
+          "name": "elusione"
+        },
+        {
+          "id": 9,
+          "name": "evasion"
+        }
+      ],
+      "stat_id": 7
+    }
+  ]
+}

@@ -1,0 +1,979 @@
+{
+  "natures": [
+    {
+      "id": 1,
+      "identifier": "hardy",
+      "decreased_stat_id": 1,
+      "increased_stat_id": 1,
+      "hates_flavor_id": 1,
+      "likes_flavor_id": 1,
+      "game_index": 0,
+      "names": [
+        {
+          "id": 1,
+          "name": "?????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Hardi"
+        },
+        {
+          "id": 6,
+          "name": "Robust"
+        },
+        {
+          "id": 7,
+          "name": "Fuerte"
+        },
+        {
+          "id": 8,
+          "name": "Ardita"
+        },
+        {
+          "id": 9,
+          "name": "Hardy"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "identifier": "bold",
+      "decreased_stat_id": 1,
+      "increased_stat_id": 2,
+      "hates_flavor_id": 1,
+      "likes_flavor_id": 5,
+      "game_index": 5,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Assur\u00e9"
+        },
+        {
+          "id": 6,
+          "name": "K\u00fchn"
+        },
+        {
+          "id": 7,
+          "name": "Osado"
+        },
+        {
+          "id": 8,
+          "name": "Sicura"
+        },
+        {
+          "id": 9,
+          "name": "Bold"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "identifier": "modest",
+      "decreased_stat_id": 1,
+      "increased_stat_id": 3,
+      "hates_flavor_id": 1,
+      "likes_flavor_id": 2,
+      "game_index": 15,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Modeste"
+        },
+        {
+          "id": 6,
+          "name": "M\u00e4\u00dfig"
+        },
+        {
+          "id": 7,
+          "name": "Modesto"
+        },
+        {
+          "id": 8,
+          "name": "Modesta"
+        },
+        {
+          "id": 9,
+          "name": "Modest"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "identifier": "calm",
+      "decreased_stat_id": 1,
+      "increased_stat_id": 4,
+      "hates_flavor_id": 1,
+      "likes_flavor_id": 4,
+      "game_index": 20,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Calme"
+        },
+        {
+          "id": 6,
+          "name": "Still"
+        },
+        {
+          "id": 7,
+          "name": "Sereno"
+        },
+        {
+          "id": 8,
+          "name": "Calma"
+        },
+        {
+          "id": 9,
+          "name": "Calm"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "identifier": "timid",
+      "decreased_stat_id": 1,
+      "increased_stat_id": 5,
+      "hates_flavor_id": 1,
+      "likes_flavor_id": 3,
+      "game_index": 10,
+      "names": [
+        {
+          "id": 1,
+          "name": "?????"
+        },
+        {
+          "id": 3,
+          "name": "???"
+        },
+        {
+          "id": 5,
+          "name": "Timide"
+        },
+        {
+          "id": 6,
+          "name": "Scheu"
+        },
+        {
+          "id": 7,
+          "name": "Miedoso"
+        },
+        {
+          "id": 8,
+          "name": "Timida"
+        },
+        {
+          "id": 9,
+          "name": "Timid"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "identifier": "lonely",
+      "decreased_stat_id": 2,
+      "increased_stat_id": 1,
+      "hates_flavor_id": 5,
+      "likes_flavor_id": 1,
+      "game_index": 1,
+      "names": [
+        {
+          "id": 1,
+          "name": "?????"
+        },
+        {
+          "id": 3,
+          "name": "???"
+        },
+        {
+          "id": 5,
+          "name": "Solo"
+        },
+        {
+          "id": 6,
+          "name": "Solo"
+        },
+        {
+          "id": 7,
+          "name": "Hura\u00f1o"
+        },
+        {
+          "id": 8,
+          "name": "Schiva"
+        },
+        {
+          "id": 9,
+          "name": "Lonely"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "identifier": "docile",
+      "decreased_stat_id": 2,
+      "increased_stat_id": 2,
+      "hates_flavor_id": 5,
+      "likes_flavor_id": 5,
+      "game_index": 6,
+      "names": [
+        {
+          "id": 1,
+          "name": "???"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Docile"
+        },
+        {
+          "id": 6,
+          "name": "Sanft"
+        },
+        {
+          "id": 7,
+          "name": "D\u00f3cil"
+        },
+        {
+          "id": 8,
+          "name": "Docile"
+        },
+        {
+          "id": 9,
+          "name": "Docile"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "identifier": "mild",
+      "decreased_stat_id": 2,
+      "increased_stat_id": 3,
+      "hates_flavor_id": 5,
+      "likes_flavor_id": 2,
+      "game_index": 16,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Doux"
+        },
+        {
+          "id": 6,
+          "name": "Mild"
+        },
+        {
+          "id": 7,
+          "name": "Afable"
+        },
+        {
+          "id": 8,
+          "name": "Mite"
+        },
+        {
+          "id": 9,
+          "name": "Mild"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "identifier": "gentle",
+      "decreased_stat_id": 2,
+      "increased_stat_id": 4,
+      "hates_flavor_id": 5,
+      "likes_flavor_id": 4,
+      "game_index": 21,
+      "names": [
+        {
+          "id": 1,
+          "name": "?????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Gentil"
+        },
+        {
+          "id": 6,
+          "name": "Zart"
+        },
+        {
+          "id": 7,
+          "name": "Amable"
+        },
+        {
+          "id": 8,
+          "name": "Gentile"
+        },
+        {
+          "id": 9,
+          "name": "Gentle"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "identifier": "hasty",
+      "decreased_stat_id": 2,
+      "increased_stat_id": 5,
+      "hates_flavor_id": 5,
+      "likes_flavor_id": 3,
+      "game_index": 11,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Press\u00e9"
+        },
+        {
+          "id": 6,
+          "name": "Hastig"
+        },
+        {
+          "id": 7,
+          "name": "Activo"
+        },
+        {
+          "id": 8,
+          "name": "Lesta"
+        },
+        {
+          "id": 9,
+          "name": "Hasty"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "identifier": "adamant",
+      "decreased_stat_id": 3,
+      "increased_stat_id": 1,
+      "hates_flavor_id": 2,
+      "likes_flavor_id": 1,
+      "game_index": 3,
+      "names": [
+        {
+          "id": 1,
+          "name": "?????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Rigide"
+        },
+        {
+          "id": 6,
+          "name": "Hart"
+        },
+        {
+          "id": 7,
+          "name": "Firme"
+        },
+        {
+          "id": 8,
+          "name": "Decisa"
+        },
+        {
+          "id": 9,
+          "name": "Adamant"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "identifier": "impish",
+      "decreased_stat_id": 3,
+      "increased_stat_id": 2,
+      "hates_flavor_id": 2,
+      "likes_flavor_id": 5,
+      "game_index": 8,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "?????"
+        },
+        {
+          "id": 5,
+          "name": "Malin"
+        },
+        {
+          "id": 6,
+          "name": "Pfiffig"
+        },
+        {
+          "id": 7,
+          "name": "Agitado"
+        },
+        {
+          "id": 8,
+          "name": "Scaltra"
+        },
+        {
+          "id": 9,
+          "name": "Impish"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "identifier": "bashful",
+      "decreased_stat_id": 3,
+      "increased_stat_id": 3,
+      "hates_flavor_id": 2,
+      "likes_flavor_id": 2,
+      "game_index": 18,
+      "names": [
+        {
+          "id": 1,
+          "name": "???"
+        },
+        {
+          "id": 3,
+          "name": "???"
+        },
+        {
+          "id": 5,
+          "name": "Pudique"
+        },
+        {
+          "id": 6,
+          "name": "Zaghaft"
+        },
+        {
+          "id": 7,
+          "name": "T\u00edmido"
+        },
+        {
+          "id": 8,
+          "name": "Ritrosa"
+        },
+        {
+          "id": 9,
+          "name": "Bashful"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "identifier": "careful",
+      "decreased_stat_id": 3,
+      "increased_stat_id": 4,
+      "hates_flavor_id": 2,
+      "likes_flavor_id": 4,
+      "game_index": 23,
+      "names": [
+        {
+          "id": 1,
+          "name": "?????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Prudent"
+        },
+        {
+          "id": 6,
+          "name": "Sacht"
+        },
+        {
+          "id": 7,
+          "name": "Cauto"
+        },
+        {
+          "id": 8,
+          "name": "Cauta"
+        },
+        {
+          "id": 9,
+          "name": "Careful"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "identifier": "rash",
+      "decreased_stat_id": 4,
+      "increased_stat_id": 3,
+      "hates_flavor_id": 4,
+      "likes_flavor_id": 2,
+      "game_index": 19,
+      "names": [
+        {
+          "id": 1,
+          "name": "?????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Foufou"
+        },
+        {
+          "id": 6,
+          "name": "Hitzig"
+        },
+        {
+          "id": 7,
+          "name": "Alocado"
+        },
+        {
+          "id": 8,
+          "name": "Ardente"
+        },
+        {
+          "id": 9,
+          "name": "Rash"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "identifier": "jolly",
+      "decreased_stat_id": 3,
+      "increased_stat_id": 5,
+      "hates_flavor_id": 2,
+      "likes_flavor_id": 3,
+      "game_index": 13,
+      "names": [
+        {
+          "id": 1,
+          "name": "???"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Jovial"
+        },
+        {
+          "id": 6,
+          "name": "Froh"
+        },
+        {
+          "id": 7,
+          "name": "Alegre"
+        },
+        {
+          "id": 8,
+          "name": "Allegra"
+        },
+        {
+          "id": 9,
+          "name": "Jolly"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "identifier": "naughty",
+      "decreased_stat_id": 4,
+      "increased_stat_id": 1,
+      "hates_flavor_id": 4,
+      "likes_flavor_id": 1,
+      "game_index": 4,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "????"
+        },
+        {
+          "id": 5,
+          "name": "Mauvais"
+        },
+        {
+          "id": 6,
+          "name": "Frech"
+        },
+        {
+          "id": 7,
+          "name": "P\u00edcaro"
+        },
+        {
+          "id": 8,
+          "name": "Birbona"
+        },
+        {
+          "id": 9,
+          "name": "Naughty"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "identifier": "lax",
+      "decreased_stat_id": 4,
+      "increased_stat_id": 2,
+      "hates_flavor_id": 4,
+      "likes_flavor_id": 5,
+      "game_index": 9,
+      "names": [
+        {
+          "id": 1,
+          "name": "?????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "L\u00e2che"
+        },
+        {
+          "id": 6,
+          "name": "Lasch"
+        },
+        {
+          "id": 7,
+          "name": "Flojo"
+        },
+        {
+          "id": 8,
+          "name": "Fiacca"
+        },
+        {
+          "id": 9,
+          "name": "Lax"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "identifier": "quirky",
+      "decreased_stat_id": 4,
+      "increased_stat_id": 4,
+      "hates_flavor_id": 4,
+      "likes_flavor_id": 4,
+      "game_index": 24,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Bizarre"
+        },
+        {
+          "id": 6,
+          "name": "Kauzig"
+        },
+        {
+          "id": 7,
+          "name": "Raro"
+        },
+        {
+          "id": 8,
+          "name": "Furba"
+        },
+        {
+          "id": 9,
+          "name": "Quirky"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "identifier": "naive",
+      "decreased_stat_id": 4,
+      "increased_stat_id": 5,
+      "hates_flavor_id": 4,
+      "likes_flavor_id": 3,
+      "game_index": 14,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "????"
+        },
+        {
+          "id": 5,
+          "name": "Na\u00eff"
+        },
+        {
+          "id": 6,
+          "name": "Naiv"
+        },
+        {
+          "id": 7,
+          "name": "Ingenuo"
+        },
+        {
+          "id": 8,
+          "name": "Ingenua"
+        },
+        {
+          "id": 9,
+          "name": "Naive"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "identifier": "brave",
+      "decreased_stat_id": 5,
+      "increased_stat_id": 1,
+      "hates_flavor_id": 3,
+      "likes_flavor_id": 1,
+      "game_index": 2,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Brave"
+        },
+        {
+          "id": 6,
+          "name": "Mutig"
+        },
+        {
+          "id": 7,
+          "name": "Audaz"
+        },
+        {
+          "id": 8,
+          "name": "Audace"
+        },
+        {
+          "id": 9,
+          "name": "Brave"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "identifier": "relaxed",
+      "decreased_stat_id": 5,
+      "increased_stat_id": 2,
+      "hates_flavor_id": 3,
+      "likes_flavor_id": 5,
+      "game_index": 7,
+      "names": [
+        {
+          "id": 1,
+          "name": "???"
+        },
+        {
+          "id": 3,
+          "name": "????"
+        },
+        {
+          "id": 5,
+          "name": "Relax"
+        },
+        {
+          "id": 6,
+          "name": "Locker"
+        },
+        {
+          "id": 7,
+          "name": "Pl\u00e1cido"
+        },
+        {
+          "id": 8,
+          "name": "Placida"
+        },
+        {
+          "id": 9,
+          "name": "Relaxed"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "identifier": "quiet",
+      "decreased_stat_id": 5,
+      "increased_stat_id": 3,
+      "hates_flavor_id": 3,
+      "likes_flavor_id": 2,
+      "game_index": 17,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Discret"
+        },
+        {
+          "id": 6,
+          "name": "Ruhig"
+        },
+        {
+          "id": 7,
+          "name": "Manso"
+        },
+        {
+          "id": 8,
+          "name": "Quieta"
+        },
+        {
+          "id": 9,
+          "name": "Quiet"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "identifier": "sassy",
+      "decreased_stat_id": 5,
+      "increased_stat_id": 4,
+      "hates_flavor_id": 3,
+      "likes_flavor_id": 4,
+      "game_index": 22,
+      "names": [
+        {
+          "id": 1,
+          "name": "????"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "Malpoli"
+        },
+        {
+          "id": 6,
+          "name": "Forsch"
+        },
+        {
+          "id": 7,
+          "name": "Grosero"
+        },
+        {
+          "id": 8,
+          "name": "Vivace"
+        },
+        {
+          "id": 9,
+          "name": "Sassy"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "identifier": "serious",
+      "decreased_stat_id": 5,
+      "increased_stat_id": 5,
+      "hates_flavor_id": 3,
+      "likes_flavor_id": 3,
+      "game_index": 12,
+      "names": [
+        {
+          "id": 1,
+          "name": "???"
+        },
+        {
+          "id": 3,
+          "name": "??"
+        },
+        {
+          "id": 5,
+          "name": "S\u00e9rieux"
+        },
+        {
+          "id": 6,
+          "name": "Ernst"
+        },
+        {
+          "id": 7,
+          "name": "Serio"
+        },
+        {
+          "id": 8,
+          "name": "Seria"
+        },
+        {
+          "id": 9,
+          "name": "Serious"
+        }
+      ]
+    }
+  ]
+}

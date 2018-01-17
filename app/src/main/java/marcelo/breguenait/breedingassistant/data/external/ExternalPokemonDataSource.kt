@@ -9,12 +9,12 @@ import marcelo.breguenait.breedingassistant.data.external.deserializers.JsonCust
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.util.LinkedHashMap
+import java.util.*
 
 /**
  * Created by Marcelo on 14/01/2018.
  */
-class ExternalPokemonDataSource (val assetManager: AssetManager){
+class ExternalPokemonDataSource (private val assetManager: AssetManager){
 
     fun <T> loadExternalAbilities(): LinkedHashMap<Int, ExternalAbility> {
         return openWithCustomDeserializer(JsonAbilityDeserializer(), "abilities.json")

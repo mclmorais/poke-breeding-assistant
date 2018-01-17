@@ -29,7 +29,7 @@ class JsonAbilityDeserializer : JsonCustomDeserializer<LinkedHashMap<Int, Extern
                 val deserializedAbilityBlock = ExternalAbility(abilityJsonObject.get("num").asInt,
                         abilityJsonObject.get("name").asString)
 
-                abilityData.put(abilityJsonObject.get("num").asInt, deserializedAbilityBlock)
+                abilityData[abilityJsonObject.get("num").asInt] = deserializedAbilityBlock
 
             }
 

@@ -4,6 +4,8 @@ interface GoalsContract {
 
     interface View {
 
+        fun showCreateGoal()
+
     }
 
     interface Presenter {

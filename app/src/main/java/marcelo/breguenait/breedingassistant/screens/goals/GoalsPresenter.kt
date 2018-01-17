@@ -13,6 +13,6 @@ internal constructor() : GoalsContract.Presenter {
     }
 
     override fun addNewGoal() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        goalsView.showCreateGoal()
     }
 }

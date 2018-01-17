@@ -1,6 +1,7 @@
 package marcelo.breguenait.breedingassistant.screens.goals
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import kotlinx.android.synthetic.main.goals_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.data.external.ExternalPokemonDataSource
 import marcelo.breguenait.breedingassistant.data.external.ExternalRepository
+import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
 
 
 class GoalsFragment : Fragment(), GoalsContract.View {
@@ -21,8 +23,10 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.goals_fragment, container, false)
 
@@ -35,8 +39,13 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
         (activity as GoalsActivity).add_goal_fab.setOnClickListener { presenter.addNewGoal() }
 
-        val externalRepository = ExternalRepository(ExternalPokemonDataSource((activity as GoalsActivity).assets)) //TODO: remover
+        val externalRepository =
+            ExternalRepository(ExternalPokemonDataSource((activity as GoalsActivity).assets)) //TODO: remover
 
         return root
+    }
+
+    override fun showCreateGoal() {
+        startActivity(Intent(context, CreationActivity::class.java))
     }
 }

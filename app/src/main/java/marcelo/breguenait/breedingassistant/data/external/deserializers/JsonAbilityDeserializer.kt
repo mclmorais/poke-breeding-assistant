@@ -15,27 +15,32 @@ class JsonAbilityDeserializer : JsonCustomDeserializer<LinkedHashMap<Int, Extern
 
     override val type: Type = object : TypeToken<LinkedHashMap<Int, ExternalAbility>>() {}.type
 
-    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): LinkedHashMap<Int, ExternalAbility> {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): LinkedHashMap<Int, ExternalAbility> {
         val jsonObject = json?.asJsonObject
         val jsonArray = jsonObject?.get("abilities")?.asJsonArray
 
         val abilityData = LinkedHashMap<Int, ExternalAbility>(260)
 
-        if(jsonObject != null && jsonArray != null) {
+        if (jsonObject != null && jsonArray != null) {
             for (abilityJsonElement in jsonArray) {
 
                 val abilityJsonObject = abilityJsonElement as JsonObject
 
-                val deserializedAbilityBlock = ExternalAbility(abilityJsonObject.get("num").asInt,
-                        abilityJsonObject.get("name").asString)
+                val deserializedAbilityBlock = ExternalAbility(
+                    abilityJsonObject.get("num").asInt,
+                    abilityJsonObject.get("name").asString
+                )
 
                 abilityData[abilityJsonObject.get("num").asInt] = deserializedAbilityBlock
 
             }
 
             return abilityData
-        }
-        else {
+        } else {
             throw Exception("External data not found")
         }
     }

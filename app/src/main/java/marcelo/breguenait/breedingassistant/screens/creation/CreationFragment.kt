@@ -34,8 +34,10 @@ class CreationFragment : Fragment(), CreationContract.View {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.creation_fragment, container, false)
     }
@@ -83,8 +85,8 @@ class CreationFragment : Fragment(), CreationContract.View {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
+        //         * @param param1 Parameter 1.
+        //         * @param param2 Parameter 2.
          * @return A new instance of fragment CreationFragment.
          */
         // TODO: Rename and change types and number of parameters

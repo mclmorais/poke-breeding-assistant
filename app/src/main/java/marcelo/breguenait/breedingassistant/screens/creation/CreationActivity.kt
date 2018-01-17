@@ -22,20 +22,21 @@ class CreationActivity : AppCompatActivity(), CreationFragment.OnFragmentInterac
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         /*Changes indicator to the 'clear' cross and tints it white*/
-        val indicator = VectorDrawableCompat.create(resources, R.drawable.ic_clear_black_24dp, theme)
+        val indicator =
+            VectorDrawableCompat.create(resources, R.drawable.ic_clear_black_24dp, theme)
         indicator?.setTint(ResourcesCompat.getColor(resources, R.color.white, theme))
-        actionBar.setHomeAsUpIndicator(indicator)
+        supportActionBar?.setHomeAsUpIndicator(indicator)
 
-        creationFragment = supportFragmentManager.findFragmentById(R.id.content_frame) as CreationFragment
-        if(creationFragment == null) {
+        creationFragment =
+                supportFragmentManager.findFragmentById(R.id.content_frame) as CreationFragment?
+        if (creationFragment == null) {
             creationFragment = CreationFragment.newInstance()
             supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.content_frame, creationFragment)
-                    .commit()
+                .beginTransaction()
+                .add(R.id.content_frame, creationFragment)
+                .commit()
         }
     }
-
 
 
     override fun onFragmentInteraction(uri: Uri) {

@@ -14,13 +14,16 @@ import java.util.*
 /**
  * Created by Marcelo on 14/01/2018.
  */
-class ExternalPokemonDataSource (private val assetManager: AssetManager){
+class ExternalPokemonDataSource(private val assetManager: AssetManager) {
 
     fun <T> loadExternalAbilities(): LinkedHashMap<Int, ExternalAbility> {
         return openWithCustomDeserializer(JsonAbilityDeserializer(), "abilities.json")
     }
 
-    private inline fun <reified T> openWithCustomDeserializer(deserializer: JsonCustomDeserializer<*>, fileName: String): T {
+    private inline fun <reified T> openWithCustomDeserializer(
+        deserializer: JsonCustomDeserializer<*>,
+        fileName: String
+    ): T {
         val gsonBuilder = GsonBuilder()
         val customGson: Gson
         val assetFile: InputStream

@@ -1,8 +1,8 @@
 package marcelo.breguenait.breedingassistant.screens.goals
 
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.goals_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
@@ -41,7 +41,7 @@ class GoalsActivity : AppCompatActivity() {
 
         //Builds Dagger injection components
         DaggerGoalsComponent.builder()
-                .appComponent(BreedingAssistantApplication.get(this).component)
+                .applicationComponent(BreedingAssistantApplication.get(this).component)
                 .build()
                 .inject(this)
 

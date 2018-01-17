@@ -1,9 +1,91 @@
-<resources>
-    <string name="app_name">Breeding Assistant 18</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="pkmn_link_filename" translatable="false">pkmn_link_%03d</string>
+    <string name="drawable_resource_name" translatable="false">drawable</string>
     <string name="goals_activity_label">Your Goals</string>
     <string name="cd_target_board">Target board.</string>
-    <string name="hint_no_goals">You don\'t have any goals at the moment.\n\nAdd a new one to start working towards it!</string>
+    <string name="app_name">Breeding Assistant 18</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_create_pokemon" tools:ignore="UnusedResources">Create</string>
+    <string name="placeholder_name" translatable="false">Name Placeholder</string>
+    <string name="placeholder_species_number" translatable="false">000</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_hp" translatable="false">HP</string>
+    <string name="label_atk" translatable="false">ATK</string>
+    <string name="label_def" translatable="false">DEF</string>
+    <string name="label_satk" translatable="false">SATK</string>
+    <string name="label_sdef" translatable="false">SDEF</string>
+    <string name="label_spd" translatable="false">SPD</string>
+
+    <string name="title_activity_assistant">Assistant</string>
+    <string name="title_your_goals">Breeding Assistant</string>
+    <string name="selected_title_singular">"%1$d item selected"</string>
+    <string name="selected_title_plural" tools:ignore="UnusedResources">%1$d items selected</string>
+    <string name="snack_goals_removed" tools:ignore="UnusedResources">Goals removed</string>
+    <string name="label_ability">Ability</string>
+    <string name="hint_no_goals">You don\'t have any goals at the moment.\n\nAdd a new one to start working towards it!</string>
+    <string name="hint_no_goals_link">Add a new one</string>
+    <string name="title_create_a_goal">Create a Goal</string>
+    <string name="title_store_a_pokemon">Store a Pokémon</string>
+    <string name="label_hidden">%1$s (Hidden)</string>
+    <string name="label_nature">Nature</string>
+    <string name="snack_goal_created">Goal Created!</string>
+    <string name="label_assistant">Assistant</string>
+    <string name="label_storage">Stored</string>
+    <string name="label_undo">UNDO</string>
+    <string name="goal_extra_info" translatable="false">• %1$s • %2$s</string>
+
+    <string name="chance_string" formatted="false">1 in %1$d (%2$.2f %%)</string>
+    <string name="menu_edit_goal">Edit Goal</string>
+    <string name="title_edit_goal">Edit your Goal</string>
+    <string name="title_edit_stored">Edit Stored Pokémon</string>
+    <string name="percent_chance">%1$.2f%%</string>
+    <string name="low_percent_chance" tools:ignore="UnusedResources">&lt;%1$.2f%%</string>
+    <string name="fraction_chance">1 in %1$d</string>
+    <string name="improvement_chance">Up to %1$.1fx better</string>
+    <string name="match_title" translatable="false">#%1$d</string>
+    <string name="subtitle_best_chance_goal" tools:ignore="UnusedResources">This combination will give you the highest chance of obtaining the goal:</string>
+    <string name="title_direct_match">Aiming for the Goal</string>
+    <string name="title_select_pokemon">Select a Pokémon</string>
+    <string name="direct_header_title_nei">Not Enough IVs</string>
+    <string name="direct_header_text_nei">You have compatible combinations, but none of them have enough IVs to be able to generate the goal.</string>
+    <string name="direct_header_label_nha">No Hidden Ability</string>
+    <string name="direct_header_text_nha">You have compatible couples, but none of them have the hidden ability.</string>
+    <string name="direct_header_label_npc">Obtaining Your Goal</string>
+    <string name="direct_header_text_npc_upper" tools:ignore="UnusedResources">To generate this goal, you\'ll need one of the following pairs:</string>
+    <string name="direct_header_text_npc_lower">If you have Pokémon from these categories in your game, add them to the app to get the best matches!</string>
+    <string name="letter_egg_group">E</string>
+    <string name="letter_related">F</string>
+    <string name="letter_ditto">D</string>
+    <string name="label_related_group">Family Group</string>
+    <string name="label_ditto_group">Ditto</string>
+    <string name="label_egg_group">Egg Group</string>
+    <string name="direct_header_label_npg">To generate this goal, you\'ll need the following pair:</string>
+    <string name="improvements_label">Possible Improvements</string>
+    <string name="improvement_text" tools:ignore="UnusedResources">The following combinations can generate a Pokémon that will improve the chance of achieving the goal:</string>
+    <string name="letter_ability">A</string>
+    <string name="letter_nature">N</string>
+    <string name="label_ivs">IVs</string>
+    <string name="label_same_family">Same Family</string>
+    <string name="label_same_egg_group">Same Egg Group</string>
+    <string name="label_incompatible">Incompatible</string>
+    <string name="direct_problems" translatable="false">• %1$s\n• %2$s\n• %3$s</string>
+    <string name="no_nature">• No matching nature</string>
+    <string name="no_ability">• No matching ability</string>
+    <string name="missing_ivs">• Missing unique IVs</string>
+    <string name="creation_nature_plus_stat" translatable="false">+%1$s</string>
+    <string name="creation_nature_minus_stat" translatable="false">−%1$s</string>
+    <string name="creation_nature_neutral_stat" tools:ignore="UnusedResources">" Neutral"</string>
+
+
+    <!--Creation-->
+    <string name="creation_stat_value" translatable="false">%d</string>
+    <string name="error">Error</string>
+    <string name="invalid_pokemon">Invalid Pokémon</string>
+    <string name="invalid_nature">Invalid Nature</string>
+    <string name="invalid_ability">Invalid Ability</string>
+
+    <!--Assistant-->
+    <string name="assistant_goal_extra_info" translatable="false">%1$s • %2$s</string>
+
 </resources>

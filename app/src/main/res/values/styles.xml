@@ -8,4 +8,25 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="AssistantThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionModeBackground">@color/colorPrimaryDark</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="AssistantThemeLight.TintedSection" parent="AssistantThemeLight">
+        <item name="android:colorBackground">@color/colorAccent</item>
+    </style>
+
+    <style name="SmallLabel">
+        <item name="android:textColor">@android:color/tertiary_text_light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
 </resources>

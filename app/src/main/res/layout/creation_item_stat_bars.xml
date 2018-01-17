@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/stat_bar_label_hp"
+        style="@style/SmallLabel"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/label_hp"
+        android:textAlignment="textEnd"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/stat_bar_label_atk"
+        style="@style/SmallLabel"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/label_atk"
+        android:textAlignment="textEnd"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stat_bar_label_hp" />
+
+    <TextView
+        android:id="@+id/stat_bar_label_def"
+        style="@style/SmallLabel"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/label_def"
+        android:textAlignment="textEnd"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stat_bar_label_atk" />
+
+    <TextView
+        android:id="@+id/stat_bar_label_satk"
+        style="@style/SmallLabel"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/label_satk"
+        android:textAlignment="textEnd"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stat_bar_label_def" />
+
+    <TextView
+        android:id="@+id/stat_bar_label_sdef"
+        style="@style/SmallLabel"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-8dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/label_sdef"
+        android:textAlignment="textEnd"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stat_bar_label_satk" />
+
+    <TextView
+        android:id="@+id/stat_bar_label_spd"
+        style="@style/SmallLabel"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/label_spd"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stat_bar_label_sdef"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/bar_hp"
+        android:layout_width="100dp"
+        android:layout_height="9dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_rectangle"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/stat_bar_label_hp"
+        app:layout_constraintLeft_toRightOf="@+id/stat_bar_label_hp"
+        app:layout_constraintTop_toTopOf="@+id/stat_bar_label_hp" />
+
+    <ImageView
+        android:id="@+id/bar_atk"
+        android:layout_width="100dp"
+        android:layout_height="9dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/shape_rectangle"
+        app:layout_constraintBottom_toBottomOf="@+id/stat_bar_label_atk"
+        app:layout_constraintLeft_toRightOf="@+id/stat_bar_label_atk"
+        app:layout_constraintTop_toTopOf="@+id/stat_bar_label_atk"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/bar_def"
+        android:layout_width="100dp"
+        android:layout_height="9dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/shape_rectangle"
+        app:layout_constraintBottom_toBottomOf="@+id/stat_bar_label_def"
+        app:layout_constraintLeft_toRightOf="@+id/stat_bar_label_def"
+        app:layout_constraintTop_toBottomOf="@+id/stat_bar_label_atk" />
+
+    <ImageView
+        android:id="@+id/bar_satk"
+        android:layout_width="100dp"
+        android:layout_height="9dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/shape_rectangle"
+        app:layout_constraintBottom_toBottomOf="@+id/stat_bar_label_satk"
+        app:layout_constraintLeft_toRightOf="@+id/stat_bar_label_satk"
+        app:layout_constraintTop_toTopOf="@+id/stat_bar_label_satk" />
+
+    <ImageView
+        android:id="@+id/bar_sdef"
+        android:layout_width="100dp"
+        android:layout_height="9dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/shape_rectangle"
+        app:layout_constraintBottom_toBottomOf="@+id/stat_bar_label_sdef"
+        app:layout_constraintLeft_toRightOf="@+id/stat_bar_label_sdef"
+        app:layout_constraintTop_toBottomOf="@+id/stat_bar_label_satk" />
+
+    <ImageView
+        android:id="@+id/bar_spd"
+        android:layout_width="100dp"
+        android:layout_height="9dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/shape_rectangle"
+        app:layout_constraintBottom_toBottomOf="@+id/stat_bar_label_spd"
+        app:layout_constraintLeft_toRightOf="@+id/stat_bar_label_spd"
+        app:layout_constraintTop_toTopOf="@+id/stat_bar_label_spd"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/value_hp"
+        style="@style/SmallLabel"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="2dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/bar_hp"
+        app:layout_constraintLeft_toRightOf="@+id/bar_hp"
+        app:layout_constraintTop_toTopOf="@+id/bar_hp"
+        app:layout_constraintVertical_bias="0.5"
+        tools:text="44" />
+
+    <TextView
+        android:id="@+id/value_atk"
+        style="@style/SmallLabel"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="2dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/bar_atk"
+        app:layout_constraintLeft_toRightOf="@+id/bar_atk"
+        app:layout_constraintTop_toTopOf="@+id/bar_atk"
+        tools:text="35" />
+
+    <TextView
+        android:id="@+id/value_def"
+        style="@style/SmallLabel"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="2dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/bar_def"
+        app:layout_constraintLeft_toRightOf="@+id/bar_def"
+        app:layout_constraintTop_toTopOf="@+id/bar_def"
+        tools:text="168" />
+
+    <TextView
+        android:id="@+id/value_satk"
+        style="@style/SmallLabel"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="2dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/bar_satk"
+        app:layout_constraintLeft_toRightOf="@+id/bar_satk"
+        app:layout_constraintTop_toTopOf="@+id/bar_satk"
+        tools:text="192" />
+
+    <TextView
+        android:id="@+id/value_sdef"
+        style="@style/SmallLabel"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="2dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/bar_sdef"
+        app:layout_constraintLeft_toRightOf="@+id/bar_sdef"
+        app:layout_constraintTop_toTopOf="@+id/bar_sdef"
+        tools:text="248" />
+
+    <TextView
+        android:id="@+id/value_spd"
+        style="@style/SmallLabel"
+        android:layout_width="24dp"
+        android:layout_height="16dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/bar_spd"
+        app:layout_constraintLeft_toRightOf="@+id/bar_spd"
+        app:layout_constraintTop_toTopOf="@+id/bar_spd"
+        tools:text="325" />
+
+
+</android.support.constraint.ConstraintLayout>

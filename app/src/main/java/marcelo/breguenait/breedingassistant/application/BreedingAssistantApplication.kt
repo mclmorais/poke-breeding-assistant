@@ -2,13 +2,13 @@ package marcelo.breguenait.breedingassistant.application
 
 import android.app.Activity
 import android.app.Application
-import marcelo.breguenait.breedingassistant.dagger.AppComponent
-import marcelo.breguenait.breedingassistant.dagger.AppModule
-import marcelo.breguenait.breedingassistant.dagger.DaggerAppComponent
+import marcelo.breguenait.breedingassistant.application.injection.ApplicationComponent
+import marcelo.breguenait.breedingassistant.application.injection.ApplicationModule
+import marcelo.breguenait.breedingassistant.application.injection.DaggerApplicationComponent
 
 
 class BreedingAssistantApplication : Application() {
-    lateinit var component: AppComponent
+    lateinit var component: ApplicationComponent
 
     companion object {
         fun get(activity: Activity): BreedingAssistantApplication =
@@ -21,9 +21,9 @@ class BreedingAssistantApplication : Application() {
     }
 
     private fun initDagger(app: BreedingAssistantApplication) {
-        component = DaggerAppComponent
+        component = DaggerApplicationComponent
                 .builder()
-                .appModule(AppModule(app))
+                .applicationModule(ApplicationModule(app))
                 .build()
     }
 

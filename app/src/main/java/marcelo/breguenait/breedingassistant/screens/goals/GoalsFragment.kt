@@ -1,14 +1,12 @@
 package marcelo.breguenait.breedingassistant.screens.goals
 
 
-import android.content.res.AssetManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.goals_activity.*
-
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.data.external.ExternalPokemonDataSource
 import marcelo.breguenait.breedingassistant.data.external.ExternalRepository

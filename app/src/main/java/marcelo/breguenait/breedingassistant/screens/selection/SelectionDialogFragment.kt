@@ -3,6 +3,7 @@ package marcelo.breguenait.breedingassistant.screens.selection
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.util.DiffUtil
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +13,13 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.miguelcatalan.materialsearchview.MaterialSearchView
+import kotlinx.android.synthetic.main.goals_activity.*
 import kotlinx.android.synthetic.main.selection_dialog_fragment.view.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
 import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
+import marcelo.breguenait.breedingassistant.utils.Utility
 
 /**
  * Created by Marcelo on 22/01/2018.
@@ -28,6 +32,8 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
     }
 
     private lateinit var presenter: SelectionContract.Presenter
+
+    private lateinit var adapter: SelectablePokemonsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +48,38 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
     ): View {
         val root = inflater.inflate(R.layout.selection_dialog_fragment, container, false)
 
+        adapter = SelectablePokemonsAdapter(presenter.externalPokemons)
+
+        root.toolbar.inflateMenu(R.menu.menu_select_pokemon)
+        root.search_view.setMenuItem(root.toolbar.menu.findItem(R.id.menu_search))
+
+        val numberOfColumns = Utility.calculateNumberOfColumns(context, resources.getDimension(R.dimen.item_selectable_width).toInt())
+        val gridLayoutManager = GridLayoutManager(context, numberOfColumns)
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                when (adapter.getItemViewType(position)) {
+                    -1   -> return numberOfColumns
+                    else -> return 1
+                }
+            }
+        }
+
+        root.list_selectable_pokemon.adapter = adapter
+        root.list_selectable_pokemon.layoutManager = gridLayoutManager
+        root.list_selectable_pokemon.setHasFixedSize(true)
+
+        root.search_view.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return true
+            }
+
+        })
+
 
         return root
     }
@@ -51,8 +89,6 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
-
-
 
     private inner class SelectablePokemonsAdapter(selectablePokemonList: List<ExternalPokemon>)
         : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {

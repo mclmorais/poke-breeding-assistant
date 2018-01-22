@@ -1,5 +1,7 @@
 package marcelo.breguenait.breedingassistant.screens.selection
 
+import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
+
 /**
  * Created by Marcelo on 22/01/2018.
  */
@@ -24,5 +26,6 @@ interface SelectionContract {
 
         fun finishSelection(id: Int)
 
+        val externalPokemons: List<ExternalPokemon>
     }
 }

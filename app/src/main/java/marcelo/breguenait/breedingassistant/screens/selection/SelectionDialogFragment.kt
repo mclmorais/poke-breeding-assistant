@@ -1,7 +1,7 @@
 package marcelo.breguenait.breedingassistant.screens.selection
 
-import android.app.DialogFragment
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -51,6 +51,8 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
+
+
 
     private inner class SelectablePokemonsAdapter(selectablePokemonList: List<ExternalPokemon>)
         : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {

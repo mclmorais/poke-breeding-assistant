@@ -1,6 +1,5 @@
 package marcelo.breguenait.breedingassistant.screens.creation
 
-import android.net.Uri
 import android.os.Bundle
 import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v4.content.res.ResourcesCompat
@@ -8,13 +7,11 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.creation_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
-import marcelo.breguenait.breedingassistant.application.injection.ApplicationComponent
-import marcelo.breguenait.breedingassistant.application.injection.ApplicationModule
 import marcelo.breguenait.breedingassistant.screens.creation.injection.DaggerCreationComponent
 import marcelo.breguenait.breedingassistant.screens.selection.SelectionPresenter
 import javax.inject.Inject
 
-class CreationActivity : AppCompatActivity(), CreationFragment.OnFragmentInteractionListener {
+class CreationActivity : AppCompatActivity(){
 
 
     @Inject
@@ -57,7 +54,4 @@ class CreationActivity : AppCompatActivity(), CreationFragment.OnFragmentInterac
     }
 
 
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

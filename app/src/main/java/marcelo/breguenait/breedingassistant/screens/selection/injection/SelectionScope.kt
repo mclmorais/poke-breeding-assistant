@@ -8,5 +8,5 @@ import javax.inject.Scope
  * Created by Marcelo on 22/01/2018.
  */
 @Scope
-@Retention(RetentionPolicy.CLASS)
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 annotation class SelectionScope

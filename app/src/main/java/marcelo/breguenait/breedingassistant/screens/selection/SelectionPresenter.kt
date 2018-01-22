@@ -29,4 +29,5 @@ class SelectionPresenter @Inject constructor(
     override fun setView(selectionView: SelectionContract.View) {
         this.selectPokemonView = selectionView
     }
+
 }

@@ -7,6 +7,7 @@ interface SelectionContract {
 
     interface View {
         fun sendSelectedPokemonId(id: Int)
+
     }
 
     interface Presenter {
@@ -22,5 +23,6 @@ interface SelectionContract {
         fun getPokemonIconId(id: Int): Int
 
         fun finishSelection(id: Int)
+
     }
 }

@@ -12,7 +12,7 @@ import marcelo.breguenait.breedingassistant.utils.CachedPokemonIcons
  * Created by Marcelo on 22/01/2018.
  */
 @Module
-class GlaucioModule(val context: Context) {
+class CachedPokemonIconsModule(val context: Context) {
 
     @Provides
     @ApplicationScope

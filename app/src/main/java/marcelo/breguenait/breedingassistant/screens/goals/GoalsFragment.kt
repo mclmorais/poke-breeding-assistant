@@ -39,9 +39,6 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
         (activity as GoalsActivity).add_goal_fab.setOnClickListener { presenter.addNewGoal() }
 
-        val externalRepository =
-            ExternalRepository(ExternalPokemonDataSource((activity as GoalsActivity).assets)) //TODO: remover
-
         return root
     }
 

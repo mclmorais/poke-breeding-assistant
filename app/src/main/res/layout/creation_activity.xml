@@ -6,12 +6,15 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_width="match_parent"/>
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -38,11 +41,11 @@
         android:layout_marginEnd="88dp"
         android:layout_marginTop="36dp"
         android:clickable="true"
+        android:focusable="true"
         android:tint="@color/white"
         app:backgroundTint="@color/male"
         app:fabSize="mini"
         app:layout_anchorGravity="bottom|right"
-        app:srcCompat="@drawable/ic_gender_male"
-        android:focusable="true" />
+        app:srcCompat="@drawable/ic_gender_male" />
 
 </android.support.design.widget.CoordinatorLayout>

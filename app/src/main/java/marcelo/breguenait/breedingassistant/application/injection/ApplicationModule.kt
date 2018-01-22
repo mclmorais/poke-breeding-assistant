@@ -9,10 +9,11 @@ import javax.inject.Singleton
 /**
  * Created by Marcelo on 17/01/2018.
  */
+@ApplicationScope
 @Module
 class ApplicationModule(private val app: Application) {
 
     @Provides
-    @Singleton
+    @ApplicationScope
     fun provideContext(): Context = app
 }

@@ -7,9 +7,21 @@ import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.creation_activity.*
 import marcelo.breguenait.breedingassistant.R
+import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
+import marcelo.breguenait.breedingassistant.application.injection.ApplicationComponent
+import marcelo.breguenait.breedingassistant.application.injection.ApplicationModule
+import marcelo.breguenait.breedingassistant.screens.creation.injection.DaggerCreationComponent
+import marcelo.breguenait.breedingassistant.screens.selection.SelectionPresenter
+import javax.inject.Inject
 
 class CreationActivity : AppCompatActivity(), CreationFragment.OnFragmentInteractionListener {
 
+
+    @Inject
+    internal lateinit var creationPresenter: CreationPresenter
+
+    @Inject
+    internal lateinit var selectionPresenter: SelectionPresenter
 
     private var creationFragment: CreationFragment? = null
 
@@ -26,6 +38,12 @@ class CreationActivity : AppCompatActivity(), CreationFragment.OnFragmentInterac
             VectorDrawableCompat.create(resources, R.drawable.ic_clear_black_24dp, theme)
         indicator?.setTint(ResourcesCompat.getColor(resources, R.color.white, theme))
         supportActionBar?.setHomeAsUpIndicator(indicator)
+
+
+        DaggerCreationComponent.builder()
+            .applicationComponent(BreedingAssistantApplication.get(this).component)
+            .build()
+            .inject(this)
 
         creationFragment =
                 supportFragmentManager.findFragmentById(R.id.content_frame) as CreationFragment?

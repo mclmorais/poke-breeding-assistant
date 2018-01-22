@@ -3,8 +3,9 @@ package marcelo.breguenait.breedingassistant.application
 import android.app.Activity
 import android.app.Application
 import marcelo.breguenait.breedingassistant.application.injection.ApplicationComponent
-import marcelo.breguenait.breedingassistant.application.injection.ApplicationModule
 import marcelo.breguenait.breedingassistant.application.injection.DaggerApplicationComponent
+import marcelo.breguenait.breedingassistant.data.external.injection.ExternalPokemonModule
+import marcelo.breguenait.breedingassistant.utils.injection.GlaucioModule
 
 
 class BreedingAssistantApplication : Application() {
@@ -12,7 +13,7 @@ class BreedingAssistantApplication : Application() {
 
     companion object {
         fun get(activity: Activity): BreedingAssistantApplication =
-                activity.application as BreedingAssistantApplication
+            activity.application as BreedingAssistantApplication
     }
 
     override fun onCreate() {
@@ -22,9 +23,10 @@ class BreedingAssistantApplication : Application() {
 
     private fun initDagger(app: BreedingAssistantApplication) {
         component = DaggerApplicationComponent
-                .builder()
-                .applicationModule(ApplicationModule(app))
-                .build()
+            .builder()
+            .externalPokemonModule(ExternalPokemonModule(assets))
+
+            .build()
     }
 
 }

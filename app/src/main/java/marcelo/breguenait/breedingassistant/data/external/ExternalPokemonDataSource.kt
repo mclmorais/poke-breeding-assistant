@@ -4,8 +4,10 @@ import android.content.res.AssetManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalAbility
+import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
 import marcelo.breguenait.breedingassistant.data.external.deserializers.JsonAbilityDeserializer
 import marcelo.breguenait.breedingassistant.data.external.deserializers.JsonCustomDeserializer
+import marcelo.breguenait.breedingassistant.data.external.deserializers.JsonPokedexDeserializer
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -18,6 +20,10 @@ class ExternalPokemonDataSource(private val assetManager: AssetManager) {
 
     fun <T> loadExternalAbilities(): LinkedHashMap<Int, ExternalAbility> {
         return openWithCustomDeserializer(JsonAbilityDeserializer(), "abilities.json")
+    }
+
+    fun <T> loadExternalPokemons(): LinkedHashMap<Int, ExternalPokemon> {
+        return openWithCustomDeserializer(JsonPokedexDeserializer(), "pokedex.json")
     }
 
     private inline fun <reified T> openWithCustomDeserializer(

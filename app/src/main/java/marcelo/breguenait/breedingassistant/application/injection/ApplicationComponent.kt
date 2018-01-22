@@ -1,12 +1,20 @@
 package marcelo.breguenait.breedingassistant.application.injection
 
 import dagger.Component
-import javax.inject.Singleton
+import marcelo.breguenait.breedingassistant.data.external.ExternalRepository
+import marcelo.breguenait.breedingassistant.data.external.injection.ExternalPokemonModule
+import marcelo.breguenait.breedingassistant.utils.CachedPokemonIcons
+import marcelo.breguenait.breedingassistant.utils.injection.GlaucioModule
 
 /**
  * Created by Marcelo on 17/01/2018.
  */
-@Singleton
-@Component(modules = [ApplicationModule::class])
+@ApplicationScope
+@Component(modules = [GlaucioModule::class, ApplicationModule::class, ExternalPokemonModule::class])
 interface ApplicationComponent {
+
+    fun getExternalPokemonsRepository(): ExternalRepository
+
+    fun cachedPokemonIcons(): CachedPokemonIcons
+
 }

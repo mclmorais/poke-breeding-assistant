@@ -66,7 +66,12 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
         recyclerView.setHasFixedSize(true)
     }
 
+    private fun initToolbar(toolbar: Toolbar) {
+        toolbar.inflateMenu(R.menu.menu_select_pokemon)
+    }
+
     private fun initSearch(searchView: MaterialSearchView, toolbar: Toolbar) {
+
         searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -80,10 +85,6 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
         })
 
         searchView.setMenuItem(toolbar.menu.findItem(R.id.menu_search))
-    }
-
-    private fun initToolbar(toolbar: Toolbar) {
-        toolbar.inflateMenu(R.menu.menu_select_pokemon)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -171,7 +172,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
                 val itemViewHolder = holder as ItemViewHolder
 
                 val number = filteredSelectableList[position].number
-                itemViewHolder.selectablePokemonNumber.text = Integer.toString(number)
+                itemViewHolder.selectablePokemonNumber.text = String.format("%d",number)
 
                 val iconId = presenter.getPokemonIconId(filteredSelectableList[position].id)
                 Glide.with(itemViewHolder.selectablePokemonIcon.context).load(iconId).into(itemViewHolder

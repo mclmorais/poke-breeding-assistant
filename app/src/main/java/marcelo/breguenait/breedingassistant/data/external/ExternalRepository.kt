@@ -3,6 +3,7 @@ package marcelo.breguenait.breedingassistant.data.external
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalAbility
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalNature
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
+import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalStat
 import marcelo.breguenait.breedingassistant.logic.CompatibilityChecker
 import java.util.*
 
@@ -16,6 +17,8 @@ class ExternalRepository(dataSource: ExternalPokemonDataSource) {
     private val pokemons: LinkedHashMap<Int, ExternalPokemon> = dataSource.loadExternalPokemons<LinkedHashMap<Int, ExternalPokemon>>()
 
     val natures: LinkedHashMap<Int, ExternalNature> = dataSource.loadExternalNatures<LinkedHashMap<Int, ExternalNature>>()
+
+    private val stats: LinkedHashMap<Int, ExternalStat> = dataSource.loadExternalStats<LinkedHashMap<Int, ExternalStat>>()
 
     private val compatibilityChecker = CompatibilityChecker(this) //TODO: mudar pra injection?
 
@@ -64,6 +67,10 @@ class ExternalRepository(dataSource: ExternalPokemonDataSource) {
             } //TODO: do a better check?
         return abilityNames
 
+    }
+
+    fun getStatName(statId: Int, languageId: Int): String {
+        return stats[statId]?.getName(languageId) ?: ""
     }
 
 }

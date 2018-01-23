@@ -6,10 +6,8 @@ import com.google.gson.GsonBuilder
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalAbility
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalNature
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
-import marcelo.breguenait.breedingassistant.data.external.deserializers.JsonAbilityDeserializer
-import marcelo.breguenait.breedingassistant.data.external.deserializers.JsonCustomDeserializer
-import marcelo.breguenait.breedingassistant.data.external.deserializers.JsonNatureDeserializer
-import marcelo.breguenait.breedingassistant.data.external.deserializers.JsonPokedexDeserializer
+import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalStat
+import marcelo.breguenait.breedingassistant.data.external.deserializers.*
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -30,6 +28,10 @@ class ExternalPokemonDataSource(private val assetManager: AssetManager) {
 
     fun <T> loadExternalNatures(): LinkedHashMap<Int, ExternalNature> {
         return openWithCustomDeserializer(JsonNatureDeserializer(), "natures.json")
+    }
+
+    fun <T> loadExternalStats(): LinkedHashMap<Int, ExternalStat> {
+        return openWithCustomDeserializer(JsonStatDeserializer(), "stats.json")
     }
 
 

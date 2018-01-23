@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 
+import java.util.Locale;
+
 public class Utility {
 
     public static int calculateNumberOfColumns(Context context, int px) {
@@ -16,7 +18,7 @@ public class Utility {
 
 
     public static Drawable getIcon(int id, Context context) {
-        String iconId = "pkmn_link_" + String.format("%03d", id);
+        String iconId = "pkmn_link_" + String.format(Locale.ENGLISH,"%03d", id);
         return ContextCompat.getDrawable(
                 context,
                 context.getResources().getIdentifier(iconId, "drawable", context.getPackageName()));

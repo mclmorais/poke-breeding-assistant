@@ -1,6 +1,8 @@
 package marcelo.breguenait.breedingassistant.screens.creation
 
+import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalNature
 import marcelo.breguenait.breedingassistant.utils.Genders
+import java.util.ArrayList
 
 /**
  * Created by Marcelo on 17/01/2018.
@@ -44,7 +46,13 @@ interface CreationContract {
 
     interface Presenter {
 
+
+
         val currentSelectionId: Int
+
+        val natures: ArrayList<ExternalNature>
+
+        fun getStatName(statId: Int): String
 
         fun selectPokemon()
 
@@ -53,5 +61,9 @@ interface CreationContract {
         fun setView(view: View)
 
         fun getNextStat(statId: Int): Int
+
+        fun notifyStatChanged(statId: Int)
+
+        fun finishCreation()
     }
 }

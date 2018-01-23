@@ -5,6 +5,7 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,18 +15,27 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.miguelcatalan.materialsearchview.MaterialSearchView
-import kotlinx.android.synthetic.main.goals_activity.*
 import kotlinx.android.synthetic.main.selection_dialog_fragment.view.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
 import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
 import marcelo.breguenait.breedingassistant.utils.Utility
 
+
 /**
  * Created by Marcelo on 22/01/2018.
  */
 class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
+    /**
+     * This interface is used to that this selection fragment can provide data about the selection
+     * to the fragment or activity that invoked it.
+     *
+     * [onPokemonSelected] should be used for data update on the base fragment/activity.
+     *
+     * [onSelectorDismissed] should treat the edge case when the user doesn't select a Pokémon and
+     * the base fragment/activity doesn't already have a selection (i.e. it should also close).
+     */
     interface PokemonSelectionListener {
         fun onPokemonSelected(id: Int)
         fun onSelectorDismissed()
@@ -35,40 +45,29 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
     private lateinit var adapter: SelectablePokemonsAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter = (activity as CreationActivity).selectionPresenter
-        presenter.setView(this)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val root = inflater.inflate(R.layout.selection_dialog_fragment, container, false)
-
+    private fun initList(recyclerView: RecyclerView) {
         adapter = SelectablePokemonsAdapter(presenter.externalPokemons)
 
-        root.toolbar.inflateMenu(R.menu.menu_select_pokemon)
-        root.search_view.setMenuItem(root.toolbar.menu.findItem(R.id.menu_search))
-
         val numberOfColumns = Utility.calculateNumberOfColumns(context, resources.getDimension(R.dimen.item_selectable_width).toInt())
+
         val gridLayoutManager = GridLayoutManager(context, numberOfColumns)
+
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                when (adapter.getItemViewType(position)) {
-                    -1   -> return numberOfColumns
-                    else -> return 1
+                return when (adapter.getItemViewType(position)) {
+                    -1   -> numberOfColumns
+                    else -> 1
                 }
             }
         }
 
-        root.list_selectable_pokemon.adapter = adapter
-        root.list_selectable_pokemon.layoutManager = gridLayoutManager
-        root.list_selectable_pokemon.setHasFixedSize(true)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = gridLayoutManager
+        recyclerView.setHasFixedSize(true)
+    }
 
-        root.search_view.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
+    private fun initSearch(searchView: MaterialSearchView, toolbar: Toolbar) {
+        searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -80,6 +79,29 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
         })
 
+        searchView.setMenuItem(toolbar.menu.findItem(R.id.menu_search))
+    }
+
+    private fun initToolbar(toolbar: Toolbar) {
+        toolbar.inflateMenu(R.menu.menu_select_pokemon)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = (activity as CreationActivity).selectionPresenter
+        presenter.setView(this)
+
+        if(targetFragment !is PokemonSelectionListener)
+            throw Exception("the base fragment must implement PokemonSelectionListener!")
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
+        val root = inflater.inflate(R.layout.selection_dialog_fragment, container, false)
+
+        initList(root.list_selectable_pokemon)
+        initToolbar(root.toolbar)
+        initSearch(root.search_view, root.toolbar)
 
         return root
     }
@@ -149,11 +171,11 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
                 val itemViewHolder = holder as ItemViewHolder
 
                 val number = filteredSelectableList[position].number
-                itemViewHolder.mSelectablePokemonNumber.text = Integer.toString(number)
+                itemViewHolder.selectablePokemonNumber.text = Integer.toString(number)
 
                 val iconId = presenter.getPokemonIconId(filteredSelectableList[position].id)
-                Glide.with(itemViewHolder.mSelectablePokemonIcon.context).load(iconId).into(itemViewHolder
-                    .mSelectablePokemonIcon)
+                Glide.with(itemViewHolder.selectablePokemonIcon.context).load(iconId).into(itemViewHolder
+                    .selectablePokemonIcon)
             } else {
                 val headerViewHolder = holder as HeaderViewHolder
 
@@ -305,9 +327,9 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
         internal inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-            var mSelectablePokemonNumber: TextView = itemView.findViewById(R.id.selectable_pokemon_number) as TextView
+            var selectablePokemonNumber: TextView = itemView.findViewById(R.id.selectable_pokemon_number) as TextView
 
-            var mSelectablePokemonIcon: ImageView = itemView.findViewById(R.id.selectable_pokemon_icon) as ImageView
+            var selectablePokemonIcon: ImageView = itemView.findViewById(R.id.selectable_pokemon_icon) as ImageView
 
             init {
                 itemView.setOnClickListener(this)
@@ -318,7 +340,8 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
             }
         }
 
-        internal inner class GoalDiffCallback(private val mOldList: List<ExternalPokemon>, private val mNewList: List<ExternalPokemon>) : DiffUtil.Callback() {
+        internal inner class GoalDiffCallback(private val mOldList: List<ExternalPokemon>, private val mNewList: List<ExternalPokemon>) :
+            DiffUtil.Callback() {
 
             override fun getOldListSize(): Int {
                 return mOldList.size
@@ -344,8 +367,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
 
     override fun sendSelectedPokemonId(id: Int) {
-        val listener = targetFragment as PokemonSelectionListener
-        listener.onPokemonSelected(id)
+        (targetFragment as PokemonSelectionListener).onPokemonSelected(id)
         dismiss()
     }
 }

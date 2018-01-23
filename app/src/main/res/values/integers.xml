@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="num_goals_columns">2</integer>
+    <integer name="max_stat_value">300</integer>
+    <integer name="max_hp_value">500</integer>
+</resources>

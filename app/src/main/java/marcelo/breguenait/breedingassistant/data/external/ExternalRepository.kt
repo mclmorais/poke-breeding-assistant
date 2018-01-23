@@ -1,6 +1,7 @@
 package marcelo.breguenait.breedingassistant.data.external
 
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalAbility
+import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalNature
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
 import marcelo.breguenait.breedingassistant.logic.CompatibilityChecker
 import java.util.*
@@ -13,6 +14,9 @@ class ExternalRepository(dataSource: ExternalPokemonDataSource) {
         dataSource.loadExternalAbilities<LinkedHashMap<Int, ExternalAbility>>()
 
     private val pokemons: LinkedHashMap<Int, ExternalPokemon> = dataSource.loadExternalPokemons<LinkedHashMap<Int, ExternalPokemon>>()
+
+    val natures: LinkedHashMap<Int, ExternalNature> = dataSource.loadExternalNatures<LinkedHashMap<Int, ExternalNature>>()
+
     private val compatibilityChecker = CompatibilityChecker(this) //TODO: mudar pra injection?
 
     val externalPokemons: ArrayList<ExternalPokemon>
@@ -20,6 +24,10 @@ class ExternalRepository(dataSource: ExternalPokemonDataSource) {
 
     fun getExternalPokemon(id: Int): ExternalPokemon? {
         return pokemons[id]
+    }
+
+    fun getNature(natureId: Int): ExternalNature {
+        return natures[natureId] ?: ExternalNature()
     }
 
     fun getAllFromEggGroups(pokemonId: Int): List<ExternalPokemon> {
@@ -39,6 +47,22 @@ class ExternalRepository(dataSource: ExternalPokemonDataSource) {
         pokemons[132]?.let { familyList.add(0, it) }
 
         return familyList
+
+    }
+
+    fun getAbilitiesNames(pokemonId: Int): Array<String?> {
+        val abilityIds = pokemons[pokemonId]?.abilities ?: return emptyArray()
+        val abilityNames = arrayOfNulls<String>(3)
+
+
+        abilityIds.indices
+            .filter {
+                abilityIds[it] != 0
+            }
+            .forEach {
+                abilityNames[it] = abilities[abilityIds[it]]?.name ?: ""
+            } //TODO: do a better check?
+        return abilityNames
 
     }
 

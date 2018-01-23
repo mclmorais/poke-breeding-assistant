@@ -1,6 +1,7 @@
 package marcelo.breguenait.breedingassistant.screens.selection
 
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
+import marcelo.breguenait.breedingassistant.utils.Genders
 
 /**
  * Created by Marcelo on 22/01/2018.
@@ -9,7 +10,6 @@ interface SelectionContract {
 
     interface View {
         fun sendSelectedPokemonId(id: Int)
-
     }
 
     interface Presenter {

@@ -2,6 +2,7 @@ package marcelo.breguenait.breedingassistant.utils
 
 
 import android.content.Context
+import android.util.SparseIntArray
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.data.external.ExternalRepository
 import java.util.*
@@ -12,7 +13,7 @@ class CachedPokemonIcons(
     private val context: Context
 ) {
 
-    private val idsMap = HashMap<Int, Int>()
+    private val idsMap = SparseIntArray()
 
 
     init {
@@ -31,18 +32,16 @@ class CachedPokemonIcons(
                 context.getString(R.string.drawable_resource_name),
                 context.packageName
             )
-            idsMap[pokemon.id] = iconId
+
+            idsMap.append(pokemon.id, iconId)
         }
-        idsMap[-1] = R.drawable.missingno
+        idsMap.append(-1, R.drawable.missingno)
 
 
     }
 
     fun getIconId(pokemonId: Int): Int {
-        return if (idsMap.containsKey(pokemonId))
-            idsMap[pokemonId] ?: -1
-        else
-            idsMap[-1] ?: -1
+        return idsMap[pokemonId, -1]
     }
 
 

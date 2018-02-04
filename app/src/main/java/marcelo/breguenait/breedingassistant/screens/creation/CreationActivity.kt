@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 class CreationActivity : AppCompatActivity(){
 
-
     @Inject
     internal lateinit var creationPresenter: CreationPresenter
 
@@ -21,6 +20,22 @@ class CreationActivity : AppCompatActivity(){
     internal lateinit var selectionPresenter: SelectionPresenter
 
     private var creationFragment: CreationFragment? = null
+
+    fun initTransactionType() {
+        val transactionType = intent.extras!!.getInt(TYPE_ID)
+
+        if (transactionType != 0)
+            creationPresenter.transactionType = transactionType
+
+        val filterId = intent.extras!!.getInt(FILTER_ID)
+        if (filterId != 0)
+            selectionPresenter.pokemonFilterId = filterId
+
+        val existentId = intent.extras!!.getString(EXISTANT_ID)
+
+        if (existentId != null)
+            creationPresenter.internalPokemonId = (existentId)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +57,8 @@ class CreationActivity : AppCompatActivity(){
             .build()
             .inject(this)
 
+        initTransactionType()
+
         creationFragment =
                 supportFragmentManager.findFragmentById(R.id.content_frame) as CreationFragment?
         if (creationFragment == null) {
@@ -51,6 +68,24 @@ class CreationActivity : AppCompatActivity(){
                 .add(R.id.content_frame, creationFragment)
                 .commit()
         }
+    }
+
+    companion object {
+        val FILTER_ID = "filter_id"
+        val EXISTANT_ID = "existant_id"
+        val TYPE_ID = "type_id"
+
+        val GOAL = 1
+        val STORED = 2
+
+        val TYPE_KEY = "type_key"
+        val TYPE_EDIT = "type_edit"
+        val REQUEST_CREATE_GOAL = 1
+        val REQUEST_CREATE_STORED = 2
+        val REQUEST_EDIT_GOAL = 3
+        val REQUEST_EDIT_STORED = 4
+        val SUCCESSFUL = 1001
+        val UNSUCCESSFUL = 1002
     }
 
 

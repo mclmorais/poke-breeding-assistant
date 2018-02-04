@@ -2,6 +2,7 @@ package marcelo.breguenait.breedingassistant.screens.creation
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Bundle
@@ -212,7 +213,7 @@ class CreationFragment : Fragment(), CreationContract.View,
             }
         }
 
-        (floatingActionButton?.layoutParams as CoordinatorLayout.LayoutParams).anchorId = R.id.main_card
+        (floatingActionButton.layoutParams as CoordinatorLayout.LayoutParams).anchorId = R.id.main_card
     }
 
     private fun initFinishFab(floatingActionButton: FloatingActionButton?) {
@@ -369,7 +370,7 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     }
 
-    internal fun animateBars() {
+    private fun animateBars() {
 
         val nextStats = IntArray(6)
 
@@ -400,7 +401,7 @@ class CreationFragment : Fragment(), CreationContract.View,
         slideAnimator.start()
     }
 
-    internal fun animateSingleBar(@Stats.StatFlag statId: Int) {
+    private fun animateSingleBar(@Stats.StatFlag statId: Int) {
         val slideAnimator = ValueAnimator
             .ofInt(1, 100)
             .setDuration(400)
@@ -421,7 +422,7 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     }
 
-    internal fun barAnimation(@Stats.StatFlag statId: Int, iterator: Int, initialStatValue: Int, finalStatValue: Int, steps: Int) {
+    private fun barAnimation(@Stats.StatFlag statId: Int, iterator: Int, initialStatValue: Int, finalStatValue: Int, steps: Int) {
 
 
         lastStatValues[statId] = initialStatValue + (finalStatValue - initialStatValue) * iterator / steps
@@ -452,7 +453,7 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     }
 
-    internal fun colorStatLabel(statId: Int) {
+    private fun colorStatLabel(statId: Int) {
 
         if (context == null) return
 
@@ -462,7 +463,7 @@ class CreationFragment : Fragment(), CreationContract.View,
             statLabels[statId]?.setTextColor(ContextCompat.getColor(context!!, android.R.color.tertiary_text_light))
     }
 
-    internal fun colorNatureBars() {
+    private fun colorNatureBars() {
         val nature = spinner_nature?.selectedItem as ExternalNature?
         for (i in 0..5) {
             statLabels[i]?.typeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL)
@@ -477,6 +478,33 @@ class CreationFragment : Fragment(), CreationContract.View,
             }
 
         }
+    }
+
+    override val selectedGender: Int
+        @Genders.GendersFlag
+        get() = if (isFemale) Genders.FEMALE else Genders.MALE
+
+    override val selectedAbilitySlot: Int
+        get() {
+            if (radio_1st_ability.isChecked)
+                return 0
+            else if (radio_2nd_ability.isChecked)
+                return 1
+            else if (radio_hidden_ability.isChecked)
+                return 2
+            else
+                return -1
+        }
+
+    override fun exitActivity(createdId: String?) {
+        if (createdId != null) {
+            val intent = Intent()
+            intent.putExtra("created_id", createdId)
+            activity?.setResult(CreationActivity.SUCCESSFUL, intent)
+
+        } else
+            activity?.setResult(CreationActivity.UNSUCCESSFUL)
+        activity?.finish()
     }
 
     private inner class NatureSpinnerAdapter internal constructor(internal var natures: ArrayList<ExternalNature>) : BaseAdapter() {

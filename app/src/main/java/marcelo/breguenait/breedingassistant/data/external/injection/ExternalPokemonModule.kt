@@ -25,7 +25,7 @@ class ExternalPokemonModule(val assetManager: AssetManager) {
 
     @Provides
     @ApplicationScope
-    fun ProvideExternalPokemonRepository(dataSource: ExternalPokemonDataSource): ExternalRepository =
+    fun provideExternalPokemonRepository(dataSource: ExternalPokemonDataSource): ExternalRepository =
         ExternalRepository(dataSource)
 
     @Provides

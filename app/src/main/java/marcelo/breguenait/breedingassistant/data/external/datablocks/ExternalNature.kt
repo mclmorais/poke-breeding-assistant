@@ -9,8 +9,8 @@ class ExternalNature(val id: Int, val name: String, val increasedStatId: Int, va
 
     constructor(): this(-1, "", -1, -1, HashMap<Int, String>(0))
 
-    fun getName(languageId: Int): String {
-        return names.get(languageId) ?: ""
-    }
+fun getName(languageId: Int): String {
+    return names.get(languageId) ?: ""
+}
 
 }

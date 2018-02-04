@@ -73,4 +73,10 @@ class ExternalRepository(dataSource: ExternalPokemonDataSource) {
         return stats[statId]?.getName(languageId) ?: ""
     }
 
+    fun getAbility(pokemonId: Int, abilitySlot: Int): ExternalAbility? { //TODO: remove from here so that null checks may be done by the caller
+        return abilities[pokemons[pokemonId]?.getAbilityId(abilitySlot)]
+    }
+
+
+
 }

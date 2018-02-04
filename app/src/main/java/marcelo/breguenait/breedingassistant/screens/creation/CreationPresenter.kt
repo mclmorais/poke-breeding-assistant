@@ -2,21 +2,33 @@ package marcelo.breguenait.breedingassistant.screens.creation
 
 import marcelo.breguenait.breedingassistant.data.external.ExternalRepository
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalNature
+import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
+import marcelo.breguenait.breedingassistant.data.internal.InternalPokemonValidator
+import marcelo.breguenait.breedingassistant.data.internal.InternalRepository
 import marcelo.breguenait.breedingassistant.logic.StatsCalculation
 import marcelo.breguenait.breedingassistant.utils.CachedPokemonIcons
+import marcelo.breguenait.breedingassistant.utils.Genders
+import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by Marcelo on 17/01/2018.
  */
-class CreationPresenter @Inject constructor(val externalRepository: ExternalRepository,
+class CreationPresenter @Inject constructor(val internalRepository: InternalRepository,
+                                            val externalRepository: ExternalRepository,
                                             val cachedPokemonIcons: CachedPokemonIcons,
                                             val statsCalculation: StatsCalculation) : CreationContract.Presenter {
 
+    var transactionType = -1
+
+    var internalPokemonId: String? = null
 
     override var currentSelectionId = -1
 
     private var nextStats = intArrayOf(0, 0, 0, 0, 0, 0)
+
+    private val validatedGender: Int
+        @Genders.GendersFlag get() = InternalPokemonValidator.getValidatedGender(currentSelectionId, createPokemonView.selectedGender, externalRepository)
 
     private lateinit var createPokemonView: CreationContract.View
 
@@ -80,26 +92,55 @@ class CreationPresenter @Inject constructor(val externalRepository: ExternalRepo
         return externalRepository.getStatName(statId, 9)
     }
 
-    override fun finishCreation() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun buildFromCurrentViewData(internalPokemonId: String?): InternalPokemon {
 
-        /*    override fun finishCreation() {
+        val createdPokemon: InternalPokemon
+
+        if (internalPokemonId == null)
+            createdPokemon = InternalPokemon(
+                currentSelectionId, Date().time,
+                UUID.randomUUID().toString())
+        else
+            createdPokemon = getExistentPokemon(internalPokemonId)
+
+
+        createdPokemon.externalId = currentSelectionId
+        createdPokemon.IVs = createPokemonView.selectedIVs
+
+        createdPokemon.gender = validatedGender
+        createdPokemon.natureId = createPokemonView.selectedNatureId
+        createdPokemon.abilitySlot = createPokemonView.selectedAbilitySlot
+
+        createdPokemon.valid = InternalPokemonValidator.validate(createdPokemon, externalRepository)
+
+        return createdPokemon
+    }
+
+    private fun getExistentPokemon(id: String): InternalPokemon {
+
+        if (transactionType == CreationActivity.GOAL)
+            return internalRepository.currentGoal!!
+        else
+            return internalRepository.getStoredPokemon(id)!!
+    }
+
+    override fun finishCreation() {
         val builtPokemon: InternalPokemon
 
         when (transactionType) {
-            CreatePokemonActivity.GOAL   -> {
+            CreationActivity.GOAL   -> {
                 builtPokemon = buildFromCurrentViewData(internalPokemonId)
                 internalRepository.addInternalPokemon(builtPokemon, InternalRepository.INTERNAL_GOAL)
             }
-            CreatePokemonActivity.STORED -> {
+            CreationActivity.STORED -> {
                 builtPokemon = buildFromCurrentViewData(internalPokemonId)
                 internalRepository.addInternalPokemon(builtPokemon, InternalRepository.INTERNAL_STORED)
             }
-            else ->
-                    throw Exception(transactionType.toString())
+            else                    ->
+                throw Exception(transactionType.toString()) //TODO: do something with it (warn the user that something's wrong)
         }
 
         createPokemonView.exitActivity(builtPokemon.internalId)
-    }*/
     }
+
 }

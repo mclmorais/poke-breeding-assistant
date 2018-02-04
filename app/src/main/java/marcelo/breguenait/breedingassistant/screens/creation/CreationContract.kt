@@ -36,11 +36,13 @@ interface CreationContract {
 
         val selectedIVs: IntArray
 
-      //  @get:Genders.GendersFlag val selectedGender: Int
+        @get:Genders.GendersFlag val selectedGender: Int
 
         val selectedNatureId: Int
 
-       // val selectedAbilitySlot: Int
+        val selectedAbilitySlot: Int
+
+        fun exitActivity(createdId: String?)
 
     }
 

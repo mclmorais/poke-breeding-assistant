@@ -43,6 +43,8 @@ class GoalsFragment : Fragment(), GoalsContract.View {
     }
 
     override fun showCreateGoal() {
-        startActivity(Intent(context, CreationActivity::class.java))
+        val intent = Intent(context, CreationActivity::class.java)
+        intent.putExtra(CreationActivity.TYPE_ID, CreationActivity.GOAL)
+        startActivity(intent)
     }
 }

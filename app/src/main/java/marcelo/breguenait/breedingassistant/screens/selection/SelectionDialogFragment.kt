@@ -315,6 +315,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
                 }
 
                 override fun publishResults(constraint: CharSequence, results: Filter.FilterResults) {
+                    @Suppress("UNCHECKED_CAST")
                     updateItems(results.values as ArrayList<ExternalPokemon>)
                 }
             }

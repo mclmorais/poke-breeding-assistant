@@ -98,24 +98,7 @@ constructor(private val internalRepository: InternalRepository,
 
         assistantView.showLoading()
 
-        object : AsyncTask<Int, Int, Int>() {
-
-
-            override fun doInBackground(vararg params: Int?): Int? {
-
-                assistantAi.calculateBestMatches(internalRepository.currentGoal ?: return 0)
-
-                return 0
-            }
-
-            override fun onPostExecute(integer: Int) {
-                super.onPostExecute(integer)
-
-                assistantView.provideDirectItems(assistantAi.directCombinations, assistantAi.directFlag)
-
-                assistantView.provideImprovementItems(assistantAi.improvementCombinations)
-            }
-        }.execute()
+        Calculations(assistantAi, internalRepository, assistantView).execute()
     }
 
     override fun getNatureName(natureId: Int): String {
@@ -135,4 +118,25 @@ constructor(private val internalRepository: InternalRepository,
         storageView.updateStoredPokemons(compatiblePokemons)
         requestChancesUpdate()
     }
+
+    companion object {
+        class Calculations(val assistantAi: AssistantAi, val internalRepository: InternalRepository, val assistantView: AssistantContract.AssistantView) : AsyncTask<Int, Int, Int>() {
+
+            override fun doInBackground(vararg params: Int?): Int? {
+
+                assistantAi.calculateBestMatches(internalRepository.currentGoal ?: return 0)
+
+                return 0
+            }
+
+            override fun onPostExecute(integer: Int) {
+                super.onPostExecute(integer)
+
+                assistantView.provideDirectItems(assistantAi.directCombinations, assistantAi.directFlag)
+
+                assistantView.provideImprovementItems(assistantAi.improvementCombinations)
+            }
+        }
+    }
+
 }

@@ -31,9 +31,9 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
     @Inject
     lateinit var presenter: AssistantContract.Presenter
 
-    var goalIvImageViews: Array<ImageView?> = arrayOfNulls(6)
+    private var goalIvImageViews: Array<ImageView?> = arrayOfNulls(6)
 
-    val assistantAdapter = AssistantAdapter()
+    private val assistantAdapter = AssistantAdapter()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,7 +44,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
         presenter = (activity as AssistantActivity).getAssistantPresenter()
         presenter.setAssistantView(this)
 
-        goalIvImageViews = arrayOfNulls<ImageView>(6)
+        goalIvImageViews = arrayOfNulls(6)
         goalIvImageViews[0] = activity?.pokemon_iv_hp
         goalIvImageViews[1] = activity?.pokemon_iv_atk
         goalIvImageViews[2] = activity?.pokemon_iv_def
@@ -154,13 +154,13 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
     inner class AssistantAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        internal var initialized = false
+        private var initialized = false
 
-        internal var directList: ArrayList<CombinationHolder> = ArrayList()
+        private var directList: ArrayList<CombinationHolder> = ArrayList()
 
-        internal var improvementsList: ArrayList<CombinationHolder> = ArrayList()
+        private var improvementsList: ArrayList<CombinationHolder> = ArrayList()
 
-        internal var directFlags = BreedingManager.DIRECT_NONE
+        private var directFlags = BreedingManager.DIRECT_NONE
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -169,35 +169,35 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
 
             if (viewType == 0) {
-                when (directFlags) {
-                    BreedingManager.DIRECT_OK                    -> return HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_dok, parent,
-                        false))
-                    BreedingManager.DIRECT_NO_PARENTS_GENDERED   -> return HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_npc,
+                return when (directFlags) {
+                    BreedingManager.DIRECT_OK                    -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_dok,
                         parent, false))
-                    BreedingManager.DIRECT_NO_PARENTS_GENDERLESS -> return HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_npg,
+                    BreedingManager.DIRECT_NO_PARENTS_GENDERED   -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_npc,
                         parent, false))
-                    BreedingManager.DIRECT_NO_HIDDEN_ABILITY     -> return HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_nha,
+                    BreedingManager.DIRECT_NO_PARENTS_GENDERLESS -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_npg,
                         parent, false))
-                    BreedingManager.DIRECT_IVS_TOO_LOW           -> return HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_nei,
+                    BreedingManager.DIRECT_NO_HIDDEN_ABILITY     -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_nha,
                         parent, false))
-                    else                                         -> return HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_dok,
+                    BreedingManager.DIRECT_IVS_TOO_LOW           -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_nei,
+                        parent, false))
+                    else                                         -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_dok,
                         parent, false))
                 }
-            } else if (viewType == 1) {
-                return DirectItemViewHolder(inflater.inflate(R.layout.assistant_item_direct,
-                    parent,
-                    false))
-            } else if (viewType == 2) {
-                return HeaderViewHolder(inflater.inflate(R.layout.assistant_item_improvement_header, parent,
-                    false))
-            } else if (viewType == 3) {
-                return ImprovementItemViewHolder(inflater.inflate(R.layout.assistant_item_direct,
-                    parent,
-                    false))
-            } else
-                return HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_dok,
-                    parent,
-                    false))
+            } else {
+                return when (viewType) {
+                    1    -> DirectItemViewHolder(inflater.inflate(R.layout.assistant_item_direct,
+                        parent,
+                        false))
+                    2    -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_improvement_header, parent,
+                        false))
+                    3    -> ImprovementItemViewHolder(inflater.inflate(R.layout.assistant_item_direct,
+                        parent,
+                        false))
+                    else -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_dok,
+                        parent,
+                        false))
+                }
+            }
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -211,7 +211,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
         }
 
-        internal fun bindDirectItem(holder: DirectItemViewHolder, item: CombinationHolder) {
+        private fun bindDirectItem(holder: DirectItemViewHolder, item: CombinationHolder) {
 
             val related = item.couple.related
             val compatible = item.couple.compatible
@@ -246,10 +246,11 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
                     ivColor = context?.let { ContextCompat.getColor(it, R.color.iv_enabled_light) } ?: 0
                     DrawableCompat.setTint(wrappedDrawable, ivColor)
                 } else {
-                    if (missingIVs[i] == 1)
-                        ivColor = context?.let { ContextCompat.getColor(it, R.color.colorAccentLight) } ?: 0
-                    else
-                        ivColor = context?.let { ContextCompat.getColor(it, R.color.iv_disabled_light) } ?: 0
+                    ivColor =
+                            if (missingIVs[i] == 1)
+                                context?.let { ContextCompat.getColor(it, R.color.colorAccentLight) } ?: 0
+                            else
+                                context?.let { ContextCompat.getColor(it, R.color.iv_disabled_light) } ?: 0
                     DrawableCompat.setTint(wrappedDrawable, ivColor)
                 }
             }
@@ -265,10 +266,11 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
                     ivColor = context?.let { ContextCompat.getColor(it, R.color.iv_enabled_light) } ?: 0
                     DrawableCompat.setTint(wrappedDrawable, ivColor)
                 } else {
-                    if (missingIVs[i] == 1)
-                        ivColor = context?.let { ContextCompat.getColor(it, R.color.colorAccentLight) } ?: 0
-                    else
-                        ivColor = context?.let { ContextCompat.getColor(it, R.color.iv_disabled_light) } ?: 0
+                    ivColor =
+                            if (missingIVs[i] == 1)
+                                context?.let { ContextCompat.getColor(it, R.color.colorAccentLight) } ?: 0
+                            else
+                                context?.let { ContextCompat.getColor(it, R.color.iv_disabled_light) } ?: 0
                     DrawableCompat.setTint(wrappedDrawable, ivColor)
                 }
             }
@@ -304,7 +306,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
             holder.problemNature.visibility = if (item.combinationProblems.hasNoMatchingNature()) View.VISIBLE else View.GONE
         }
 
-        internal fun bindImprovementItem(holder: ImprovementItemViewHolder, item: CombinationHolder) {
+        private fun bindImprovementItem(holder: ImprovementItemViewHolder, item: CombinationHolder) {
 
             val related = item.couple
                 .related
@@ -378,13 +380,13 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
         }
 
         override fun getItemCount(): Int {
-            if (!initialized)
-                return 0
+            return if (!initialized)
+                0
             else {
                 if (improvementsList.isEmpty())
-                    return 1 + directList.size
+                    1 + directList.size
                 else
-                    return 1 + directList.size + 1 + improvementsList.size
+                    1 + directList.size + 1 + improvementsList.size
             }
         }
 
@@ -407,60 +409,44 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
         }
 
         override fun getItemViewType(position: Int): Int {
-            if (position == 0)
-                return 0 //Direct Header
-            else if (position > 0 && position <= directList.size)
-                return 1 //Direct Items
-            else if (position == directList.size + 1)
-                return 2 //Improvement Header
-            else
-                return 3 //Improvement Items
+            return when {
+                position == 0                               -> 0 //Direct Header
+                position > 0 && position <= directList.size -> 1 //Direct Items
+                position == directList.size + 1             -> 2 //Improvement Header
+                else                                        -> 3 //Improvement Items
+            }
         }
 
         internal inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
         internal inner class ImprovementItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-            val related: ImageView
-            val compatible: ImageView
+            val related: ImageView = itemView.related_icon
+            val compatible: ImageView = itemView.compatible_icon
 
-            val relatedInfo: TextView
-            val compatibleInfo: TextView
+            val relatedInfo: TextView = itemView.related_info
+            val compatibleInfo: TextView = itemView.compatible_info
 
-            val totalChanceFraction: TextView
-            val totalChancePercentage: TextView
+            val totalChanceFraction: TextView = itemView.total_chance
+            //val totalChancePercentage: TextView = itemView.total_percentage
 
-            val relatedIVs: Array<ImageView?>
-            val compatibleIVs: Array<ImageView?>
+            val relatedIVs: Array<ImageView?> = arrayOfNulls(6)
+            val compatibleIVs: Array<ImageView?> = arrayOfNulls(6)
 
             init {
+                relatedIVs[0] = itemView.related_iv_hp
+                relatedIVs[1] = itemView.related_iv_atk
+                relatedIVs[2] = itemView.related_iv_def
+                relatedIVs[3] = itemView.related_iv_satk
+                relatedIVs[4] = itemView.related_iv_sdef
+                relatedIVs[5] = itemView.related_iv_spd
 
-                related = itemView.findViewById(R.id.related_icon) as ImageView
-                compatible = itemView.findViewById(R.id.compatible_icon) as ImageView
-
-                relatedInfo = itemView.findViewById(R.id.related_info) as TextView
-                compatibleInfo = itemView.findViewById(R.id.compatible_info) as TextView
-
-                totalChanceFraction = itemView.findViewById(R.id.total_chance) as TextView
-                totalChancePercentage = itemView.findViewById(R.id.total_percentage) as TextView
-
-                relatedIVs = arrayOfNulls<ImageView>(6)
-                relatedIVs[0] = itemView.findViewById(R.id.related_iv_hp) as ImageView
-                relatedIVs[1] = itemView.findViewById(R.id.related_iv_atk) as ImageView
-                relatedIVs[2] = itemView.findViewById(R.id.related_iv_def) as ImageView
-                relatedIVs[3] = itemView.findViewById(R.id.related_iv_satk) as ImageView
-                relatedIVs[4] = itemView.findViewById(R.id.related_iv_sdef) as ImageView
-                relatedIVs[5] = itemView.findViewById(R.id.related_iv_spd) as ImageView
-
-                compatibleIVs = arrayOfNulls<ImageView>(6)
-                compatibleIVs[0] = itemView.findViewById(R.id.compatible_iv_hp) as ImageView
-                compatibleIVs[1] = itemView.findViewById(R.id.compatible_iv_atk) as ImageView
-                compatibleIVs[2] = itemView.findViewById(R.id.compatible_iv_def) as ImageView
-                compatibleIVs[3] = itemView.findViewById(R.id.compatible_iv_satk) as ImageView
-                compatibleIVs[4] = itemView.findViewById(R.id.compatible_iv_sdef) as ImageView
-                compatibleIVs[5] = itemView.findViewById(R.id.compatible_iv_spd) as ImageView
-
-
+                compatibleIVs[0] = itemView.compatible_iv_hp
+                compatibleIVs[1] = itemView.compatible_iv_atk
+                compatibleIVs[2] = itemView.compatible_iv_def
+                compatibleIVs[3] = itemView.compatible_iv_satk
+                compatibleIVs[4] = itemView.compatible_iv_sdef
+                compatibleIVs[5] = itemView.compatible_iv_spd
             }
 
             fun setGenderBackground(@Genders.GendersFlag gender: Int, view: ImageView) {
@@ -519,11 +505,11 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
             fun setGenderBackground(@Genders.GendersFlag gender: Int, view: ImageView) {
 
                 when (gender) {
-                    Genders.MALE       -> view.background = context?.let{ContextCompat.getDrawable(it, R.drawable.shape_circle_color_male)}
-                    Genders.FEMALE     -> view.background = context?.let{ContextCompat.getDrawable(it, R.drawable.shape_circle_color_female)}
-                    Genders.GENDERLESS -> view.background = context?.let{ContextCompat.getDrawable(it, R.drawable.shape_circle_color_genderless)}
-                    Genders.DITTO      -> view.background = context?.let{ContextCompat.getDrawable(it, R.drawable.shape_circle_color_ditto)}
-                    else               -> view.background = context?.let{ContextCompat.getDrawable(it, R.drawable.shape_circle_color_genderless)}
+                    Genders.MALE       -> view.background = context?.let { ContextCompat.getDrawable(it, R.drawable.shape_circle_color_male) }
+                    Genders.FEMALE     -> view.background = context?.let { ContextCompat.getDrawable(it, R.drawable.shape_circle_color_female) }
+                    Genders.GENDERLESS -> view.background = context?.let { ContextCompat.getDrawable(it, R.drawable.shape_circle_color_genderless) }
+                    Genders.DITTO      -> view.background = context?.let { ContextCompat.getDrawable(it, R.drawable.shape_circle_color_ditto) }
+                    else               -> view.background = context?.let { ContextCompat.getDrawable(it, R.drawable.shape_circle_color_genderless) }
                 }
             }
 
@@ -531,7 +517,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
                 val iconId = presenter.getPokemonIconId(id)
 
-                val icon = context?.let{ContextCompat.getDrawable(it, iconId)}
+                val icon = context?.let { ContextCompat.getDrawable(it, iconId) }
 
                 view.setImageDrawable(icon)
             }

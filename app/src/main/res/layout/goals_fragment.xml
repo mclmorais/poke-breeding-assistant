@@ -24,12 +24,9 @@
         android:id="@+id/goals_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
         android:clickable="true"
         android:clipToPadding="false"
+        android:focusable="true"
         android:paddingBottom="96dp"
         android:paddingTop="0dp"
         android:scrollbars="vertical"
@@ -43,7 +40,6 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:focusable="true" />
+        tools:layout_constraintTop_creator="1" />
 
 </android.support.constraint.ConstraintLayout>

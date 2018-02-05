@@ -12,7 +12,7 @@ class InternalPokemonValidator{
 
             repository.getExternalPokemon(internalPokemon.externalId) ?: return false
 
-            repository.getNature(internalPokemon.natureId) ?: return false
+            repository.getNature(internalPokemon.natureId)
 
             if(internalPokemon.abilitySlot !in 0..2) return false
 

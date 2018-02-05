@@ -19,7 +19,7 @@
     <color name="male">#74bce8</color>
     <color name="female">#e87474</color>
     <color name="genderless" tools:ignore="UnusedResources">#9A9A9A</color>
-    <color name="ditto">#CE93D8</color>
+    <color name="ditto">#ce93d8</color>
 
     <color name="iv_enabled_light">@color/colorPrimary</color>
     <color name="iv_disabled_light">@color/light_grey</color>

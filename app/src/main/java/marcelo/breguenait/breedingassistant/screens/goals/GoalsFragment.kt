@@ -20,10 +20,10 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Pair
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.creation_activity.*
 import kotlinx.android.synthetic.main.goals_activity.*
 import kotlinx.android.synthetic.main.goals_fragment.*
 import kotlinx.android.synthetic.main.goals_fragment.view.*
@@ -32,7 +32,6 @@ import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
 import marcelo.breguenait.breedingassistant.screens.assistant.AssistantActivity
 import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
-import android.util.Pair
 import java.util.*
 
 

@@ -51,13 +51,13 @@ class AssistantActivity : AppCompatActivity() {
         assistantFragment = AssistantFragment()
         storedPokemonFragment = StoredPokemonFragment()
 
-        val viewPager = findViewById(R.id.assistant_viewpager) as ViewPager
+        val viewPager = findViewById<ViewPager>(R.id.assistant_viewpager)
         val adapter = Adapter(supportFragmentManager)
         adapter.addFragment(assistantFragment, getString(R.string.label_assistant))
         adapter.addFragment(storedPokemonFragment, getString(R.string.label_storage))
         viewPager.adapter = adapter
 
-        val tabs = findViewById(R.id.assistant_tabs) as TabLayout
+        val tabs = findViewById<TabLayout>(R.id.assistant_tabs)
         tabs.setupWithViewPager(viewPager)
 
         DaggerAssistantComponent
@@ -83,11 +83,6 @@ class AssistantActivity : AppCompatActivity() {
             R.id.action_edit_goal -> assistantFragment.requestGoalEdit()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onEnterAnimationComplete() {
-        super.onEnterAnimationComplete()//getWindow().getEnterTransition();
-        // assistantPresenter.requestChancesUpdate();
     }
 
     override fun onBackPressed() {

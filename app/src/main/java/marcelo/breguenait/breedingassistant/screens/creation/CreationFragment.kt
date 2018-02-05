@@ -47,19 +47,19 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     private var initializedViews = 0
 
-    internal var lastStatValues = intArrayOf(0, 0, 0, 0, 0, 0)
+    private var lastStatValues = intArrayOf(0, 0, 0, 0, 0, 0)
 
     private lateinit var presenter: CreationContract.Presenter
 
-    internal var isFemale = false
+    private var isFemale = false
 
     private var IVs = arrayOfNulls<CheckBox>(6)
 
     private var statBars = arrayOfNulls<ImageView>(6)
 
-    internal var statTexts = arrayOfNulls<TextView>(6)
+    private var statTexts = arrayOfNulls<TextView>(6)
 
-    internal var statLabels = arrayOfNulls<TextView>(6)
+    private var statLabels = arrayOfNulls<TextView>(6)
 
     private var globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
         initializedViews++
@@ -72,9 +72,8 @@ class CreationFragment : Fragment(), CreationContract.View,
     override val selectedIVs: IntArray
         get() {
             val data = IntArray(6)
-            for (i in IVs.indices) {
-                data[i] = if (IVs[i]?.isChecked ?: false) 1 else 0 //TODO: validate better
-            }
+            //TODO: validate better
+            for (i in IVs.indices) data[i] = if (IVs[i]?.isChecked == true) 1 else 0
             return data
         }
 
@@ -299,46 +298,52 @@ class CreationFragment : Fragment(), CreationContract.View,
 
         val genderFab = activity?.gender_fab
 
-        if (restriction == 0) {
-            val maleColor = ContextCompat.getColor(context!!, R.color.male_strong)
-            genderFab?.backgroundTintList = ColorStateList.valueOf(maleColor)
-            genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_male,
-                activity?.theme))
-            genderFab?.isClickable = false
-            isFemale = false
-        } else if (restriction == 1000) {
-            val femaleColor = ContextCompat.getColor(context!!, R.color.female_strong)
-            genderFab?.backgroundTintList = ColorStateList.valueOf(femaleColor)
-            genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_female,
-                activity?.theme))
-            genderFab?.isClickable = false
-            isFemale = true
-        } else if (restriction == 2000) {
-            val genderlessColor = ContextCompat.getColor(context!!, R.color.genderless)
-            genderFab?.backgroundTintList = ColorStateList.valueOf(genderlessColor)
-            genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_genderless,
-                activity?.theme))
-            genderFab?.isClickable = false
-        } else if (restriction == 3000) {
-            val dittoColor = ContextCompat.getColor(context!!, R.color.ditto)
-            genderFab?.backgroundTintList = ColorStateList.valueOf(dittoColor)
-            genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_genderless,
-                activity?.theme))
-            genderFab?.isClickable = false
-        } else {
-            if (isFemale) {
-                val maleColor = ContextCompat.getColor(context!!, R.color.female)
-                genderFab?.backgroundTintList = ColorStateList.valueOf(maleColor)
-                genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_female,
-                    activity?.theme))
-            } else {
-                val maleColor = ContextCompat.getColor(context!!, R.color.male)
+        when (restriction) {
+            0    -> {
+                val maleColor = ContextCompat.getColor(context!!, R.color.male_strong)
                 genderFab?.backgroundTintList = ColorStateList.valueOf(maleColor)
                 genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_male,
                     activity?.theme))
+                genderFab?.isClickable = false
+                isFemale = false
             }
-            genderFab?.isClickable = true
+            1000 -> {
+                val femaleColor = ContextCompat.getColor(context!!, R.color.female_strong)
+                genderFab?.backgroundTintList = ColorStateList.valueOf(femaleColor)
+                genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_female,
+                    activity?.theme))
+                genderFab?.isClickable = false
+                isFemale = true
+            }
+            2000 -> {
+                val genderlessColor = ContextCompat.getColor(context!!, R.color.genderless)
+                genderFab?.backgroundTintList = ColorStateList.valueOf(genderlessColor)
+                genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_genderless,
+                    activity?.theme))
+                genderFab?.isClickable = false
+            }
+            3000 -> {
+                val dittoColor = ContextCompat.getColor(context!!, R.color.ditto)
+                genderFab?.backgroundTintList = ColorStateList.valueOf(dittoColor)
+                genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_genderless,
+                    activity?.theme))
+                genderFab?.isClickable = false
+            }
+            else -> {
+                if (isFemale) {
+                    val maleColor = ContextCompat.getColor(context!!, R.color.female)
+                    genderFab?.backgroundTintList = ColorStateList.valueOf(maleColor)
+                    genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_female,
+                        activity?.theme))
+                } else {
+                    val maleColor = ContextCompat.getColor(context!!, R.color.male)
+                    genderFab?.backgroundTintList = ColorStateList.valueOf(maleColor)
+                    genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_male,
+                        activity?.theme))
+                }
+                genderFab?.isClickable = true
 
+            }
         }
     }
 
@@ -431,20 +436,21 @@ class CreationFragment : Fragment(), CreationContract.View,
 
         val statMaxValue: Int
 
-        if (statId == Stats.HP)
-            statMaxValue = resources.getInteger(R.integer.max_hp_value)
+        statMaxValue = if (statId == Stats.HP)
+            resources.getInteger(R.integer.max_hp_value)
         else
-            statMaxValue = resources.getInteger(R.integer.max_stat_value)
+            resources.getInteger(R.integer.max_stat_value)
+
         val barMaxWidth = resources.getDimension(R.dimen.stat_bar_max_width).toInt()
         val barMinWidth = resources.getDimension(R.dimen.stat_bar_min_width).toInt()
 
         val ratio = statMaxValue.toFloat() / barMaxWidth
 
-        var barSize: Int
-        if (lastStatValues[statId] < statMaxValue)
-            barSize = (lastStatValues[statId] / ratio).toInt()
-        else
-            barSize = barMaxWidth
+        var barSize =
+            if (lastStatValues[statId] < statMaxValue)
+                (lastStatValues[statId] / ratio).toInt()
+            else
+                barMaxWidth
 
         if (barSize < barMinWidth) barSize = barMinWidth
 
@@ -469,12 +475,11 @@ class CreationFragment : Fragment(), CreationContract.View,
             statLabels[i]?.typeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL)
 
             if (nature?.decreasedStatId != nature?.increasedStatId) {
-                if (i == nature?.increasedStatId)
-                    statLabels[i]?.typeface = Typeface.create("sans-serif-condensed", Typeface.BOLD)
-                else if (i == nature?.decreasedStatId)
-                    statLabels[i]?.typeface = Typeface.create("sans-serif-condensed", Typeface.ITALIC)
-                else
-                    statLabels[i]?.typeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL)
+                when (i) {
+                    nature?.increasedStatId -> statLabels[i]?.typeface = Typeface.create("sans-serif-condensed", Typeface.BOLD)
+                    nature?.decreasedStatId -> statLabels[i]?.typeface = Typeface.create("sans-serif-condensed", Typeface.ITALIC)
+                    else                    -> statLabels[i]?.typeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL)
+                }
             }
 
         }
@@ -486,14 +491,12 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     override val selectedAbilitySlot: Int
         get() {
-            if (radio_1st_ability.isChecked)
-                return 0
-            else if (radio_2nd_ability.isChecked)
-                return 1
-            else if (radio_hidden_ability.isChecked)
-                return 2
-            else
-                return -1
+            return when {
+                radio_1st_ability.isChecked    -> 0
+                radio_2nd_ability.isChecked    -> 1
+                radio_hidden_ability.isChecked -> 2
+                else                           -> -1
+            }
         }
 
     override fun exitActivity(createdId: String?) {

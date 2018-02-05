@@ -129,11 +129,11 @@ public class StoredPokemonFragment extends Fragment implements AssistantContract
         gridLayoutManager = new GridLayoutManager(getContext(), numberOfColumns);
         linearLayoutManager = new LinearLayoutManager(getContext());
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.stored_pokemon_list);
+        recyclerView = view.findViewById(R.id.stored_pokemon_list);
         recyclerView.setAdapter(storedPokemonsAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        addPokemonFab = (FloatingActionButton) getActivity().findViewById(R.id.fab_add);
+        addPokemonFab = getActivity().findViewById(R.id.fab_add);
 
         return view;
     }
@@ -175,7 +175,7 @@ public class StoredPokemonFragment extends Fragment implements AssistantContract
         Intent intent = new Intent(getContext(), CreationActivity.class);
         intent.putExtra(CreationActivity.TYPE_ID, CreationActivity.STORED);
         intent.putExtra(CreationActivity.FILTER_ID, internalPokemon.getExternalId());
-        intent.putExtra(CreationActivity.EXISTANT_ID, internalPokemon.getInternalId());
+        intent.putExtra(CreationActivity.EXISTENT_ID, internalPokemon.getInternalId());
         startActivityForResult(intent, CreationActivity.REQUEST_EDIT_STORED);
     }
 
@@ -366,16 +366,16 @@ public class StoredPokemonFragment extends Fragment implements AssistantContract
 
             ViewHolder(View itemView) {
                 super(itemView);
-                this.viewIcon = (ImageView) itemView.findViewById(R.id.stored_icon);
-                viewIVs[0] = (ImageView) itemView.findViewById(R.id.stored_iv_hp);
-                viewIVs[1] = (ImageView) itemView.findViewById(R.id.stored_iv_atk);
-                viewIVs[2] = (ImageView) itemView.findViewById(R.id.stored_iv_def);
-                viewIVs[3] = (ImageView) itemView.findViewById(R.id.stored_iv_satk);
-                viewIVs[4] = (ImageView) itemView.findViewById(R.id.stored_iv_sdef);
-                viewIVs[5] = (ImageView) itemView.findViewById(R.id.stored_iv_spd);
-                viewGender = (ImageView) itemView.findViewById(R.id.stored_gender);
-                abilityIndicator = (TextView) itemView.findViewById(R.id.stored_ability_indicator);
-                natureIndicator = (TextView) itemView.findViewById(R.id.stored_nature_indicator);
+                this.viewIcon = itemView.findViewById(R.id.stored_icon);
+                viewIVs[0] = itemView.findViewById(R.id.stored_iv_hp);
+                viewIVs[1] = itemView.findViewById(R.id.stored_iv_atk);
+                viewIVs[2] = itemView.findViewById(R.id.stored_iv_def);
+                viewIVs[3] = itemView.findViewById(R.id.stored_iv_satk);
+                viewIVs[4] = itemView.findViewById(R.id.stored_iv_sdef);
+                viewIVs[5] = itemView.findViewById(R.id.stored_iv_spd);
+                viewGender = itemView.findViewById(R.id.stored_gender);
+                abilityIndicator = itemView.findViewById(R.id.stored_ability_indicator);
+                natureIndicator = itemView.findViewById(R.id.stored_nature_indicator);
 
                 itemView.setOnClickListener(this);
                 itemView.setOnLongClickListener(this);

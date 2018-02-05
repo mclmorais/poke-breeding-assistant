@@ -21,7 +21,7 @@ class CreationActivity : AppCompatActivity(){
 
     private var creationFragment: CreationFragment? = null
 
-    fun initTransactionType() {
+    private fun initTransactionType() {
         val transactionType = intent.extras!!.getInt(TYPE_ID)
 
         if (transactionType != 0)
@@ -31,7 +31,7 @@ class CreationActivity : AppCompatActivity(){
         if (filterId != 0)
             selectionPresenter.pokemonFilterId = filterId
 
-        val existentId = intent.extras!!.getString(EXISTANT_ID)
+        val existentId = intent.extras!!.getString(EXISTENT_ID)
 
         if (existentId != null)
             creationPresenter.internalPokemonId = (existentId)
@@ -72,15 +72,12 @@ class CreationActivity : AppCompatActivity(){
 
     companion object {
         const val FILTER_ID = "filter_id"
-        const val EXISTANT_ID = "existant_id"
+        const val EXISTENT_ID = "existent_id"
         const val TYPE_ID = "type_id"
 
         const val GOAL = 1
         const val STORED = 2
 
-        const val TYPE_KEY = "type_key"
-        const val TYPE_EDIT = "type_edit"
-        const val REQUEST_CREATE_GOAL = 1
         const val REQUEST_CREATE_STORED = 2
         const val REQUEST_EDIT_GOAL = 3
         const val REQUEST_EDIT_STORED = 4

@@ -14,10 +14,10 @@ import javax.inject.Inject
 /**
  * Created by Marcelo on 17/01/2018.
  */
-class CreationPresenter @Inject constructor(val internalRepository: InternalRepository,
-                                            val externalRepository: ExternalRepository,
-                                            val cachedPokemonIcons: CachedPokemonIcons,
-                                            val statsCalculation: StatsCalculation) : CreationContract.Presenter {
+class CreationPresenter @Inject constructor(private val internalRepository: InternalRepository,
+                                            private val externalRepository: ExternalRepository,
+                                            private val cachedPokemonIcons: CachedPokemonIcons,
+                                            private val statsCalculation: StatsCalculation) : CreationContract.Presenter {
 
     var transactionType = -1
 
@@ -94,14 +94,13 @@ class CreationPresenter @Inject constructor(val internalRepository: InternalRepo
 
     private fun buildFromCurrentViewData(internalPokemonId: String?): InternalPokemon {
 
-        val createdPokemon: InternalPokemon
-
-        if (internalPokemonId == null)
-            createdPokemon = InternalPokemon(
-                currentSelectionId, Date().time,
-                UUID.randomUUID().toString())
-        else
-            createdPokemon = getExistentPokemon(internalPokemonId)
+        val createdPokemon: InternalPokemon =
+            if (internalPokemonId == null)
+                InternalPokemon(
+                    currentSelectionId, Date().time,
+                    UUID.randomUUID().toString())
+            else
+                getExistentPokemon(internalPokemonId)
 
 
         createdPokemon.externalId = currentSelectionId
@@ -118,10 +117,10 @@ class CreationPresenter @Inject constructor(val internalRepository: InternalRepo
 
     private fun getExistentPokemon(id: String): InternalPokemon {
 
-        if (transactionType == CreationActivity.GOAL)
-            return internalRepository.currentGoal!!
+        return if (transactionType == CreationActivity.GOAL)
+            internalRepository.currentGoal!!
         else
-            return internalRepository.getStoredPokemon(id)!!
+            internalRepository.getStoredPokemon(id)!!
     }
 
     override fun finishCreation() {

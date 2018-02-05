@@ -128,7 +128,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
     override fun showEditGoal() {
         val intent = Intent(context, CreationActivity::class.java)
         intent.putExtra(CreationActivity.TYPE_ID, CreationActivity.GOAL)
-        intent.putExtra(CreationActivity.EXISTANT_ID, presenter.currentGoal.internalId)
+        intent.putExtra(CreationActivity.EXISTENT_ID, presenter.currentGoal.internalId)
         startActivityForResult(intent, CreationActivity.REQUEST_EDIT_GOAL)
     }
 

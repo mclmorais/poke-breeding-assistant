@@ -1,8 +1,5 @@
 package marcelo.breguenait.breedingassistant.screens.creation.injection
 
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-
 import javax.inject.Scope
 
 /**

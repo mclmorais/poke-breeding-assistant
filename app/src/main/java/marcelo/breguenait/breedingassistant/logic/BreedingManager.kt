@@ -165,10 +165,10 @@ class BreedingManager @Inject constructor(private val externalRepository: Extern
         const val DIRECT_NO_HIDDEN_ABILITY = 3
         const val DIRECT_IVS_TOO_LOW = 4
 
-        const internal val CONSIDER_STRICT_NATURE = 1
-        const internal val CONSIDER_ABILITY = 1 shl 1
-        const internal val CONSIDER_GENDER = 1 shl 2
-        const internal val CONSIDER_STRICT_IVS = 1 shl 3
+        internal const val CONSIDER_STRICT_NATURE = 1
+        internal const val CONSIDER_ABILITY = 1 shl 1
+        internal const val CONSIDER_GENDER = 1 shl 2
+        internal const val CONSIDER_STRICT_IVS = 1 shl 3
     }
 
 }

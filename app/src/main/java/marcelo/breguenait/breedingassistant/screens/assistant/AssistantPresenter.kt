@@ -101,11 +101,6 @@ constructor(private val internalRepository: InternalRepository,
         object : AsyncTask<Int, Int, Int>() {
 
 
-            override fun onPreExecute() {
-                super.onPreExecute()
-
-            }
-
             override fun doInBackground(vararg params: Int?): Int? {
 
                 assistantAi.calculateBestMatches(internalRepository.currentGoal ?: return 0)
@@ -124,7 +119,7 @@ constructor(private val internalRepository: InternalRepository,
     }
 
     override fun getNatureName(natureId: Int): String {
-        return externalRepository.getNature(natureId)!!.getName(9)
+        return externalRepository.getNature(natureId).getName(9)
     }
 
     override fun getAbilityName(pokemonId: Int, abilitySlot: Int): String? {

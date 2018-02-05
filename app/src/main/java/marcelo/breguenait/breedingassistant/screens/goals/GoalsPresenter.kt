@@ -10,9 +10,9 @@ import javax.inject.Inject
 
 
 class GoalsPresenter @Inject
-internal constructor(val internalRepository: InternalRepository,
-                     val externalRepository: ExternalRepository,
-                     val cachedIcons: CachedPokemonIcons) : GoalsContract.Presenter {
+internal constructor(private val internalRepository: InternalRepository,
+                     private val externalRepository: ExternalRepository,
+                     private val cachedIcons: CachedPokemonIcons) : GoalsContract.Presenter {
 
     private lateinit var goalsView: GoalsContract.View
 

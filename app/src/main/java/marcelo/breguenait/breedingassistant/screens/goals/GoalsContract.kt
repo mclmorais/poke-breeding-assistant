@@ -8,13 +8,13 @@ interface GoalsContract {
 
     interface View {
 
-        fun showCreateGoal()
+        fun showCreationActivity()
 
-        fun showAssistant(animate: Boolean)
+        fun showAssistantActivity(animate: Boolean)
 
-        fun updateGoals()
+        fun updateGoalsList()
 
-        fun showHint(show: Boolean)
+        fun showBackgroundHint(show: Boolean)
 
         fun showUndoAction()
 

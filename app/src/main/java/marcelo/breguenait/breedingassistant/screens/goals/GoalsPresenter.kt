@@ -27,13 +27,12 @@ internal constructor(val internalRepository: InternalRepository,
 
     override fun processGoalSelection(selectedPokemon: InternalPokemon) {
         internalRepository.setCurrentGoalPokemon(selectedPokemon.internalId)
-        goalsView.showAssistant(true)
+        goalsView.showAssistantActivity(true)
     }
 
     override fun addNewGoal() {
-        goalsView.showCreateGoal()
+        goalsView.showCreationActivity()
     }
-
 
     override fun removeGoals(goalsToBeRemoved: List<InternalPokemon>) {
 
@@ -41,11 +40,11 @@ internal constructor(val internalRepository: InternalRepository,
 
         internalRepository.removeGoalPokemons(goalsToBeRemoved)
 
-        goalsView.updateGoals()
+        goalsView.updateGoalsList()
 
         goalsView.showUndoAction()
 
-        goalsView.showHint(goals.isEmpty())
+        goalsView.showBackgroundHint(goals.isEmpty())
 
     }
 
@@ -53,9 +52,9 @@ internal constructor(val internalRepository: InternalRepository,
         temporaryRestorableGoals.forEach { goal ->
             internalRepository.addInternalPokemon(goal, InternalRepository.INTERNAL_GOAL)
         }
-        goalsView.updateGoals()
+        goalsView.updateGoalsList()
         temporaryRestorableGoals.clear()
-        goalsView.showHint(goals.isEmpty())
+        goalsView.showBackgroundHint(goals.isEmpty())
     }
 
     override fun getExternalPokemon(externalId: Int): ExternalPokemon?
@@ -72,5 +71,4 @@ internal constructor(val internalRepository: InternalRepository,
     override fun getPokemonIconId(id: Int): Int {
         return cachedIcons.getIconId(id)
     }
-
 }

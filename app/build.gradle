@@ -34,6 +34,8 @@ dependencies {
 
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 
+    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+
     implementation 'com.google.dagger:dagger:2.14.1'
     implementation 'com.android.support:support-v4:27.0.2'
     kapt 'com.google.dagger:dagger-compiler:2.14.1'

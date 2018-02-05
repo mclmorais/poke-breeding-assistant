@@ -23,6 +23,10 @@
         <activity
             android:name=".screens.creation.CreationActivity"
             android:theme="@style/AssistantThemeLight" />
+        <activity
+            android:name=".screens.assistant.AssistantActivity"
+            android:label="@string/title_activity_assistant"
+            android:theme="@style/AssistantThemeLight" />
 
     </application>
 

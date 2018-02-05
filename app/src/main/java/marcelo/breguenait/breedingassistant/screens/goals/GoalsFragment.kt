@@ -1,6 +1,7 @@
 package marcelo.breguenait.breedingassistant.screens.goals
 
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -29,11 +30,14 @@ import kotlinx.android.synthetic.main.goals_fragment.view.*
 import kotlinx.android.synthetic.main.goals_item.view.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
+import marcelo.breguenait.breedingassistant.screens.assistant.AssistantActivity
 import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
+import android.util.Pair
 import java.util.*
 
 
 class GoalsFragment : Fragment(), GoalsContract.View {
+
 
     var selectionMode: ActionMode? = null
         private set
@@ -127,43 +131,47 @@ class GoalsFragment : Fragment(), GoalsContract.View {
         super.onResume()
 
         goalsAdapter.updateItems(presenter.goals)
-        showHint(goalsAdapter.goalList.isEmpty())
+        showBackgroundHint(goalsAdapter.goalList.isEmpty())
 
     }
 
-    override fun showCreateGoal() {
+    override fun showCreationActivity() {
         val intent = Intent(context, CreationActivity::class.java)
         intent.putExtra(CreationActivity.TYPE_ID, CreationActivity.GOAL)
         startActivity(intent)
     }
 
-    override fun showAssistant(animate: Boolean) {
+    override fun showAssistantActivity(animate: Boolean) {
 
-        TODO("Implement Assistant")
+        val intent = Intent(context, AssistantActivity::class.java)
 
-//        val intent = Intent(context, AssistantActivity::class.java)
-//
-//        if (animate) {
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-//
-//                val transitionActivityOptions: ActivityOptions =
-//                    ActivityOptions.makeSceneTransitionAnimation(
-//                        activity,
-//                        Pair.create<View, String>(goalsAdapter.clickedPokemonView, "profile"),
-//                        Pair.create<View, String>(goalsAdapter.clickedBackgroundView, "pokemon_background_transition"))
-//                startActivity(intent, transitionActivityOptions.toBundle())
-//            } else
-//                startActivity(intent)
-//        } else
-//            startActivity(intent)
+        if (animate) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+
+                val transitionActivityOptions: ActivityOptions =
+                    ActivityOptions.makeSceneTransitionAnimation(
+                        activity,
+                        Pair.create<View, String>(goalsAdapter.clickedPokemonView, "profile"),
+                        Pair.create<View, String>(goalsAdapter.clickedBackgroundView, "pokemon_background_transition"))
+                startActivity(intent, transitionActivityOptions.toBundle())
+            } else
+                startActivity(intent)
+        } else
+            startActivity(intent)
     }
 
-    override fun updateGoals() {
+    override fun updateGoalsList() {
         goalsAdapter.updateItems(presenter.goals)
         goals_list.smoothScrollToPosition(0)
     }
 
-    override fun showHint(show: Boolean) {
+    fun fastUpdateGoals() {
+        //TODO: UNGARBAGIZE
+        goalsAdapter.notifyDataSetChanged()
+        showBackgroundHint(goalsAdapter.goalList.isEmpty())
+    }
+
+    override fun showBackgroundHint(show: Boolean) {
 
         if (show) {
             goals_list.visibility = View.GONE
@@ -195,16 +203,18 @@ class GoalsFragment : Fragment(), GoalsContract.View {
     }
 
     override fun showUndoAction() {
-        val snackbar = Snackbar
-            .make((activity as GoalsActivity).finish_fab, R.string.snack_goals_removed, 10000).setAction(R.string.label_undo) {
-            presenter.restoreRemovedGoals()
+
+        val snackbar = activity?.add_goal_fab?.let {
+            Snackbar.make(it, R.string.snack_goals_removed, 10000).setAction(R.string.label_undo) {
+                presenter.restoreRemovedGoals()
+            }
         }
 
-        val text = snackbar.view.findViewById(android.support.design.R.id.snackbar_text) as TextView
+        val text = snackbar?.view?.findViewById<TextView>(android.support.design.R.id.snackbar_text)
 
-        text.gravity = Gravity.CENTER_HORIZONTAL
+        text?.gravity = Gravity.CENTER_HORIZONTAL
 
-        snackbar.show()
+        snackbar?.show()
     }
 
     fun startSelectionMode() {
@@ -223,10 +233,11 @@ class GoalsFragment : Fragment(), GoalsContract.View {
     @IntDef(GoalsFragment.SORT_DATE.toLong(), GoalsFragment.SORT_IVS.toLong())
     internal annotation class SortFlag
 
-    internal inner class GoalsAdapter(val goalList: ArrayList<InternalPokemon>) : RecyclerView.Adapter<GoalsAdapter.ViewHolder>() {
 
-        private var clickedPokemonView: View? = null
-        private var clickedBackgroundView: View? = null
+    private inner class GoalsAdapter(val goalList: ArrayList<InternalPokemon>) : RecyclerView.Adapter<GoalsAdapter.ViewHolder>() {
+
+        var clickedPokemonView: View? = null
+        var clickedBackgroundView: View? = null
 
         fun itemAt(position: Int): InternalPokemon = goalList[position]
 
@@ -252,6 +263,7 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
             /*Sorts the newly received list in the same way that the current list is sorted*/
             sortList(newGoals, sortFlag)
+
 
             /*Checks the differences between the current list and the newly received list*/
             val diffCallback = GoalDiffCallback(goalList, newGoals)

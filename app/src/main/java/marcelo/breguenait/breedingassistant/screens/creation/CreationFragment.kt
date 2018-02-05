@@ -359,7 +359,7 @@ class CreationFragment : Fragment(), CreationContract.View,
     }
 
     override fun onSelectorDismissed() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (presenter.currentSelectionId == -1) activity?.finish()
     }
 
     override fun showSelectPokemonFragment() {

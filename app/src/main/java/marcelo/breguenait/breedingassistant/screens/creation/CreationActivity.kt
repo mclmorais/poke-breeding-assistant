@@ -71,21 +71,21 @@ class CreationActivity : AppCompatActivity(){
     }
 
     companion object {
-        val FILTER_ID = "filter_id"
-        val EXISTANT_ID = "existant_id"
-        val TYPE_ID = "type_id"
+        const val FILTER_ID = "filter_id"
+        const val EXISTANT_ID = "existant_id"
+        const val TYPE_ID = "type_id"
 
-        val GOAL = 1
-        val STORED = 2
+        const val GOAL = 1
+        const val STORED = 2
 
-        val TYPE_KEY = "type_key"
-        val TYPE_EDIT = "type_edit"
-        val REQUEST_CREATE_GOAL = 1
-        val REQUEST_CREATE_STORED = 2
-        val REQUEST_EDIT_GOAL = 3
-        val REQUEST_EDIT_STORED = 4
-        val SUCCESSFUL = 1001
-        val UNSUCCESSFUL = 1002
+        const val TYPE_KEY = "type_key"
+        const val TYPE_EDIT = "type_edit"
+        const val REQUEST_CREATE_GOAL = 1
+        const val REQUEST_CREATE_STORED = 2
+        const val REQUEST_EDIT_GOAL = 3
+        const val REQUEST_EDIT_STORED = 4
+        const val SUCCESSFUL = 1001
+        const val UNSUCCESSFUL = 1002
     }
 
 

@@ -1,5 +1,6 @@
 package marcelo.breguenait.breedingassistant.screens.selection
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.util.DiffUtil
@@ -107,10 +108,15 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
         return root
     }
 
-
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        super.onDismiss(dialog)
+        val listener = targetFragment as PokemonSelectionListener
+        listener.onSelectorDismissed()
     }
 
     private inner class SelectablePokemonsAdapter(selectablePokemonList: List<ExternalPokemon>)

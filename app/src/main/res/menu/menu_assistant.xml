@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".screens.assistant.AssistantActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_edit_goal"
+        android:icon="@drawable/ic_edit_white_24dp"
+        android:title="@string/menu_edit_goal"
+        app:showAsAction="ifRoom"/>
+
+</menu>

@@ -77,6 +77,26 @@ class ExternalRepository(dataSource: ExternalPokemonDataSource) {
         return abilities[pokemons[pokemonId]?.getAbilityId(abilitySlot)]
     }
 
+    fun getGenderRestriction(pokemonId: Int): Int? { //TODO: remove from here so that null checks may be done by the caller
+        return pokemons[pokemonId]?.genderRestriction
+    }
 
+    fun getNumberOfAbilities(pokemonId: Int): Int { //TODO: remove from here so that null checks may be done by the caller
+        return if (pokemons[pokemonId]?.abilities?.get(1) == 0) 1 else 2
+    }
+
+    fun getBaseFormId(pokemonId: Int): Int { //TODO: remove from here so that null checks may be done by the caller
+
+        var currentPokemon = pokemons[pokemonId]
+
+        var tries = 0
+        while (currentPokemon?.previousEvolution != 0) {
+            tries++
+            currentPokemon = pokemons[currentPokemon?.previousEvolution]
+            if (tries > 10) break
+        }
+
+        return currentPokemon?.id ?: 151 //TODO: make better
+    }
 
 }

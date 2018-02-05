@@ -1,5 +1,6 @@
 package marcelo.breguenait.breedingassistant.screens.goals
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -45,5 +46,10 @@ class GoalsActivity : AppCompatActivity() {
                 .build()
                 .inject(this)
 
+    }
+
+    override fun onActivityReenter(resultCode: Int, data: Intent) {
+        super.onActivityReenter(resultCode, data)
+        goalsFragment?.fastUpdateGoals()
     }
 }

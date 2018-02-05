@@ -1,0 +1,153 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="72dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/cardview_light_background">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <ImageView
+            android:id="@+id/stored_icon"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/pkmn_link_310" />
+
+        <TextView
+            android:id="@+id/stored_ability_indicator"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="57dp"
+            android:background="@drawable/shape_leftcircle_color_primary"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:paddingLeft="2dp"
+            android:text="@string/letter_ability"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry,SmallSp" />
+
+        <TextView
+            android:id="@+id/stored_nature_indicator"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:background="@drawable/shape_rightcircle_color_primary"
+            android:gravity="center"
+            android:paddingRight="2dp"
+            android:text="@string/letter_nature"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/stored_ability_indicator"
+            app:layout_constraintLeft_toRightOf="@+id/stored_ability_indicator"
+            app:layout_constraintTop_toTopOf="@+id/stored_ability_indicator"
+            tools:ignore="RtlSymmetry,SmallSp" />
+
+        <ImageView
+            android:id="@+id/stored_gender"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="57dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/stored_icon"
+            app:srcCompat="@drawable/shape_circle_color_primary"
+            tools:tint="@color/female" />
+
+        <ImageView
+            android:id="@+id/stored_iv_hp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/stored_iv_atk"
+            app:layout_constraintTop_toBottomOf="@+id/stored_ability_indicator"
+            app:srcCompat="@drawable/ic_iv_circle"
+            tools:tint="@color/iv_disabled_light" />
+
+        <ImageView
+            android:id="@+id/stored_iv_atk"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintLeft_toRightOf="@+id/stored_iv_hp"
+            app:layout_constraintRight_toLeftOf="@+id/stored_iv_def"
+            app:layout_constraintTop_toTopOf="@+id/stored_iv_hp"
+            app:srcCompat="@drawable/ic_iv_triangle"
+            tools:tint="@color/iv_enabled_light" />
+
+        <ImageView
+            android:id="@+id/stored_iv_def"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintLeft_toRightOf="@+id/stored_iv_atk"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/stored_iv_hp"
+            app:srcCompat="@drawable/ic_iv_square"
+            tools:tint="@color/iv_enabled_light" />
+
+        <ImageView
+            android:id="@+id/stored_iv_satk"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/stored_iv_sdef"
+            app:layout_constraintTop_toBottomOf="@+id/stored_iv_hp"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_iv_heart" />
+
+        <ImageView
+            android:id="@+id/stored_iv_sdef"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintLeft_toRightOf="@+id/stored_iv_satk"
+            app:layout_constraintRight_toLeftOf="@+id/stored_iv_spd"
+            app:layout_constraintTop_toTopOf="@+id/stored_iv_satk"
+            app:srcCompat="@drawable/ic_iv_star" />
+
+        <ImageView
+            android:id="@+id/stored_iv_spd"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintLeft_toRightOf="@+id/stored_iv_sdef"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/stored_iv_satk"
+            app:srcCompat="@drawable/ic_iv_diamond"
+            tools:tint="@color/iv_enabled_light" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

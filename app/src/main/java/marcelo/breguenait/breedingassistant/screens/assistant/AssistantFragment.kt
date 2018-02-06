@@ -121,14 +121,14 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
     override fun showCreatePokemon() {
         val intent = Intent(context, CreationActivity::class.java)
         intent.putExtra(CreationActivity.TYPE_ID, CreationActivity.STORED)
-        intent.putExtra(CreationActivity.FILTER_ID, presenter.currentGoal.externalId)
+        intent.putExtra(CreationActivity.FILTER_ID, presenter.currentGoal?.externalId)
         startActivityForResult(intent, CreationActivity.REQUEST_CREATE_STORED)
     }
 
     override fun showEditGoal() {
         val intent = Intent(context, CreationActivity::class.java)
         intent.putExtra(CreationActivity.TYPE_ID, CreationActivity.GOAL)
-        intent.putExtra(CreationActivity.EXISTENT_ID, presenter.currentGoal.internalId)
+        intent.putExtra(CreationActivity.EXISTENT_ID, presenter.currentGoal?.internalId)
         startActivityForResult(intent, CreationActivity.REQUEST_EDIT_GOAL)
     }
 

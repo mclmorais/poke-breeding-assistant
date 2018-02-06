@@ -150,10 +150,7 @@ class BreedingManager @Inject constructor(private val externalRepository: Extern
 
     }
 
-    @IntDef(flag = true, value = *longArrayOf(CONSIDER_STRICT_IVS.toLong(),
-                                              CONSIDER_STRICT_NATURE.toLong(),
-                                              CONSIDER_ABILITY.toLong(),
-                                              CONSIDER_GENDER.toLong()))
+    @IntDef(flag = true, value = [(CONSIDER_STRICT_IVS.toLong()), (CONSIDER_STRICT_NATURE.toLong()), (CONSIDER_ABILITY.toLong()), (CONSIDER_GENDER.toLong())])
     internal annotation class ChanceFlags
 
     companion object {

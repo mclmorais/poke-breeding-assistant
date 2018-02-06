@@ -105,13 +105,12 @@ constructor(private val internalRepository: InternalRepository,
         return externalRepository.getNature(natureId).getName(9)
     }
 
-    override fun getAbilityName(pokemonId: Int, abilitySlot: Int): String? {
-        return externalRepository.getAbility(pokemonId, abilitySlot)?.name
+    override fun getAbilityName(pokemonId: Int, abilitySlot: Int): String {
+        return externalRepository.getAbility(pokemonId, abilitySlot)?.name ?: ""
     }
 
-    override fun getCurrentGoal(): InternalPokemon? {
-        return internalRepository.currentGoal
-    }
+    override val currentGoal = internalRepository.currentGoal
+
 
     override fun removeStoredPokemons(stored: List<InternalPokemon>) {
         internalRepository.removeStoredPokemons(stored)

@@ -34,7 +34,7 @@ class AssistantAi @Inject constructor(private val breedingManager: BreedingManag
                     direct[0].couple.related.internalId == improvement.couple.related.internalId &&
                             direct[0].couple.compatible?.internalId == improvement.couple.compatible?.internalId
                 }
-            }
+
 
 
             improvementCombinations = improvements
@@ -48,7 +48,7 @@ class AssistantAi @Inject constructor(private val breedingManager: BreedingManag
                     .filterNot {
                         java.lang.Double.compare(it.chance, 0.0) <= 0
                     }
-
+            }
 
 
 

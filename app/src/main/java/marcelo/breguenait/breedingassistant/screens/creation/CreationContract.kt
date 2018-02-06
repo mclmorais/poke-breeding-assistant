@@ -22,11 +22,11 @@ interface CreationContract {
 
         fun updateSelectedPokemonAbilities(abilities: Array<String?>)
 
-//        fun updateSelectedPokemonChosenAbilitySlot(slot: Int)
-//
-//        fun updateSelectedPokemonChosenNature(natureId: Int)
-//
-//        fun updateSelectedPokemonChosenIVs(IVs: IntArray)
+        fun updateSelectedPokemonChosenAbilitySlot(slot: Int)
+
+        fun updateSelectedPokemonChosenNature(natureId: Int)
+
+        fun updateSelectedPokemonChosenIVs(IVs: IntArray)
 
         fun updateGenderRestrictions(restriction: Int)
 
@@ -48,7 +48,7 @@ interface CreationContract {
 
     interface Presenter {
 
-
+        fun start()
 
         val currentSelectionId: Int
 

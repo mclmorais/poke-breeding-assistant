@@ -35,6 +35,20 @@ class CreationPresenter @Inject constructor(private val internalRepository: Inte
     override val natures: ArrayList<ExternalNature>
         get() = ArrayList(externalRepository.natures.values)
 
+
+    override fun start() {
+
+        if (internalPokemonId == null)
+            selectPokemon()
+        else {
+            val safeId = internalPokemonId ?: return
+            val existentPokemon = getExistentPokemon(safeId)
+            updateSelection(existentPokemon.externalId)
+            populateViewWithInternalData(existentPokemon)
+            populateViewWithSelectedData()
+        }
+    }
+
     override fun selectPokemon() {
         createPokemonView.showSelectPokemonFragment()
     }
@@ -71,6 +85,16 @@ class CreationPresenter @Inject constructor(private val internalRepository: Inte
 
     }
 
+    private fun populateViewWithInternalData(existentPokemon: InternalPokemon) {
+
+        createPokemonView.updateSelectedPokemonChosenIVs(existentPokemon.IVs)
+        createPokemonView.updateSelectedPokemonChosenAbilitySlot(existentPokemon.abilitySlot)
+        createPokemonView.updateSelectedPokemonChosenNature(existentPokemon.natureId)
+        createPokemonView.updateSelectedPokemonChosenGender(existentPokemon.gender)
+        createPokemonView.updateGenderRestrictions(externalRepository.getExternalPokemon(existentPokemon.externalId)?.genderRestriction?: return) //todo: RECOVER
+
+        currentSelectionId = existentPokemon.externalId
+    }
     override fun setView(view: CreationContract.View) {
         createPokemonView = view
     }

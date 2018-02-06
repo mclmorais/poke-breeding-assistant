@@ -14,10 +14,10 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.*
+import androidx.view.doOnLayout
 import kotlinx.android.synthetic.main.creation_activity.*
 import kotlinx.android.synthetic.main.creation_fragment.*
 import kotlinx.android.synthetic.main.creation_fragment.view.*
@@ -53,6 +53,7 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     private var isFemale = false
 
+    @Suppress("PrivatePropertyName")
     private var IVs = arrayOfNulls<CheckBox>(6)
 
     private var statBars = arrayOfNulls<ImageView>(6)
@@ -60,14 +61,6 @@ class CreationFragment : Fragment(), CreationContract.View,
     private var statTexts = arrayOfNulls<TextView>(6)
 
     private var statLabels = arrayOfNulls<TextView>(6)
-
-    private var globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-        initializedViews++
-        if (initializedViews >= 6) {
-            animateBars()
-            initializedViews = 0
-        }
-    }
 
     override val selectedIVs: IntArray
         get() {
@@ -121,14 +114,6 @@ class CreationFragment : Fragment(), CreationContract.View,
         statLabels[3] = root.stat_bar_label_satk
         statLabels[4] = root.stat_bar_label_sdef
         statLabels[5] = root.stat_bar_label_spd
-
-        globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-            initializedViews++
-            if (initializedViews >= 6) {
-                animateBars()
-                initializedViews = 0
-            }
-        }
     }
 
     private fun initNatures(root: View) {
@@ -248,7 +233,7 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     override fun onResume() {
         super.onResume()
-        presenter.selectPokemon()
+        presenter.start()
     }
 
     override fun updateSelectedPokemonName(name: String) {
@@ -262,8 +247,15 @@ class CreationFragment : Fragment(), CreationContract.View,
     }
 
     override fun updateSelectedPokemonStats() {
+
         for (bar in statBars)
-            bar?.viewTreeObserver?.addOnGlobalLayoutListener(globalLayoutListener)
+            bar?.doOnLayout {
+                initializedViews++
+                if (initializedViews >= 6) {
+                    animateBars()
+                    initializedViews = 0
+                }
+            }
     }
 
     override fun updateSelectedPokemonStat(statId: Int) {
@@ -359,6 +351,49 @@ class CreationFragment : Fragment(), CreationContract.View,
         }
     }
 
+    override fun updateSelectedPokemonChosenAbilitySlot(slot: Int) {
+        //TODO: check if not invalid
+        when (slot) {
+            0 -> {
+                radio_1st_ability.isChecked = true
+                radio_2nd_ability.isChecked = false
+                radio_hidden_ability.isChecked = false
+            }
+            1 -> {
+                radio_1st_ability.isChecked = false
+                radio_2nd_ability.isChecked = true
+                radio_hidden_ability.isChecked = false
+            }
+            2 -> {
+                radio_1st_ability.isChecked = false
+                radio_2nd_ability.isChecked = false
+                radio_hidden_ability.isChecked = true
+            }
+        }
+    }
+
+    override fun updateSelectedPokemonChosenNature(natureId: Int) {
+
+        var index = 0
+
+        for (i in 0..spinner_nature.count - 1) {
+            val nature = spinner_nature.getItemAtPosition(i) as ExternalNature
+            if (nature.id == natureId) {
+                index = i
+                break
+            }
+        }
+
+        spinner_nature.setSelection(index, false)
+    }
+
+    override fun updateSelectedPokemonChosenIVs(IVs: IntArray) {
+        for (i in 0..5) {
+            this.IVs[i]?.isChecked = IVs[i] == 1
+        }
+    }
+
+
     override fun onPokemonSelected(id: Int) {
         presenter.updateSelection(id)
     }
@@ -383,9 +418,6 @@ class CreationFragment : Fragment(), CreationContract.View,
             nextStats[i] = presenter.getNextStat(i)
         }
 
-
-        for (i in 0..5)
-            statBars[i]?.viewTreeObserver?.removeOnGlobalLayoutListener(globalLayoutListener)
 
         val steps = 200
 
@@ -434,9 +466,7 @@ class CreationFragment : Fragment(), CreationContract.View,
 
         statTexts[statId]?.text = context?.getString(R.string.creation_stat_value, lastStatValues[statId]) ?: ""
 
-        val statMaxValue: Int
-
-        statMaxValue = if (statId == Stats.HP)
+        val statMaxValue: Int = if (statId == Stats.HP)
             resources.getInteger(R.integer.max_hp_value)
         else
             resources.getInteger(R.integer.max_stat_value)

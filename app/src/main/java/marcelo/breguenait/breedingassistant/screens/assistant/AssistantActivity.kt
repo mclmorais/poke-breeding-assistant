@@ -7,20 +7,16 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
-import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-
-import java.util.ArrayList
-
-import javax.inject.Inject
-
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
 import marcelo.breguenait.breedingassistant.screens.assistant.injection.DaggerAssistantComponent
+import java.util.*
+import javax.inject.Inject
 
 class AssistantActivity : AppCompatActivity() {
 

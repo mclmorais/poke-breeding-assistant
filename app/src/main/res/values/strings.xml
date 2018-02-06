@@ -4,7 +4,7 @@
     <string name="drawable_resource_name" translatable="false">drawable</string>
     <string name="goals_activity_label">Your Goals</string>
     <string name="cd_target_board">Target board.</string>
-    <string name="app_name">Breeding Assistant 18</string>
+    <string name="app_name">Breeding Assistant</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_create_pokemon" tools:ignore="UnusedResources">Create</string>
     <string name="placeholder_name" translatable="false">Name Placeholder</string>

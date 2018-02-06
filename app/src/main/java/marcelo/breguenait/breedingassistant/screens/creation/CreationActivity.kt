@@ -78,6 +78,7 @@ class CreationActivity : AppCompatActivity(){
         const val GOAL = 1
         const val STORED = 2
 
+        const val REQUEST_CREATE_GOAL = 1
         const val REQUEST_CREATE_STORED = 2
         const val REQUEST_EDIT_GOAL = 3
         const val REQUEST_EDIT_STORED = 4

@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -227,6 +228,25 @@ class CreationFragment : Fragment(), CreationContract.View,
         initAbilities(root)
         initGenderFab(activity?.gender_fab)
         initFinishFab(activity?.finish_fab)
+
+        val actionBar = (activity as AppCompatActivity).supportActionBar
+        if (actionBar != null) {
+            try {
+                when ((presenter as CreationPresenter).transactionType) {
+                    CreationActivity.REQUEST_CREATE_GOAL ->
+                        actionBar.setTitle(R.string.title_create_a_goal);
+
+                    CreationActivity.REQUEST_CREATE_STORED ->
+                        actionBar.setTitle(R.string.title_store_a_pokemon);
+                    CreationActivity.REQUEST_EDIT_GOAL ->
+                        actionBar.setTitle(R.string.title_edit_goal);
+                    CreationActivity.REQUEST_EDIT_STORED ->
+                        actionBar.setTitle(R.string.title_edit_stored);
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
 
         return root
     }

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import kotlinx.android.synthetic.main.assistant_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
 import marcelo.breguenait.breedingassistant.screens.assistant.injection.DaggerAssistantComponent
@@ -36,13 +37,9 @@ class AssistantActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.assistant_activity)
 
-
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        toolbar.title = ""
         setSupportActionBar(toolbar)
-        val actionBar = supportActionBar
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-
+        supportActionBar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         assistantFragment = AssistantFragment()
         storedPokemonFragment = StoredPokemonFragment()

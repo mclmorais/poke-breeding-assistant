@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import com.github.ybq.android.spinkit.style.DoubleBounce
@@ -24,6 +25,10 @@ import marcelo.breguenait.breedingassistant.screens.assistant.adapter.AssistantA
 import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
 import marcelo.breguenait.breedingassistant.utils.Genders
 import javax.inject.Inject
+import android.view.animation.AnimationUtils.loadLayoutAnimation
+import android.view.animation.LayoutAnimationController
+
+
 
 
 class AssistantFragment : Fragment(), AssistantContract.AssistantView {
@@ -150,6 +155,16 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
         assistantAdapter.notifyDataSetChanged()
 //        best_matches_list.visibility = View.GONE
 //        progress_bar.visibility = View.VISIBLE
+    }
+
+    override fun runLayoutAnimation() {
+        val recyclerView = best_matches_list
+        val context = recyclerView.context
+        val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+
+        recyclerView.layoutAnimation = controller
+        recyclerView.adapter.notifyDataSetChanged()
+        recyclerView.scheduleLayoutAnimation()
     }
 
     inner class AssistantAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

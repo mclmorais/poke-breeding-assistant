@@ -37,6 +37,7 @@ class AssistantAdapter2(val presenter: AssistantContract.Presenter) : RecyclerVi
 
         //TODO: Animate everything!
 
+
         items.remove(loadingItem)
 
         (delegateAdapters[AdapterConstants.HEADER] as HeaderDelegateAdapter).directFlags = flags
@@ -46,6 +47,8 @@ class AssistantAdapter2(val presenter: AssistantContract.Presenter) : RecyclerVi
 
         items.removeInCase { it is CombinationHolder }
         items.addAll(newDirectList)
+
+        notifyItemRangeChanged(0, items.size-1)
     }
 
     fun clear() {

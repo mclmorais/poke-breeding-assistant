@@ -30,6 +30,8 @@ interface AssistantContract {
 
         fun provideImprovementItems(improvements: List<CombinationHolder>)
 
+        fun runLayoutAnimation()
+
     }
 
     interface StorageView {

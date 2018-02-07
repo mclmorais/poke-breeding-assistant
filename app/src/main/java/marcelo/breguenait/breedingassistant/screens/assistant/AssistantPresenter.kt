@@ -136,6 +136,8 @@ constructor(private val internalRepository: InternalRepository,
                 assistantView.provideDirectItems(assistantAi.directCombinations, assistantAi.directFlag)
 
                 assistantView.provideImprovementItems(assistantAi.improvementCombinations)
+
+                assistantView.runLayoutAnimation()
             }
         }
     }

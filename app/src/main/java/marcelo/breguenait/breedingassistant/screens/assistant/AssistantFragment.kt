@@ -63,10 +63,6 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
         root.best_matches_list.layoutManager = linearLayoutManager
         root.best_matches_list.adapter = assistantAdapter
 
-        val loadingIcon = DoubleBounce()
-        loadingIcon.color = context?.let { ContextCompat.getColor(it, R.color.colorAccent) } ?: 0
-        root.progress_bar.indeterminateDrawable = loadingIcon
-
         return root
     }
 
@@ -136,8 +132,8 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
     }
 
     override fun provideDirectItems(chances: List<CombinationHolder>, flags: Int) {
-        progress_bar.visibility = View.GONE
-        best_matches_list.visibility = View.VISIBLE
+//        progress_bar.visibility = View.GONE
+//        best_matches_list.visibility = View.VISIBLE
 
         assistantAdapter.updateDirectItems(chances, flags)// TODO: REPLACE WITH NEW ADAPTER
 
@@ -151,8 +147,9 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
     override fun showLoading() {
         assistantAdapter.clear()
-        best_matches_list.visibility = View.GONE
-        progress_bar.visibility = View.VISIBLE
+        assistantAdapter.notifyDataSetChanged()
+//        best_matches_list.visibility = View.GONE
+//        progress_bar.visibility = View.VISIBLE
     }
 
     inner class AssistantAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

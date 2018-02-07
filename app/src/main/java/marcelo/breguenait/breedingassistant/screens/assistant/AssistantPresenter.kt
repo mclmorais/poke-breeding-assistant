@@ -80,10 +80,12 @@ constructor(private val internalRepository: InternalRepository,
 
     override fun storeNewPokemon() {
         assistantView.showCreatePokemon()
+        requestChancesUpdate()
     }
 
     override fun editGoal() {
         assistantView.showEditGoal()
+        requestChancesUpdate()
     }
 
     override fun getPokemonName(externalId: Int): String {
@@ -95,9 +97,7 @@ constructor(private val internalRepository: InternalRepository,
     }
 
     override fun requestChancesUpdate() {
-
         assistantView.showLoading()
-
         Calculations(assistantAi, internalRepository, assistantView).execute()
     }
 
@@ -124,6 +124,8 @@ constructor(private val internalRepository: InternalRepository,
             override fun doInBackground(vararg params: Int?): Int? {
 
                 assistantAi.calculateBestMatches(internalRepository.currentGoal ?: return 0)
+
+                Thread.sleep(500) //TODO: Switch to a more elegant solution to always delay at least 500ms before giving results
 
                 return 0
             }

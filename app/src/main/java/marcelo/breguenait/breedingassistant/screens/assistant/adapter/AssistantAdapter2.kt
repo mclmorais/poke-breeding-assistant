@@ -35,10 +35,13 @@ class AssistantAdapter2(val presenter: AssistantContract.Presenter) : RecyclerVi
 
     fun updateDirectItems(newDirectList: List<CombinationHolder>, flags: Int) {
 
+        //TODO: Animate everything!
+
         items.remove(loadingItem)
 
         (delegateAdapters[AdapterConstants.HEADER] as HeaderDelegateAdapter).directFlags = flags
-        items.add(headerItem)
+        if(!items.contains(headerItem))
+            items.add(headerItem)
 
 
         items.removeInCase { it is CombinationHolder }

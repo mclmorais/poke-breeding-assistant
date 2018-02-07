@@ -3,6 +3,7 @@ package marcelo.breguenait.breedingassistant.screens.assistant.adapter
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import android.widget.Adapter
 import marcelo.breguenait.breedingassistant.logic.CombinationHolder
 import marcelo.breguenait.breedingassistant.screens.assistant.AssistantContract
 
@@ -29,14 +30,12 @@ class AssistantAdapter2(val presenter: AssistantContract.Presenter) : RecyclerVi
         delegateAdapters.put(AdapterConstants.LOADING, LoadingDelegateAdapter())
         delegateAdapters.put(AdapterConstants.DIRECT, DirectDelegateAdapter(presenter))
         delegateAdapters.put(AdapterConstants.HEADER, HeaderDelegateAdapter())
+        delegateAdapters.put(AdapterConstants.IMPROVEMENT, ImprovementDelegateAdapter(presenter))
         items.add(headerItem)
         items.add(loadingItem)
     }
 
     fun updateDirectItems(newDirectList: List<CombinationHolder>, flags: Int) {
-
-        //TODO: Animate everything!
-
 
         items.remove(loadingItem)
 
@@ -49,6 +48,10 @@ class AssistantAdapter2(val presenter: AssistantContract.Presenter) : RecyclerVi
         items.addAll(newDirectList)
 
         notifyItemRangeChanged(0, items.size-1)
+    }
+
+    internal fun updateImprovementItems(newImprovementsList: List<CombinationHolder>) {
+        items.addAll(newImprovementsList)
     }
 
     fun clear() {
@@ -70,7 +73,3 @@ class AssistantAdapter2(val presenter: AssistantContract.Presenter) : RecyclerVi
 
 }
 
-fun <T> ArrayList<T>.removeInCase(condition: (T) -> Boolean) {
-
-    this.removeAll(this.filter(condition))
-}

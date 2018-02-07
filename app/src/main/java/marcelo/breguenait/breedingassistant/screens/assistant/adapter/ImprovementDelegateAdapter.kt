@@ -3,7 +3,6 @@ package marcelo.breguenait.breedingassistant.screens.assistant.adapter
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,49 +15,44 @@ import marcelo.breguenait.breedingassistant.utils.Genders
 /**
  * Created by Marcelo on 07/02/2018.
  */
-class DirectDelegateAdapter(val assistantPresenter: AssistantContract.Presenter) : ViewTypeDelegateAdapter {
-
-
-    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = DirectViewHolder(parent)
+class ImprovementDelegateAdapter(val assistantPresenter: AssistantContract.Presenter) : ViewTypeDelegateAdapter {
+    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = ImprovementViewHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
-        holder as DirectViewHolder
+        holder as ImprovementViewHolder
         holder.bind(item as CombinationHolder)
     }
 
-    inner class DirectViewHolder(parent: ViewGroup) :
-        RecyclerView.ViewHolder(parent.inflate(R.layout.assistant_item_direct)) {
-
-        private val related: ImageView = itemView.related_icon
-        private val compatible: ImageView = itemView.compatible_icon
+    inner class ImprovementViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.assistant_item_direct)) {
+        val related: ImageView = itemView.related_icon
+        val compatible: ImageView = itemView.compatible_icon
 
         private val relatedInfo: TextView = itemView.related_info
         private val compatibleInfo: TextView = itemView.compatible_info
 
-        private val totalChanceFraction: TextView = itemView.total_chance
-        private val totalChancePercentage: TextView = itemView.total_percentage
+        val totalChanceFraction: TextView = itemView.total_chance
+        //val totalChancePercentage: TextView = itemView.total_percentage
 
-        private val relatedIVs = arrayOf(itemView.related_iv_hp,
-            itemView.related_iv_atk,
-            itemView.related_iv_def,
-            itemView.related_iv_satk,
-            itemView.related_iv_sdef,
-            itemView.related_iv_spd)
+        val relatedIVs: Array<ImageView?> = arrayOfNulls(6)
+        val compatibleIVs: Array<ImageView?> = arrayOfNulls(6)
 
-        private val compatibleIVs = arrayOf(itemView.compatible_iv_hp,
-            itemView.compatible_iv_atk,
-            itemView.compatible_iv_def,
-            itemView.compatible_iv_satk,
-            itemView.compatible_iv_sdef,
-            itemView.compatible_iv_spd)
+        init {
+            relatedIVs[0] = itemView.related_iv_hp
+            relatedIVs[1] = itemView.related_iv_atk
+            relatedIVs[2] = itemView.related_iv_def
+            relatedIVs[3] = itemView.related_iv_satk
+            relatedIVs[4] = itemView.related_iv_sdef
+            relatedIVs[5] = itemView.related_iv_spd
 
-        private val problemNature: TextView = itemView.problem_nature
-        private val problemAbility: TextView = itemView.problem_ability
-        private val problemIVs: TextView = itemView.problem_ivs
+            compatibleIVs[0] = itemView.compatible_iv_hp
+            compatibleIVs[1] = itemView.compatible_iv_atk
+            compatibleIVs[2] = itemView.compatible_iv_def
+            compatibleIVs[3] = itemView.compatible_iv_satk
+            compatibleIVs[4] = itemView.compatible_iv_sdef
+            compatibleIVs[5] = itemView.compatible_iv_spd
+        }
 
-        private val problemsLayout: View = itemView.problems_layout
-
-        private fun setGenderBackground(@Genders.GendersFlag gender: Int, view: ImageView) {
+        fun setGenderBackground(@Genders.GendersFlag gender: Int, view: ImageView) {
 
             when (gender) {
                 Genders.MALE       -> view.background = ContextCompat.getDrawable(itemView.context, R.drawable.shape_circle_color_male)
@@ -69,7 +63,7 @@ class DirectDelegateAdapter(val assistantPresenter: AssistantContract.Presenter)
             }
         }
 
-        private fun setIcon(id: Int, view: ImageView) {
+        fun setIcon(id: Int, view: ImageView) {
 
             val iconId = assistantPresenter.getPokemonIconId(id)
 
@@ -80,8 +74,10 @@ class DirectDelegateAdapter(val assistantPresenter: AssistantContract.Presenter)
 
         fun bind(item: CombinationHolder) {
 
-            val relatedPokemon = item.couple.related
-            val compatiblePokemon = item.couple.compatible
+            val relatedPokemon = item.couple
+                .related
+            val compatiblePokemon = item.couple
+                .compatible
             val chance = item.chance
 
             setIcon(relatedPokemon.externalId, related)
@@ -100,10 +96,10 @@ class DirectDelegateAdapter(val assistantPresenter: AssistantContract.Presenter)
 
             compatibleInfo.text = itemView.context.getString(R.string.assistant_goal_extra_info, compatibleNature, compatibleAbility)
 
-            val missingIVs = item.combinationProblems?.missingIVs
-
+            //Tints the IV drawable according to if the selected goal has it
             for (i in 0..5) {
-                val drawable = relatedIVs[i].drawable
+
+                val drawable = relatedIVs[i]?.drawable ?: return
                 var wrappedDrawable = DrawableCompat.wrap(drawable)
                 wrappedDrawable = wrappedDrawable.mutate()
 
@@ -112,17 +108,15 @@ class DirectDelegateAdapter(val assistantPresenter: AssistantContract.Presenter)
                     ivColor = ContextCompat.getColor(itemView.context, R.color.iv_enabled_light)
                     DrawableCompat.setTint(wrappedDrawable, ivColor)
                 } else {
-                    ivColor = if (missingIVs!![i] == 1)
-                        ContextCompat.getColor(itemView.context, R.color.colorAccentLight)
-                    else
-                        ContextCompat.getColor(itemView.context, R.color.iv_disabled_light)
+                    ivColor = ContextCompat.getColor(itemView.context, R.color.iv_disabled_light)
                     DrawableCompat.setTint(wrappedDrawable, ivColor)
                 }
             }
 
+            //Tints the IV drawable according to if the selected goal has it
             for (i in 0..5) {
 
-                val drawable = compatibleIVs[i].drawable
+                val drawable = compatibleIVs[i]?.drawable ?: return
                 var wrappedDrawable = DrawableCompat.wrap(drawable)
                 wrappedDrawable = wrappedDrawable.mutate()
 
@@ -131,45 +125,23 @@ class DirectDelegateAdapter(val assistantPresenter: AssistantContract.Presenter)
                     ivColor = ContextCompat.getColor(itemView.context, R.color.iv_enabled_light)
                     DrawableCompat.setTint(wrappedDrawable, ivColor)
                 } else {
-                    ivColor =
-                            if (missingIVs!![i] == 1)
-                                ContextCompat.getColor(itemView.context, R.color.colorAccentLight)
-                            else
-                                ContextCompat.getColor(itemView.context, R.color.iv_disabled_light)
+                    ivColor = ContextCompat.getColor(itemView.context, R.color.iv_disabled_light)
                     DrawableCompat.setTint(wrappedDrawable, ivColor)
                 }
             }
 
-            if (chance > 0.0001)
-                totalChancePercentage.text = itemView.context.getString(R.string.percent_chance, chance * 100)
-            else
-                totalChancePercentage.text = itemView.context.getString(R.string.low_percent_chance, 0.01)
 
-            var fractionChance = (1 / chance).toInt()
-
-            if (fractionChance == 1) fractionChance = 2
-
-            totalChanceFraction.text = itemView.context.getString(R.string.fraction_chance, fractionChance)
-
-            problemNature.visibility = if (item.combinationProblems!!.hasNoMatchingNature()) View.VISIBLE else View.GONE
-
-            problemAbility.visibility = if (item.combinationProblems!!.hasNoMatchingAbility()) View.VISIBLE else View.GONE
-
-            problemIVs.visibility = View.GONE
-            for (iv in item.combinationProblems!!.missingIVs) {
-
-                if (iv == 1) {
-                    problemIVs.visibility = View.VISIBLE
-                    break
-                }
-            }
-
-            if (problemNature.visibility != View.GONE || problemAbility.visibility != View.GONE || problemIVs.visibility != View.GONE)
-                problemsLayout.visibility = View.VISIBLE
-            else problemsLayout.visibility = View.GONE
-
-            problemNature.visibility = if (item.combinationProblems!!.hasNoMatchingNature()) View.VISIBLE else View.GONE
+//            if (!directList.isEmpty()) { //TODO: implement connection from improvement to direct so that it can calculate improvement
+//                val baseDirectChance = directList[0].chance
+//
+//                val doubleDirectChance = 1.0 - (1.0 - baseDirectChance) * (1.0 - baseDirectChance)
+//
+//                val improvement = chance / doubleDirectChance
+//
+//                totalChanceFraction.text = itemView.context.getString(R.string.improvement_chance, improvement)
+//            }
         }
-
     }
+
+
 }

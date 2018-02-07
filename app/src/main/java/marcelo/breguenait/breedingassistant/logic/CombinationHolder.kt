@@ -37,5 +37,11 @@ class CombinationHolder(val couple: Couple) : ViewType {
         this.chance = combinedChildrenChance
     }
 
-    override val viewType = AdapterConstants.DIRECT
+    override val viewType: Int
+        get() {
+            return if(children == null)
+                AdapterConstants.DIRECT
+            else
+                AdapterConstants.IMPROVEMENT
+        }
 }

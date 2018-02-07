@@ -11,3 +11,8 @@ import android.view.ViewGroup
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
+
+fun <T> ArrayList<T>.removeInCase(condition: (T) -> Boolean) {
+
+    this.removeAll(this.filter(condition))
+}

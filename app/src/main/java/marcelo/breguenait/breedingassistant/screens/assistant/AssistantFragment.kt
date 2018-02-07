@@ -145,7 +145,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
     }
 
     override fun provideImprovementItems(improvements: List<CombinationHolder>) {
-        //assistantAdapter.updateImprovementItems(improvements) TODO: REPLACE WITH NEW ADAPTER
+        assistantAdapter.updateImprovementItems(improvements) //TODO: REPLACE WITH NEW ADAPTER
 
         best_matches_list.adapter = assistantAdapter
     }

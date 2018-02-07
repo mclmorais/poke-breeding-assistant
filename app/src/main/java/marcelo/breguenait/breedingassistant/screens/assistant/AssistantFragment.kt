@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.assistant_main_fragment.view.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.logic.BreedingManager
 import marcelo.breguenait.breedingassistant.logic.CombinationHolder
+import marcelo.breguenait.breedingassistant.screens.assistant.adapter.AssistantAdapter2
 import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
 import marcelo.breguenait.breedingassistant.utils.Genders
 import javax.inject.Inject
@@ -33,7 +34,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
     private var goalIvImageViews: Array<ImageView?> = arrayOfNulls(6)
 
-    private val assistantAdapter = AssistantAdapter()
+    private lateinit var assistantAdapter: AssistantAdapter2
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,6 +44,8 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
         presenter = (activity as AssistantActivity).getAssistantPresenter()
         presenter.setAssistantView(this)
+
+        assistantAdapter = AssistantAdapter2(presenter)
 
         goalIvImageViews = arrayOfNulls(6)
         goalIvImageViews[0] = activity?.pokemon_iv_hp
@@ -74,7 +77,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        assistantAdapter.clear()
+        //assistantAdapter.clear() TODO: REPLACE WITH NEW ADAPTER
         best_matches_list.adapter = assistantAdapter
         presenter.result(requestCode, resultCode)
     }
@@ -136,18 +139,18 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
         progress_bar.visibility = View.GONE
         best_matches_list.visibility = View.VISIBLE
 
-        assistantAdapter.updateDirectItems(chances, flags)
+        assistantAdapter.updateDirectItems(chances, flags)// TODO: REPLACE WITH NEW ADAPTER
 
     }
 
     override fun provideImprovementItems(improvements: List<CombinationHolder>) {
-        assistantAdapter.updateImprovementItems(improvements)
+        //assistantAdapter.updateImprovementItems(improvements) TODO: REPLACE WITH NEW ADAPTER
 
         best_matches_list.adapter = assistantAdapter
     }
 
     override fun showLoading() {
-        assistantAdapter.clear()
+        //assistantAdapter.clear() TODO: REPLACE WITH NEW ADAPTER
         best_matches_list.visibility = View.GONE
         progress_bar.visibility = View.VISIBLE
     }
@@ -234,7 +237,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
             holder.compatibleInfo.text = getString(R.string.assistant_goal_extra_info, compatibleNature, compatibleAbility)
 
-            val missingIVs = item.combinationProblems.missingIVs
+            val missingIVs = item.combinationProblems!!.missingIVs
 
             for (i in 0..5) {
                 val drawable = holder.relatedIVs[i].drawable
@@ -286,12 +289,12 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
             holder.totalChanceFraction.text = getString(R.string.fraction_chance, fractionChance)
 
-            holder.problemNature.visibility = if (item.combinationProblems.hasNoMatchingNature()) View.VISIBLE else View.GONE
+            holder.problemNature.visibility = if (item.combinationProblems!!.hasNoMatchingNature()) View.VISIBLE else View.GONE
 
-            holder.problemAbility.visibility = if (item.combinationProblems.hasNoMatchingAbility()) View.VISIBLE else View.GONE
+            holder.problemAbility.visibility = if (item.combinationProblems!!.hasNoMatchingAbility()) View.VISIBLE else View.GONE
 
             holder.problemIVs.visibility = View.GONE
-            for (iv in item.combinationProblems.missingIVs) {
+            for (iv in item.combinationProblems!!.missingIVs) {
 
                 if (iv == 1) {
                     holder.problemIVs.visibility = View.VISIBLE
@@ -303,7 +306,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
                 holder.problemsLayout.visibility = View.VISIBLE
             else holder.problemsLayout.visibility = View.GONE
 
-            holder.problemNature.visibility = if (item.combinationProblems.hasNoMatchingNature()) View.VISIBLE else View.GONE
+            holder.problemNature.visibility = if (item.combinationProblems!!.hasNoMatchingNature()) View.VISIBLE else View.GONE
         }
 
         private fun bindImprovementItem(holder: ImprovementItemViewHolder, item: CombinationHolder) {

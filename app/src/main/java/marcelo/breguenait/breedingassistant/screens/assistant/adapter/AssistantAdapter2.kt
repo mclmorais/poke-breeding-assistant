@@ -3,21 +3,14 @@ package marcelo.breguenait.breedingassistant.screens.assistant.adapter
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import android.widget.Adapter
-import marcelo.breguenait.breedingassistant.data.external.ExternalRepository
-import marcelo.breguenait.breedingassistant.logic.BreedingManager
 import marcelo.breguenait.breedingassistant.logic.CombinationHolder
 import marcelo.breguenait.breedingassistant.screens.assistant.AssistantContract
-import marcelo.breguenait.breedingassistant.screens.assistant.AssistantPresenter
 
 /**
  * Created by Marcelo on 07/02/2018.
  */
 class AssistantAdapter2(val presenter: AssistantContract.Presenter) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var initialized = false
-
-    private var directFlags = BreedingManager.DIRECT_NONE
 
     private val delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
@@ -27,18 +20,34 @@ class AssistantAdapter2(val presenter: AssistantContract.Presenter) : RecyclerVi
         override val viewType = AdapterConstants.LOADING
     }
 
+    private val headerItem = object : ViewType {
+        override val viewType = AdapterConstants.HEADER
+    }
+
+
     init {
         delegateAdapters.put(AdapterConstants.LOADING, LoadingDelegateAdapter())
         delegateAdapters.put(AdapterConstants.DIRECT, DirectDelegateAdapter(presenter))
+        delegateAdapters.put(AdapterConstants.HEADER, HeaderDelegateAdapter())
+        items.add(headerItem)
         items.add(loadingItem)
     }
 
     fun updateDirectItems(newDirectList: List<CombinationHolder>, flags: Int) {
-        this.directFlags = flags
 
-        initialized = true
+        items.remove(loadingItem)
 
+        (delegateAdapters[AdapterConstants.HEADER] as HeaderDelegateAdapter).directFlags = flags
+        items.add(headerItem)
+
+
+        items.removeInCase { it is CombinationHolder }
         items.addAll(newDirectList)
+    }
+
+    fun clear() {
+        items.clear()
+        items.add(loadingItem)
     }
 
 
@@ -51,4 +60,11 @@ class AssistantAdapter2(val presenter: AssistantContract.Presenter) : RecyclerVi
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
         delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, items[position])
+
+
+}
+
+fun <T> ArrayList<T>.removeInCase(condition: (T) -> Boolean) {
+
+    this.removeAll(this.filter(condition))
 }

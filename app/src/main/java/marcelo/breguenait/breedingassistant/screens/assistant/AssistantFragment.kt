@@ -150,7 +150,7 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
     }
 
     override fun showLoading() {
-        //assistantAdapter.clear() TODO: REPLACE WITH NEW ADAPTER
+        assistantAdapter.clear()
         best_matches_list.visibility = View.GONE
         progress_bar.visibility = View.VISIBLE
     }
@@ -173,18 +173,12 @@ class AssistantFragment : Fragment(), AssistantContract.AssistantView {
 
             if (viewType == 0) {
                 return when (directFlags) {
-                    BreedingManager.DIRECT_OK                    -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_dok,
-                        parent, false))
-                    BreedingManager.DIRECT_NO_PARENTS_GENDERED   -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_npc,
-                        parent, false))
-                    BreedingManager.DIRECT_NO_PARENTS_GENDERLESS -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_npg,
-                        parent, false))
-                    BreedingManager.DIRECT_NO_HIDDEN_ABILITY     -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_nha,
-                        parent, false))
-                    BreedingManager.DIRECT_IVS_TOO_LOW           -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_nei,
-                        parent, false))
-                    else                                         -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_dok,
-                        parent, false))
+                    BreedingManager.DIRECT_OK                    -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_dok, parent, false))
+                    BreedingManager.DIRECT_NO_PARENTS_GENDERED   -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_npc, parent, false))
+                    BreedingManager.DIRECT_NO_PARENTS_GENDERLESS -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_npg, parent, false))
+                    BreedingManager.DIRECT_NO_HIDDEN_ABILITY     -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_nha, parent, false))
+                    BreedingManager.DIRECT_IVS_TOO_LOW           -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_nei, parent, false))
+                    else                                         -> HeaderViewHolder(inflater.inflate(R.layout.assistant_item_direct_header_dok, parent, false))
                 }
             } else {
                 return when (viewType) {

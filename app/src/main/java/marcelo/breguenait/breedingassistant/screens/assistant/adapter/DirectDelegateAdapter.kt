@@ -38,14 +38,16 @@ class DirectDelegateAdapter(val assistantPresenter: AssistantContract.Presenter)
         private val totalChanceFraction: TextView = itemView.total_chance
         private val totalChancePercentage: TextView = itemView.total_percentage
 
-        private val relatedIVs = arrayOf(itemView.related_iv_hp,
+        private val relatedIVs = arrayOf(
+            itemView.related_iv_hp,
             itemView.related_iv_atk,
             itemView.related_iv_def,
             itemView.related_iv_satk,
             itemView.related_iv_sdef,
             itemView.related_iv_spd)
 
-        private val compatibleIVs = arrayOf(itemView.compatible_iv_hp,
+        private val compatibleIVs = arrayOf(
+            itemView.compatible_iv_hp,
             itemView.compatible_iv_atk,
             itemView.compatible_iv_def,
             itemView.compatible_iv_satk,

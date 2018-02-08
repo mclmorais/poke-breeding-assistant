@@ -40,8 +40,8 @@ class CombinationHolder(val couple: Couple) : ViewType {
     override val viewType: Int
         get() {
             return if(children == null)
-                AdapterConstants.DIRECT
+                AdapterConstants.DIRECT_SUGGESTION
             else
-                AdapterConstants.IMPROVEMENT
+                AdapterConstants.IMPROVEMENT_SUGGESTION
         }
 }

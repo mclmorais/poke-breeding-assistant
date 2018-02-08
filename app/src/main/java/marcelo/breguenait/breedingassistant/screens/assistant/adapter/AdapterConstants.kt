@@ -5,9 +5,10 @@ package marcelo.breguenait.breedingassistant.screens.assistant.adapter
  */
 object AdapterConstants {
 
-    const val HEADER = 1
-    const val LOADING = 2
-    const val DIRECT = 3
-    const val IMPROVEMENT = 4
+    const val LOADING = 0
+    const val DIRECT_HEADER = 1
+    const val DIRECT_SUGGESTION = 2
+    const val IMPROVEMENT_HEADER = 3
+    const val IMPROVEMENT_SUGGESTION = 4
 
 }

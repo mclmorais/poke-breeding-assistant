@@ -8,16 +8,17 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import android.view.ViewTreeObserver
+import androidx.view.doOnPreDraw
 import kotlinx.android.synthetic.main.assistant_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
 import marcelo.breguenait.breedingassistant.screens.assistant.injection.DaggerAssistantComponent
 import java.util.*
 import javax.inject.Inject
+
 
 class AssistantActivity : AppCompatActivity() {
 
@@ -36,6 +37,16 @@ class AssistantActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.assistant_activity)
+
+        // Postpone the transition until the window's decor view has
+        // finished its layout.
+        postponeEnterTransition()
+
+        window.decorView.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
+
+
 
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
@@ -58,6 +69,7 @@ class AssistantActivity : AppCompatActivity() {
             .applicationComponent(BreedingAssistantApplication.get(this).component)
             .build()
             .inject(this)
+
 
 
     }

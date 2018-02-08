@@ -4,6 +4,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.transition.Fade
+import android.transition.Slide
+import android.view.Gravity
 import kotlinx.android.synthetic.main.goals_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
@@ -45,7 +48,6 @@ class GoalsActivity : AppCompatActivity() {
                 .applicationComponent(BreedingAssistantApplication.get(this).component)
                 .build()
                 .inject(this)
-
     }
 
     override fun onActivityReenter(resultCode: Int, data: Intent) {

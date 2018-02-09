@@ -8,9 +8,13 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.transition.Transition
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewTreeObserver
+import android.view.View
+import androidx.transition.addListener
+import androidx.transition.doOnEnd
+import androidx.transition.doOnStart
 import androidx.view.doOnPreDraw
 import kotlinx.android.synthetic.main.assistant_activity.*
 import marcelo.breguenait.breedingassistant.R
@@ -38,6 +42,7 @@ class AssistantActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.assistant_activity)
 
+
         // Postpone the transition until the window's decor view has
         // finished its layout.
         postponeEnterTransition()
@@ -47,10 +52,14 @@ class AssistantActivity : AppCompatActivity() {
         }
 
 
+        window.sharedElementEnterTransition.doOnEnd { grupinho.visibility = View.VISIBLE }
+
 
         setSupportActionBar(toolbar)
-        supportActionBar?.title = ""
+        supportActionBar?.title = null
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
 
         assistantFragment = AssistantFragment()
         storedPokemonFragment = StoredPokemonFragment()
@@ -69,8 +78,6 @@ class AssistantActivity : AppCompatActivity() {
             .applicationComponent(BreedingAssistantApplication.get(this).component)
             .build()
             .inject(this)
-
-
 
     }
 

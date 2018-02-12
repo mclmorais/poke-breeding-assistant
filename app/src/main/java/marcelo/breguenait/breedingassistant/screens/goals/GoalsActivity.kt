@@ -12,10 +12,15 @@ import kotlinx.android.synthetic.main.goals_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
 import marcelo.breguenait.breedingassistant.extensions.active
+import marcelo.breguenait.breedingassistant.screens.assistant.BoxContract
+import marcelo.breguenait.breedingassistant.screens.assistant.StoredPokemonFragment
 import marcelo.breguenait.breedingassistant.screens.goals.injection.DaggerGoalsComponent
 import javax.inject.Inject
 
-class GoalsActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class GoalsActivity :
+    AppCompatActivity(),
+    BottomNavigationView.OnNavigationItemSelectedListener,
+    StoredPokemonFragment.PresenterCallback {
 
 
     @Inject
@@ -26,7 +31,7 @@ class GoalsActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItem
     private var navPosition = NAV_GOALS
 
 
-    fun initBottomNavigation() {
+    private fun initBottomNavigation() {
         bottom_navigation.active(navPosition)
         bottom_navigation.setOnNavigationItemSelectedListener(this)
     }
@@ -113,6 +118,7 @@ class GoalsActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItem
         detachFragment()
         attachFragment(fragment, getTag(position))
         supportFragmentManager.executePendingTransactions()
+        switchTitle(position)
         return true
     }
 
@@ -127,12 +133,14 @@ class GoalsActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItem
 
     private fun getTag(position: Int): String = when (position) {
         NAV_GOALS    -> GoalsFragment.TAG
+        NAV_BOX      -> StoredPokemonFragment.TAG
         NAV_TUTORIAL -> TutorialFragment.TAG
         else         -> GoalsFragment.TAG
     }
 
     private fun createFragment(position: Int): Fragment = when (position) {
         NAV_GOALS    -> GoalsFragment.newInstance()
+        NAV_BOX      -> StoredPokemonFragment.newInstance()
         NAV_TUTORIAL -> TutorialFragment.newInstance()
         else         -> GoalsFragment.newInstance()
     }
@@ -157,4 +165,23 @@ class GoalsActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItem
             .commit()
     }
 
+    override fun setPresenter(): BoxContract.Presenter {
+        return goalsPresenter
+    }
+
+    private fun switchTitle(position: Int) = when(position) {
+        NAV_GOALS -> {
+            activity_title.text = getString(R.string.goals_activity_label)
+            activity_background_symbol.setImageResource(R.drawable.ic_goal)
+        }
+        NAV_BOX -> {
+            activity_title.text = getString(R.string.box_activity_label)
+            activity_background_symbol.setImageResource(R.drawable.ic_grid_on_black_24dp)
+        }
+        NAV_TUTORIAL -> {
+            activity_title.text = getString(R.string.tutorial_activity_label)
+            activity_background_symbol.setImageResource(R.drawable.ic_school_black_24dp)
+        }
+        else -> {}
+    }
 }

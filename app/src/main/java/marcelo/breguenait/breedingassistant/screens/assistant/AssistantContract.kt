@@ -1,6 +1,5 @@
 package marcelo.breguenait.breedingassistant.screens.assistant
 
-import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
 import marcelo.breguenait.breedingassistant.logic.CombinationHolder
 
 /**
@@ -34,28 +33,13 @@ interface AssistantContract {
 
     }
 
-    interface StorageView {
 
-        fun initialized(): Boolean
 
-        fun updateStoredPokemons(storedPokemons: List<InternalPokemon>)
-
-        fun showSuccessfulStorage()
-    }
-
-    interface Presenter {
-
-        val currentGoal: InternalPokemon?
+    interface Presenter: BoxContract.Presenter {
 
         fun setAssistantView(assistantView: AssistantView)
 
-        fun setStorageView(storageView: StorageView)
-
         fun startAssistant()
-
-        fun startStored()
-
-        fun result(requestCode: Int, resultCode: Int)
 
         fun requestChancesUpdate()
 
@@ -70,8 +54,5 @@ interface AssistantContract {
         fun storeNewPokemon()
 
         fun editGoal()
-
-        fun removeStoredPokemons(stored: List<InternalPokemon>)
-
     }
 }

@@ -25,15 +25,16 @@ constructor(private val internalRepository: InternalRepository,
     @Resource
     private lateinit var assistantView: AssistantContract.AssistantView
     @Resource
-    private lateinit var storageView: AssistantContract.StorageView
+    private lateinit var boxView: BoxContract.BoxView
 
     override fun setAssistantView(assistantView: AssistantContract.AssistantView) {
         this.assistantView = assistantView
     }
 
-    override fun setStorageView(storageView: AssistantContract.StorageView) {
-        this.storageView = storageView
+    override fun setStorageView(boxView: BoxContract.BoxView) {
+        this.boxView = boxView
     }
+
 
     private val compatiblePokemons: List<InternalPokemon>
         get() = compatibilityChecker.getCompatibleStoredPokemon(internalRepository.getStoredPokemons(), internalRepository.currentGoal!!)
@@ -60,21 +61,20 @@ constructor(private val internalRepository: InternalRepository,
         requestChancesUpdate()
     }
 
-    override fun startStored() {
-
-        if (!storageView.initialized()) {
-            storageView.updateStoredPokemons(compatiblePokemons)
+    override fun initBox() {
+        if (!boxView.initialized()) {
+            boxView.updateStoredPokemons(compatiblePokemons)
         }
     }
 
     override fun result(requestCode: Int, resultCode: Int) {
         if (CreationActivity.REQUEST_CREATE_STORED == requestCode && CreationActivity.SUCCESSFUL == resultCode) {
-            storageView.updateStoredPokemons(compatiblePokemons)
-            storageView.showSuccessfulStorage()
+            boxView.updateStoredPokemons(compatiblePokemons)
+            boxView.showSuccessfulStorage()
         } else if (requestCode == CreationActivity.REQUEST_EDIT_STORED && resultCode == CreationActivity.SUCCESSFUL) {
-            storageView.updateStoredPokemons(compatiblePokemons)
+            boxView.updateStoredPokemons(compatiblePokemons)
         } else if (CreationActivity.REQUEST_EDIT_GOAL == requestCode && CreationActivity.SUCCESSFUL == resultCode) {
-            storageView.updateStoredPokemons(compatiblePokemons)
+            boxView.updateStoredPokemons(compatiblePokemons)
         }
     }
 
@@ -114,7 +114,7 @@ constructor(private val internalRepository: InternalRepository,
 
     override fun removeStoredPokemons(stored: List<InternalPokemon>) {
         internalRepository.removeStoredPokemons(stored)
-        storageView.updateStoredPokemons(compatiblePokemons)
+        boxView.updateStoredPokemons(compatiblePokemons)
         requestChancesUpdate()
     }
 

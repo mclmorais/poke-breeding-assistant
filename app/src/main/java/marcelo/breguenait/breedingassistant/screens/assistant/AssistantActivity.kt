@@ -21,7 +21,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class AssistantActivity : AppCompatActivity() {
+class AssistantActivity : AppCompatActivity(), StoredPokemonFragment.PresenterCallback {
 
 
     @Inject
@@ -102,6 +102,10 @@ class AssistantActivity : AppCompatActivity() {
         data.putExtra("ASD", 3)
         setResult(333, data)
         supportFinishAfterTransition()
+    }
+
+    override fun setPresenter(): BoxContract.Presenter {
+        return assistantPresenter
     }
 
     private class Adapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager) {

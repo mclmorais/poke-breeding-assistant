@@ -397,7 +397,7 @@ class CreationFragment : Fragment(), CreationContract.View,
 
         var index = 0
 
-        for (i in 0..spinner_nature.count - 1) {
+        for (i in 0 until spinner_nature.count) {
             val nature = spinner_nature.getItemAtPosition(i) as ExternalNature
             if (nature.id == natureId) {
                 index = i

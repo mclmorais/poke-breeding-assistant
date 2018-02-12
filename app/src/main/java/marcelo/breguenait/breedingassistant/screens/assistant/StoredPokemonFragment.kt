@@ -1,5 +1,6 @@
 package marcelo.breguenait.breedingassistant.screens.assistant
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -27,10 +28,12 @@ import java.util.*
 import javax.inject.Inject
 
 
-class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
+class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
 
     @Inject
-    lateinit var presenter: AssistantContract.Presenter
+    lateinit var presenter: BoxContract.Presenter
+
+    private lateinit var presenterCallback: PresenterCallback
 
     private var gridLayoutManager: GridLayoutManager? = null
 
@@ -76,11 +79,24 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
         }
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        try {
+            presenterCallback = activity as PresenterCallback
+        } catch (e: ClassCastException) {
+            throw  ClassCastException (activity.toString()
+                    + " must implement " + PresenterCallback::class.java.simpleName)
+        }
+
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.assistant_stored_fragment, container, false)
 
-        presenter = (activity as AssistantActivity).assistantPresenter
+        presenter = presenterCallback.setPresenter()
         presenter.setStorageView(this)
 
         storedPokemonsAdapter = StoredPokemonsAdapter()
@@ -98,7 +114,7 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
 
     override fun onResume() {
         super.onResume()
-        presenter.startStored()
+        presenter.initBox()
     }
 
 
@@ -204,7 +220,7 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
 
             val abilityBackground = DrawableCompat.wrap(holder.abilityIndicator.background).mutate()
             if (storedPokemons[position].gender != Genders.DITTO) {
-                if (storedPokemons[position].abilitySlot == goal!!.abilitySlot)
+                if (storedPokemons[position].abilitySlot == goal?.abilitySlot)
                     DrawableCompat.setTint(abilityBackground, activeIndicatorColor)
                 else
                     DrawableCompat.setTint(abilityBackground, inactiveIndicatorColor)
@@ -212,7 +228,7 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
                 DrawableCompat.setTint(abilityBackground, inactiveIndicatorColor)
 
             val natureBackground = DrawableCompat.wrap(holder.natureIndicator.background).mutate()
-            if (storedPokemons[position].natureId == goal!!.natureId)
+            if (storedPokemons[position].natureId == goal?.natureId)
                 DrawableCompat.setTint(natureBackground, activeIndicatorColor)
             else
                 DrawableCompat.setTint(natureBackground, inactiveIndicatorColor)
@@ -271,12 +287,11 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
         }
 
         fun removeSelected() {
-            val goalsToBeRemoved = ArrayList<InternalPokemon>(selectionsList.size)
-            selectionsList.mapTo(goalsToBeRemoved) { storedPokemons[it] }
-            presenter.removeStoredPokemons(goalsToBeRemoved)
+            val storedToBeRemoved = ArrayList<InternalPokemon>(selectionsList.size)
+            selectionsList.mapTo(storedToBeRemoved) { storedPokemons[it] }
+            presenter.removeStoredPokemons(storedToBeRemoved)
 
-            if (selectionMode != null)
-                selectionMode!!.finish()
+            selectionMode?.finish()
         }
 
 
@@ -358,7 +373,14 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
 
     }
 
+
+    interface PresenterCallback {
+        fun setPresenter(): BoxContract.Presenter
+    }
+
     companion object {
+
+        val TAG: String = StoredPokemonFragment::class.java.simpleName
 
         fun newInstance(): StoredPokemonFragment {
             return StoredPokemonFragment()

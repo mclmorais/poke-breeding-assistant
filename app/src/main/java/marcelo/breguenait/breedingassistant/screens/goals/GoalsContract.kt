@@ -3,6 +3,7 @@ package marcelo.breguenait.breedingassistant.screens.goals
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalNature
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
 import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
+import marcelo.breguenait.breedingassistant.screens.assistant.BoxContract
 
 interface GoalsContract {
 
@@ -20,7 +21,7 @@ interface GoalsContract {
 
     }
 
-    interface Presenter {
+    interface Presenter: BoxContract.Presenter {
 
         val goals: List<InternalPokemon>
 

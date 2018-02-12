@@ -8,6 +8,8 @@
     <string name="pkmn_link_filename" translatable="false">pkmn_link_%03d</string>
     <string name="drawable_resource_name" translatable="false">drawable</string>
     <string name="goals_activity_label">Your Goals</string>
+    <string name="box_activity_label">Boxed Pokémon</string>
+    <string name="tutorial_activity_label">Tutorial</string>
     <string name="cd_target_board">Target board.</string>
     <string name="app_name">Breeding Assistant</string>
     <string name="action_settings">Settings</string>

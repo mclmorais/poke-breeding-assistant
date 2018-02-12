@@ -3,19 +3,33 @@ package marcelo.breguenait.breedingassistant.screens.goals
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.goals_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
+import marcelo.breguenait.breedingassistant.extensions.active
 import marcelo.breguenait.breedingassistant.screens.goals.injection.DaggerGoalsComponent
 import javax.inject.Inject
 
-class GoalsActivity : AppCompatActivity() {
+class GoalsActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+
 
     @Inject
     lateinit var goalsPresenter: GoalsPresenter
 
     private var goalsFragment: GoalsFragment? = null
+
+    private var navPosition = NAV_GOALS
+
+
+    fun initBottomNavigation() {
+        bottom_navigation.active(navPosition)
+        bottom_navigation.setOnNavigationItemSelectedListener(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +51,19 @@ class GoalsActivity : AppCompatActivity() {
             ""
         }
 
-        //If the goals fragment doesn't currently exist in the fragment manager, creates a new instance
-        goalsFragment = supportFragmentManager.findFragmentById(R.id.content_frame) as GoalsFragment?
-        if (goalsFragment == null) {
-            goalsFragment = GoalsFragment.newInstance()
-            val fragmentManager = supportFragmentManager
-            val transaction = fragmentManager.beginTransaction()
-            transaction.add(R.id.content_frame, goalsFragment)
-            transaction.commit()
-        }
+
+//        //If the goals fragment doesn't currently exist in the fragment manager, creates a new instance
+//        goalsFragment = supportFragmentManager.findFragmentById(R.id.content_frame) as GoalsFragment?
+//        if (goalsFragment == null) {
+//            goalsFragment = GoalsFragment.newInstance()
+//            val fragmentManager = supportFragmentManager
+//            val transaction = fragmentManager.beginTransaction()
+//            transaction.add(R.id.content_frame, goalsFragment)
+//            transaction.commit()
+//        }
+
+        initBottomNavigation()
+        savedInstanceState ?: switchFragment(NAV_GOALS)
     }
 
     /**
@@ -56,4 +74,87 @@ class GoalsActivity : AppCompatActivity() {
         super.onActivityReenter(resultCode, data)
         goalsFragment?.fastUpdateGoals()
     }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        // Store the current navigation position.
+        outState?.putInt(KEY_POSITION, navPosition)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        // Restore the current navigation position.
+        savedInstanceState?.let {
+            val id = it.getInt(KEY_POSITION, NAV_GOALS)
+            navPosition = when (id) {
+                R.id.nav_goals    -> NAV_GOALS
+                R.id.nav_box      -> NAV_BOX
+                R.id.nav_tutorial -> NAV_TUTORIAL
+                else              -> NAV_GOALS
+            }
+        }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        navPosition = when (item.itemId) { //TODO: turn into function
+            R.id.nav_goals    -> NAV_GOALS
+            R.id.nav_box      -> NAV_BOX
+            R.id.nav_tutorial -> NAV_TUTORIAL
+            else              -> NAV_GOALS
+        }
+
+        return switchFragment(navPosition)
+
+    }
+
+    private fun switchFragment(position: Int): Boolean {
+        val fragment = supportFragmentManager.findFragmentByTag(getTag(position)) ?: createFragment(position)
+        if (fragment.isAdded) return false
+        detachFragment()
+        attachFragment(fragment, getTag(position))
+        supportFragmentManager.executePendingTransactions()
+        return true
+    }
+
+
+    companion object {
+        const val KEY_POSITION = "key_position"
+
+        const val NAV_GOALS = 0
+        const val NAV_BOX = 1
+        const val NAV_TUTORIAL = 2
+    }
+
+    private fun getTag(position: Int): String = when (position) {
+        NAV_GOALS    -> GoalsFragment.TAG
+        NAV_TUTORIAL -> TutorialFragment.TAG
+        else         -> GoalsFragment.TAG
+    }
+
+    private fun createFragment(position: Int): Fragment = when (position) {
+        NAV_GOALS    -> GoalsFragment.newInstance()
+        NAV_TUTORIAL -> TutorialFragment.newInstance()
+        else         -> GoalsFragment.newInstance()
+    }
+
+    private fun detachFragment() {
+        supportFragmentManager.findFragmentById(R.id.content_frame)?.also {
+            supportFragmentManager.beginTransaction().detach(it).commit()
+        }
+    }
+
+    private fun attachFragment(fragment: Fragment, tag: String) {
+
+        if (fragment.isDetached)
+            supportFragmentManager.beginTransaction().attach(fragment).commit()
+        else
+            supportFragmentManager.beginTransaction().add(R.id.content_frame, fragment, tag).commit()
+
+        // Set a transition animation for this transaction.
+        supportFragmentManager
+            .beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .commit()
+    }
+
 }

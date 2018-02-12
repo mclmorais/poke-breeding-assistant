@@ -1,0 +1,7 @@
+package marcelo.breguenait.breedingassistant.extensions
+
+import android.support.design.widget.BottomNavigationView
+
+fun BottomNavigationView.active(position: Int) {
+    menu.getItem(position).isChecked = true
+}

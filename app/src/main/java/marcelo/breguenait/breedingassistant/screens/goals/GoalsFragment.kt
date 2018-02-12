@@ -217,9 +217,11 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
     companion object {
 
-        fun newInstance(): GoalsFragment = GoalsFragment()
-        const val SORT_DATE = 0
+        val TAG: String = GoalsFragment::class.java.simpleName
 
+        fun newInstance(): GoalsFragment = GoalsFragment()
+
+        const val SORT_DATE = 0
         const val SORT_IVS = 1
     }
 

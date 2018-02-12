@@ -88,6 +88,7 @@ class InternalRepository(private val mDataSource: InternalPokemonDataSource) {
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     @IntDef(INTERNAL_GOAL.toLong(), INTERNAL_STORED.toLong())
     internal annotation class InternalPokemonFlag
+
     companion object {
 
         const val INTERNAL_GOAL = 1

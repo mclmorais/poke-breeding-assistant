@@ -57,15 +57,12 @@ internal constructor(private val internalRepository: InternalRepository,
         goalsView.showBackgroundHint(goals.isEmpty())
     }
 
-    override fun getExternalPokemon(externalId: Int): ExternalPokemon?
-            = externalRepository.getExternalPokemon(externalId)
+    override fun getExternalPokemon(externalId: Int): ExternalPokemon? = externalRepository.getExternalPokemon(externalId)
 
-    override fun getNature(natureId: Int): ExternalNature?
-        = externalRepository.getNature(natureId)
+    override fun getNature(natureId: Int): ExternalNature? = externalRepository.getNature(natureId)
 
 
-    override fun getAbilityName(pokemonId: Int, abilitySlot: Int): String?
-        = externalRepository.getAbility(pokemonId, abilitySlot)?.name
+    override fun getAbilityName(pokemonId: Int, abilitySlot: Int): String? = externalRepository.getAbility(pokemonId, abilitySlot)?.name
 
 
     override fun getPokemonIconId(id: Int): Int {

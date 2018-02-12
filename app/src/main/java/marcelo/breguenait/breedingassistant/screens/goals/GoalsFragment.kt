@@ -38,6 +38,10 @@ import java.util.*
 class GoalsFragment : Fragment(), GoalsContract.View {
 
 
+    private lateinit var presenter: GoalsContract.Presenter
+
+    private lateinit var goalsAdapter: GoalsAdapter
+
     var selectionMode: ActionMode? = null
         private set
 
@@ -49,16 +53,9 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
             val counter = goalsAdapter.selectedItemsCount
-            val selectedText =
-                if (counter == 1)
-                    getString(R.string.selected_title_singular)
-                else
-                    getString(R.string.selected_title_plural)
 
+            mode.title = resources.getQuantityString(R.plurals.selected_title, counter, counter)
 
-            val title = String.format(selectedText, goalsAdapter.selectedItemsCount)
-
-            mode.title = title
             return true
         }
 
@@ -83,10 +80,6 @@ class GoalsFragment : Fragment(), GoalsContract.View {
         }
     }
 
-    private lateinit var presenter: GoalsContract.Presenter
-
-    private lateinit var goalsAdapter: GoalsAdapter
-
     private fun initGoalsAdapter(root: View) {
         goalsAdapter = GoalsAdapter(presenter.goals as ArrayList<InternalPokemon>)
         goalsAdapter.setHasStableIds(true)
@@ -102,9 +95,9 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
         val linearLayoutManager = LinearLayoutManager(context)
 
-        val dividerItemDecoration = DividerItemDecoration(root.goals_list.context,
-            linearLayoutManager.orientation)
+        val dividerItemDecoration = DividerItemDecoration(root.goals_list.context, linearLayoutManager.orientation)
         root.goals_list.addItemDecoration(dividerItemDecoration)
+
         root.goals_list.layoutManager = linearLayoutManager
     }
 
@@ -131,10 +124,10 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
         goalsAdapter.updateItems(presenter.goals)
         showBackgroundHint(goalsAdapter.goalList.isEmpty())
-
     }
 
     override fun showCreationActivity() {
+
         val intent = Intent(context, CreationActivity::class.java)
         intent.putExtra(CreationActivity.TYPE_ID, CreationActivity.GOAL)
         startActivity(intent)
@@ -168,7 +161,6 @@ class GoalsFragment : Fragment(), GoalsContract.View {
     }
 
     fun fastUpdateGoals() {
-        //TODO: UNGARBAGIZE
         goalsAdapter.notifyDataSetChanged()
         showBackgroundHint(goalsAdapter.goalList.isEmpty())
     }

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import kotlinx.android.synthetic.main.goals_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
@@ -13,14 +12,20 @@ import javax.inject.Inject
 
 class GoalsActivity : AppCompatActivity() {
 
-
-    @Inject lateinit var goalsPresenter: GoalsPresenter
+    @Inject
+    lateinit var goalsPresenter: GoalsPresenter
 
     private var goalsFragment: GoalsFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.goals_activity)
+
+        //Builds Dagger injection components
+        DaggerGoalsComponent.builder()
+            .applicationComponent(BreedingAssistantApplication.get(this).component)
+            .build()
+            .inject(this)
 
         //Sets the custom XML toolbar as the action bar
         setSupportActionBar(toolbar)
@@ -32,6 +37,7 @@ class GoalsActivity : AppCompatActivity() {
             ""
         }
 
+        //If the goals fragment doesn't currently exist in the fragment manager, creates a new instance
         goalsFragment = supportFragmentManager.findFragmentById(R.id.content_frame) as GoalsFragment?
         if (goalsFragment == null) {
             goalsFragment = GoalsFragment.newInstance()
@@ -40,17 +46,12 @@ class GoalsActivity : AppCompatActivity() {
             transaction.add(R.id.content_frame, goalsFragment)
             transaction.commit()
         }
-
-        //Builds Dagger injection components
-        DaggerGoalsComponent.builder()
-                .applicationComponent(BreedingAssistantApplication.get(this).component)
-                .build()
-                .inject(this)
-
-        visibility_group.visibility = View.VISIBLE
-        toolbar.visibility = View.VISIBLE
     }
 
+    /**
+     * Forces a fast update on the fragment's adapter before the transition animation finishes in order to ensure that the data shown in the activity
+     * is up to date. This is needed in order to avoid a 'flicker' of the old data after the transition is done, due to the way transitions work.
+     */
     override fun onActivityReenter(resultCode: Int, data: Intent) {
         super.onActivityReenter(resultCode, data)
         goalsFragment?.fastUpdateGoals()

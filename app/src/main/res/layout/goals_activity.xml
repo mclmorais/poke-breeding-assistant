@@ -46,14 +46,6 @@
                 android:animateLayoutChanges="true"
                 app:layout_collapseMode="parallax">
 
-                <android.support.constraint.Group
-                    android:id="@+id/visibility_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    app:constraint_referenced_ids="activity_title, activity_version_label, activity_background_symbol"/>
-
                 <TextView
                     android:id="@+id/activity_title"
                     android:layout_width="wrap_content"

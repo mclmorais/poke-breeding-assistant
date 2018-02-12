@@ -19,8 +19,8 @@ public class InternalPokemonDataSource {
 
     private final static int INTERNAL_POKEMON_VERSION = 1;
 
-    private SharedPreferences mSharedPreferences;
-    private Gson mGson;
+    private final SharedPreferences mSharedPreferences;
+    private final Gson mGson;
 
     public InternalPokemonDataSource(SharedPreferences sharedPreferences, Gson gson) {
         this.mSharedPreferences = sharedPreferences;

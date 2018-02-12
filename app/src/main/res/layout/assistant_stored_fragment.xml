@@ -12,6 +12,6 @@
         android:layout_marginRight="16dp"
         android:clipToPadding="false"
         android:paddingTop="8dp"
-        app:layoutManager="LinearLayoutManager"/>
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 </FrameLayout>
 

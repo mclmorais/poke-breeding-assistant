@@ -1,5 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <plurals name="selected_title">
+        <item quantity="one">"%1$d item selected"</item>
+        <item quantity="other">%1$d items selected</item>
+    </plurals>
+
     <string name="pkmn_link_filename" translatable="false">pkmn_link_%03d</string>
     <string name="drawable_resource_name" translatable="false">drawable</string>
     <string name="goals_activity_label">Your Goals</string>
@@ -19,8 +24,6 @@
 
     <string name="title_activity_assistant">Assistant</string>
     <string name="title_your_goals">Breeding Assistant</string>
-    <string name="selected_title_singular">"%1$d item selected"</string>
-    <string name="selected_title_plural" tools:ignore="UnusedResources">%1$d items selected</string>
     <string name="snack_goals_removed" tools:ignore="UnusedResources">Goals removed</string>
     <string name="label_ability">Ability</string>
     <string name="hint_no_goals">You don\'t have any goals at the moment.\n\nAdd a new one to start working towards it!</string>

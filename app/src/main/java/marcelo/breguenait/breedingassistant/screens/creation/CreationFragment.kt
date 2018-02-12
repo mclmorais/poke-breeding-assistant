@@ -235,14 +235,14 @@ class CreationFragment : Fragment(), CreationContract.View,
             try {
                 when ((presenter as CreationPresenter).transactionType) {
                     CreationActivity.REQUEST_CREATE_GOAL ->
-                        actionBar.setTitle(R.string.title_create_a_goal);
+                        actionBar.setTitle(R.string.title_create_a_goal)
 
                     CreationActivity.REQUEST_CREATE_STORED ->
-                        actionBar.setTitle(R.string.title_store_a_pokemon);
+                        actionBar.setTitle(R.string.title_store_a_pokemon)
                     CreationActivity.REQUEST_EDIT_GOAL ->
-                        actionBar.setTitle(R.string.title_edit_goal);
+                        actionBar.setTitle(R.string.title_edit_goal)
                     CreationActivity.REQUEST_EDIT_STORED ->
-                        actionBar.setTitle(R.string.title_edit_stored);
+                        actionBar.setTitle(R.string.title_edit_stored)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

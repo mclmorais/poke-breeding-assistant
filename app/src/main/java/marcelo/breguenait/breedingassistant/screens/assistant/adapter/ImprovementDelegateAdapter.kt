@@ -76,7 +76,7 @@ class ImprovementDelegateAdapter(val assistantPresenter: AssistantContract.Prese
                 .related
             val compatiblePokemon = item.couple
                 .compatible
-            val chance = item.chance
+            //val chance = item.chance
 
             setIcon(relatedPokemon.externalId, related)
             setGenderBackground(relatedPokemon.gender, related)

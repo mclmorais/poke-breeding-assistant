@@ -1,5 +1,7 @@
 package marcelo.breguenait.breedingassistant.data.external.deserializers
 
+import android.util.SparseArray
+import androidx.util.set
 import com.google.gson.JsonArray
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
@@ -20,7 +22,7 @@ import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalSta
 
 class JsonStatDeserializer : JsonCustomDeserializer<LinkedHashMap<Int, ExternalStat>> {
 
-    override val type = object : TypeToken<LinkedHashMap<Int, ExternalStat>>() {}.type
+    override val type: Type = object : TypeToken<LinkedHashMap<Int, ExternalStat>>() {}.type
 
     override fun deserialize(json: JsonElement, typeOfT: Type?, context: JsonDeserializationContext?): LinkedHashMap<Int, ExternalStat> {
         val jsonObject = json.asJsonObject
@@ -34,7 +36,7 @@ class JsonStatDeserializer : JsonCustomDeserializer<LinkedHashMap<Int, ExternalS
 
             val nameArray = statJsonObject.get("names").asJsonArray
 
-            val names = HashMap<Int, String>(10)
+            val names = SparseArray<String>(10)
             for (nameElement in nameArray) {
                 val id = nameElement.asJsonObject.get("id").asInt
                 val name = nameElement.asJsonObject.get("name").asString

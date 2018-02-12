@@ -50,17 +50,9 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
 
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
             val counter = storedPokemonsAdapter!!.selectedItemsCount
-            val selectedText: String
-            selectedText =
-                    if (counter == 1)
-                        getString(R.string.selected_title_singular)
-                    else
-                        getString(R.string.selected_title_plural)
 
+            mode.title = resources.getQuantityString(R.plurals.selected_title, counter, counter)
 
-            val title = String.format(selectedText, counter)
-
-            mode.title = title
             return true
         }
 

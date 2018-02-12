@@ -1,6 +1,8 @@
 package marcelo.breguenait.breedingassistant.data.external.deserializers
 
+import android.util.SparseArray
 import android.util.SparseIntArray
+import androidx.util.set
 import com.google.gson.JsonArray
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
@@ -36,7 +38,7 @@ class JsonNatureDeserializer : JsonCustomDeserializer<LinkedHashMap<Int, Externa
 
             val nameArray = natureJsonObject.get("names").asJsonArray
 
-            val names = HashMap<Int, String>(10)
+            val names = SparseArray<String>(10)
             for (nameElement in nameArray) {
                 val id = nameElement.asJsonObject.get("id").asInt
                 val name = nameElement.asJsonObject.get("name").asString

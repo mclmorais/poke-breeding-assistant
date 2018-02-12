@@ -1,10 +1,7 @@
 package marcelo.breguenait.breedingassistant.screens.assistant.adapter
 
-import android.support.annotation.LayoutRes
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.github.ybq.android.spinkit.style.DoubleBounce
 import kotlinx.android.synthetic.main.assistant_item_loading.view.*

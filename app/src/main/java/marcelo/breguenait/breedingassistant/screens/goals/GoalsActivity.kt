@@ -5,8 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import androidx.transition.doOnEnd
-import androidx.transition.doOnStart
 import kotlinx.android.synthetic.main.goals_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication

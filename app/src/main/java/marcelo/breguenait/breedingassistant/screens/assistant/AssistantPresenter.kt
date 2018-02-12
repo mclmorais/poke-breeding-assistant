@@ -51,8 +51,8 @@ constructor(private val internalRepository: InternalRepository,
 
         val natureName = externalRepository.getNature(currentGoal.natureId).getName(9)
         val abilityName = externalRepository.getAbility(
-                currentGoal.externalId, currentGoal.abilitySlot)!!
-                .name
+            currentGoal.externalId, currentGoal.abilitySlot)!!
+            .name
 
         assistantView.updateSelectedPokemonExtraInfo(natureName, abilityName)
 
@@ -119,7 +119,10 @@ constructor(private val internalRepository: InternalRepository,
     }
 
     companion object {
-        class Calculations(val assistantAi: AssistantAi, val internalRepository: InternalRepository, val assistantView: AssistantContract.AssistantView) : AsyncTask<Int, Int, Int>() {
+        class Calculations(private val assistantAi: AssistantAi,
+                           private val internalRepository: InternalRepository,
+                           private val assistantView: AssistantContract.AssistantView) :
+            AsyncTask<Int, Int, Int>() {
 
             override fun doInBackground(vararg params: Int?): Int? {
 

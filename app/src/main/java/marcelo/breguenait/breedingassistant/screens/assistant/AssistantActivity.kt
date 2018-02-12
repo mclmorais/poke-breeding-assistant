@@ -62,7 +62,7 @@ class AssistantActivity : AppCompatActivity() {
 
 
         assistantFragment = AssistantFragment()
-        storedPokemonFragment = StoredPokemonFragment()
+        storedPokemonFragment = StoredPokemonFragment.newInstance()
 
         val viewPager = findViewById<ViewPager>(R.id.assistant_viewpager)
         val adapter = Adapter(supportFragmentManager)

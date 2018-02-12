@@ -30,29 +30,27 @@ class ImprovementDelegateAdapter(val assistantPresenter: AssistantContract.Prese
         private val relatedInfo: TextView = itemView.related_info
         private val compatibleInfo: TextView = itemView.compatible_info
 
-        val totalChanceFraction: TextView = itemView.total_chance
+        //val totalChanceFraction: TextView = itemView.total_chance
         //val totalChancePercentage: TextView = itemView.total_percentage
 
-        val relatedIVs: Array<ImageView?> = arrayOfNulls(6)
-        val compatibleIVs: Array<ImageView?> = arrayOfNulls(6)
+        private val relatedIVs = arrayOf(
+            itemView.related_iv_hp,
+            itemView.related_iv_atk,
+            itemView.related_iv_def,
+            itemView.related_iv_satk,
+            itemView.related_iv_sdef,
+            itemView.related_iv_spd
+            )
+        private val compatibleIVs = arrayOf(
+            itemView.compatible_iv_hp,
+            itemView.compatible_iv_atk,
+            itemView.compatible_iv_def,
+            itemView.compatible_iv_satk,
+            itemView.compatible_iv_sdef,
+            itemView.compatible_iv_spd
+        )
 
-        init {
-            relatedIVs[0] = itemView.related_iv_hp
-            relatedIVs[1] = itemView.related_iv_atk
-            relatedIVs[2] = itemView.related_iv_def
-            relatedIVs[3] = itemView.related_iv_satk
-            relatedIVs[4] = itemView.related_iv_sdef
-            relatedIVs[5] = itemView.related_iv_spd
-
-            compatibleIVs[0] = itemView.compatible_iv_hp
-            compatibleIVs[1] = itemView.compatible_iv_atk
-            compatibleIVs[2] = itemView.compatible_iv_def
-            compatibleIVs[3] = itemView.compatible_iv_satk
-            compatibleIVs[4] = itemView.compatible_iv_sdef
-            compatibleIVs[5] = itemView.compatible_iv_spd
-        }
-
-        fun setGenderBackground(@Genders.GendersFlag gender: Int, view: ImageView) {
+        private fun setGenderBackground(@Genders.GendersFlag gender: Int, view: ImageView) {
 
             when (gender) {
                 Genders.MALE       -> view.background = ContextCompat.getDrawable(itemView.context, R.drawable.shape_circle_color_male)
@@ -63,7 +61,7 @@ class ImprovementDelegateAdapter(val assistantPresenter: AssistantContract.Prese
             }
         }
 
-        fun setIcon(id: Int, view: ImageView) {
+        private fun setIcon(id: Int, view: ImageView) {
 
             val iconId = assistantPresenter.getPokemonIconId(id)
 

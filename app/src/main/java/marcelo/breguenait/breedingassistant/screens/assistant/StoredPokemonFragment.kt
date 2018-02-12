@@ -16,6 +16,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.assistant_activity.*
+import kotlinx.android.synthetic.main.assistant_item_stored_small.view.*
 import kotlinx.android.synthetic.main.assistant_stored_fragment.view.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
@@ -50,10 +51,11 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
         override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
             val counter = storedPokemonsAdapter!!.selectedItemsCount
             val selectedText: String
-            if (counter == 1)
-                selectedText = getString(R.string.selected_title_singular)
-            else
-                selectedText = getString(R.string.selected_title_plural)
+            selectedText =
+                    if (counter == 1)
+                        getString(R.string.selected_title_singular)
+                    else
+                        getString(R.string.selected_title_plural)
 
 
             val title = String.format(selectedText, counter)
@@ -63,16 +65,16 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            when (item.itemId) {
+            return when (item.itemId) {
                 android.R.id.home         -> {
                     mode.finish()
-                    return true
+                    true
                 }
                 R.id.menu_delete_selected -> {
                     storedPokemonsAdapter!!.removeSelected()
-                    return true
+                    true
                 }
-                else                      -> return false
+                else                      -> false
             }
         }
 
@@ -188,12 +190,12 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
 
             val genderColor: Int
 
-            when (gender) {
-                Genders.MALE       -> genderColor = ContextCompat.getColor(context!!, R.color.male)
-                Genders.FEMALE     -> genderColor = ContextCompat.getColor(context!!, R.color.female)
-                Genders.GENDERLESS -> genderColor = ContextCompat.getColor(context!!, R.color.genderless)
-                Genders.DITTO      -> genderColor = ContextCompat.getColor(context!!, R.color.ditto)
-                else               -> genderColor = ContextCompat.getColor(context!!, android.R.color.black)
+            genderColor = when (gender) {
+                Genders.MALE       -> ContextCompat.getColor(context!!, R.color.male)
+                Genders.FEMALE     -> ContextCompat.getColor(context!!, R.color.female)
+                Genders.GENDERLESS -> ContextCompat.getColor(context!!, R.color.genderless)
+                Genders.DITTO      -> ContextCompat.getColor(context!!, R.color.ditto)
+                else               -> ContextCompat.getColor(context!!, android.R.color.black)
             }
 
             var genderDrawable = holder.viewGender.drawable
@@ -278,9 +280,7 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
 
         fun removeSelected() {
             val goalsToBeRemoved = ArrayList<InternalPokemon>(selectionsList.size)
-            for (selection in selectionsList) {
-                goalsToBeRemoved.add(storedPokemons[selection])
-            }
+            selectionsList.mapTo(goalsToBeRemoved) { storedPokemons[it] }
             presenter.removeStoredPokemons(goalsToBeRemoved)
 
             if (selectionMode != null)
@@ -290,27 +290,22 @@ class StoredPokemonFragment : Fragment(), AssistantContract.StorageView {
 
         internal inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
 
-            val viewIVs = arrayOfNulls<ImageView>(6)
+            val viewIVs = arrayOf(
+                itemView.stored_iv_hp,
+                itemView.stored_iv_atk,
+                itemView.stored_iv_def,
+                itemView.stored_iv_satk,
+                itemView.stored_iv_sdef,
+                itemView.stored_iv_spd)
 
-            val viewIcon: ImageView
+            val viewIcon: ImageView = itemView.findViewById(R.id.stored_icon)
 
-            val viewGender: ImageView
+            val viewGender: ImageView = itemView.findViewById(R.id.stored_gender)
 
-            val abilityIndicator: TextView
-            val natureIndicator: TextView
+            val abilityIndicator: TextView = itemView.findViewById(R.id.stored_ability_indicator)
+            val natureIndicator: TextView = itemView.findViewById(R.id.stored_nature_indicator)
 
             init {
-                this.viewIcon = itemView.findViewById(R.id.stored_icon)
-                viewIVs[0] = itemView.findViewById(R.id.stored_iv_hp)
-                viewIVs[1] = itemView.findViewById(R.id.stored_iv_atk)
-                viewIVs[2] = itemView.findViewById(R.id.stored_iv_def)
-                viewIVs[3] = itemView.findViewById(R.id.stored_iv_satk)
-                viewIVs[4] = itemView.findViewById(R.id.stored_iv_sdef)
-                viewIVs[5] = itemView.findViewById(R.id.stored_iv_spd)
-                viewGender = itemView.findViewById(R.id.stored_gender)
-                abilityIndicator = itemView.findViewById(R.id.stored_ability_indicator)
-                natureIndicator = itemView.findViewById(R.id.stored_nature_indicator)
-
                 itemView.setOnClickListener(this)
                 itemView.setOnLongClickListener(this)
             }

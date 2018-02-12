@@ -41,6 +41,7 @@ import java.util.*
 class CreationFragment : Fragment(), CreationContract.View,
     SelectionDialogFragment.PokemonSelectionListener {
 
+    private lateinit var slideAnimator: ValueAnimator
 
     internal var lastIncreasedStat = -1
 
@@ -441,7 +442,8 @@ class CreationFragment : Fragment(), CreationContract.View,
 
         val steps = 200
 
-        val slideAnimator = ValueAnimator
+
+        slideAnimator = ValueAnimator
             .ofInt(1, steps)
             .setDuration(1200)
         slideAnimator.interpolator = AccelerateDecelerateInterpolator()
@@ -481,6 +483,7 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     private fun barAnimation(@Stats.StatFlag statId: Int, iterator: Int, initialStatValue: Int, finalStatValue: Int, steps: Int) {
 
+        if(activity == null) return
 
         lastStatValues[statId] = initialStatValue + (finalStatValue - initialStatValue) * iterator / steps
 
@@ -630,4 +633,5 @@ class CreationFragment : Fragment(), CreationContract.View,
             return CreationFragment()
         }
     }
+
 }

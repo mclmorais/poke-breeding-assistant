@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.IntDef
 import android.support.design.widget.Snackbar
-import android.support.transition.Fade
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
@@ -145,18 +144,19 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
         val intent = Intent(context, AssistantActivity::class.java)
 
-        val navpair = Pair.create<View, String>(activity?.findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME)
-
-        val toppair = Pair.create<View, String>(activity?.appbar, "top")
-
         if (animate) {
             val transitionActivityOptions: ActivityOptions =
                 ActivityOptions.makeSceneTransitionAnimation(
                     activity,
-                    navpair,
-                    toppair,
-                    Pair.create<View, String>(goalsAdapter.clickedPokemonView, "profile"),
-                    Pair.create<View, String>(goalsAdapter.clickedBackgroundView, "pokemon_background_transition"))
+                    Pair.create<View, String>
+                        (activity?.findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+                    Pair.create<View, String>
+                        (activity?.appbar, "top"),
+                    Pair.create<View, String>
+                        (goalsAdapter.clickedPokemonView, "profile"),
+                    Pair.create<View, String>
+                        (goalsAdapter.clickedBackgroundView, "pokemon_background_transition"))
+
             startActivity(intent, transitionActivityOptions.toBundle())
         } else
             startActivity(intent)
@@ -390,7 +390,7 @@ class GoalsFragment : Fragment(), GoalsContract.View {
                 val icon = context?.let { ContextCompat.getDrawable(it, iconId) }
                 itemView.pokemon_icon.setImageDrawable(icon)
 
-                val nature = presenter.getNature(goal.natureId)?.name ?: getString(R.string.invalid_nature)
+                val nature = presenter.getNature(goal.natureId)?.name?.capitalize() ?: getString(R.string.invalid_nature)
                 val ability = presenter.getAbilityName(goal.externalId, goal.abilitySlot) ?: getString(R.string.invalid_ability)
 
                 itemView.pokemon_extra_info.text = getString(R.string.goal_extra_info, nature, ability)

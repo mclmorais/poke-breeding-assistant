@@ -29,6 +29,8 @@
     <string name="snack_goals_removed" tools:ignore="UnusedResources">Goals removed</string>
     <string name="label_ability">Ability</string>
     <string name="hint_no_goals">You don\'t have any goals at the moment.\n\nAdd a new one to start working towards it!</string>
+    <string name="hint_tutorial">Unfortunately, the tutorial isn\'t yet available.\n\n Check out later for more information on IVs, natures,
+        abilities, egg moves, and everything else related to breeding!</string>
     <string name="hint_no_goals_link">Add a new one</string>
     <string name="title_create_a_goal">Create a Goal</string>
     <string name="title_store_a_pokemon">Store a Pokémon</string>

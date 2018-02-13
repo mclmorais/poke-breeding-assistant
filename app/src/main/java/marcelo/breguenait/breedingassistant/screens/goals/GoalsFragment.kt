@@ -137,12 +137,14 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
         val intent = Intent(context, AssistantActivity::class.java)
 
+        val navPair = Pair.create<View, String>(activity?.findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME)
+
         if (animate) {
             val transitionActivityOptions: ActivityOptions =
                 ActivityOptions.makeSceneTransitionAnimation(
                     activity,
-                    Pair.create<View, String>
-                        (activity?.findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME),
+//                    Pair.create<View, String>
+//                        (activity?.findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME), //TODO: check for null
                     Pair.create<View, String>
                         (activity?.appbar, "top"),
                     Pair.create<View, String>

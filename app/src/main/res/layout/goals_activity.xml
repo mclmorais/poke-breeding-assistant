@@ -6,31 +6,25 @@
     android:layout_height="match_parent"
     tools:context="marcelo.breguenait.breedingassistant.screens.goals.GoalsActivity">
 
-    <android.support.v7.widget.ContentFrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    </android.support.v7.widget.ContentFrameLayout>
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_goal_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="64dp"
         android:layout_marginEnd="16dp"
         android:tint="@android:color/white"
+        app:elevation="12dp"
         app:fabSize="normal"
-        android:layout_gravity="bottom|end"
-        app:srcCompat="@drawable/ic_add_white_16dp"/>
+        app:layout_anchor="@id/bottom_navigation"
+        app:layout_anchorGravity="top|end"
+        app:srcCompat="@drawable/ic_add_white_16dp" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
-        android:transitionName="top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:transitionName="top">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -52,13 +46,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="32dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/goals_activity_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/activity_background_symbol"
-                    app:layout_constraintHorizontal_bias="0.2"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,11 +60,9 @@
                     android:id="@+id/activity_version_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="0dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    app:layout_constraintStart_toEndOf="@+id/activity_title"
-                    app:layout_constraintTop_toTopOf="@+id/activity_title"
+                    app:layout_constraintBottom_toTopOf="@+id/activity_title"
+                    app:layout_constraintStart_toStartOf="@+id/activity_title"
                     tools:text="Alpha 255" />
 
                 <ImageView
@@ -101,4 +93,24 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.ContentFrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </android.support.v7.widget.ContentFrameLayout>
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        app:elevation="8dp"
+        app:menu="@menu/goal_navigation" />
+
+
 </android.support.design.widget.CoordinatorLayout>

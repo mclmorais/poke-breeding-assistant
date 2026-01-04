@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.creation_activity.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
@@ -11,7 +12,7 @@ import marcelo.breguenait.breedingassistant.screens.creation.injection.DaggerCre
 import marcelo.breguenait.breedingassistant.screens.selection.SelectionPresenter
 import javax.inject.Inject
 
-class CreationActivity : AppCompatActivity(){
+class CreationActivity : AppCompatActivity() {
 
     @Inject
     internal lateinit var creationPresenter: CreationPresenter
@@ -68,6 +69,16 @@ class CreationActivity : AppCompatActivity(){
                 .add(R.id.content_frame, creationFragment)
                 .commit()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

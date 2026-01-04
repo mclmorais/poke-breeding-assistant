@@ -8,6 +8,8 @@
     <string name="pkmn_link_filename" translatable="false">pkmn_link_%03d</string>
     <string name="drawable_resource_name" translatable="false">drawable</string>
     <string name="goals_activity_label">Your Goals</string>
+    <string name="box_activity_label">Storage</string>
+    <string name="tutorial_activity_label">Tutorial</string>
     <string name="cd_target_board">Target board.</string>
     <string name="app_name">Breeding Assistant</string>
     <string name="action_settings">Settings</string>
@@ -27,6 +29,8 @@
     <string name="snack_goals_removed" tools:ignore="UnusedResources">Goals removed</string>
     <string name="label_ability">Ability</string>
     <string name="hint_no_goals">You don\'t have any goals at the moment.\n\nAdd a new one to start working towards it!</string>
+    <string name="hint_tutorial">Unfortunately, the tutorial isn\'t yet available.\n\n Check out later for more information on IVs, natures,
+        abilities, egg moves, and everything else related to breeding!</string>
     <string name="hint_no_goals_link">Add a new one</string>
     <string name="title_create_a_goal">Create a Goal</string>
     <string name="title_store_a_pokemon">Store a Pokémon</string>
@@ -90,5 +94,8 @@
 
     <!--Assistant-->
     <string name="assistant_goal_extra_info" translatable="false">%1$s • %2$s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -5,6 +5,7 @@ import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalNat
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
 import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
 import marcelo.breguenait.breedingassistant.data.internal.InternalRepository
+import marcelo.breguenait.breedingassistant.screens.assistant.BoxContract
 import marcelo.breguenait.breedingassistant.utils.CachedPokemonIcons
 import javax.inject.Inject
 
@@ -15,6 +16,8 @@ internal constructor(private val internalRepository: InternalRepository,
                      private val cachedIcons: CachedPokemonIcons) : GoalsContract.Presenter {
 
     private lateinit var goalsView: GoalsContract.View
+
+    private lateinit var boxView: BoxContract.BoxView
 
     override val goals: List<InternalPokemon>
         get() = internalRepository.goals
@@ -67,5 +70,25 @@ internal constructor(private val internalRepository: InternalRepository,
 
     override fun getPokemonIconId(id: Int): Int {
         return cachedIcons.getIconId(id)
+    }
+
+    override val currentGoal: InternalPokemon? = null
+
+    override fun initBox() {
+        if (!boxView.initialized()) {
+            boxView.updateStoredPokemons(internalRepository.getStoredPokemons())
+        }
+    }
+
+    override fun result(requestCode: Int, resultCode: Int) {
+        boxView.updateStoredPokemons(internalRepository.getStoredPokemons())
+    }
+
+    override fun removeStoredPokemons(stored: List<InternalPokemon>) {
+        TODO("not implemented")
+    }
+
+    override fun setStorageView(boxView: BoxContract.BoxView) {
+        this.boxView = boxView
     }
 }

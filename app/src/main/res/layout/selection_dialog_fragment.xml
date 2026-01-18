@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,7 +15,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             style="@style/AssistantThemeLight.TintedSection"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -25,23 +25,19 @@
             android:layout_marginTop="0dp"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:title="Select a Pokémon"/>
-        <com.miguelcatalan.materialsearchview.MaterialSearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+
     </FrameLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_selectable_pokemon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:listitem="@layout/selection_item_small"
         app:layout_constraintTop_toBottomOf="@id/toolbar_layout"/>
-</android.support.constraint.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

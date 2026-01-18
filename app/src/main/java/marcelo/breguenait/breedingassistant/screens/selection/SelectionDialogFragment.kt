@@ -2,11 +2,6 @@ package marcelo.breguenait.breedingassistant.screens.selection
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +9,13 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.miguelcatalan.materialsearchview.MaterialSearchView
 import kotlinx.android.synthetic.main.selection_dialog_fragment.view.*
 import marcelo.breguenait.breedingassistant.R
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
@@ -69,11 +69,10 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
     private fun initToolbar(toolbar: Toolbar) {
         toolbar.inflateMenu(R.menu.menu_select_pokemon)
-    }
+        val searchItem = toolbar.menu.findItem(R.id.menu_search)
+        val searchView = searchItem.actionView as SearchView
 
-    private fun initSearch(searchView: MaterialSearchView, toolbar: Toolbar) {
-
-        searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -82,10 +81,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
                 adapter.filter.filter(newText)
                 return true
             }
-
         })
-
-        searchView.setMenuItem(toolbar.menu.findItem(R.id.menu_search))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,7 +99,6 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
         initList(root.list_selectable_pokemon)
         initToolbar(root.toolbar)
-        initSearch(root.search_view, root.toolbar)
 
         return root
     }
@@ -113,7 +108,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         val listener = targetFragment as PokemonSelectionListener
         listener.onSelectorDismissed()
@@ -259,7 +254,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
                         }
 
                         /*If no family compatible pokemons were added, removes the header*/
-                        if (filteredSelectablePokemons[filteredSelectablePokemons.size - 1] === fakePokemons[0])
+                        if (filteredSelectablePokemons.isNotEmpty() && filteredSelectablePokemons[filteredSelectablePokemons.size - 1] === fakePokemons[0])
                             filteredSelectablePokemons.removeAt(filteredSelectablePokemons.size - 1)
 
 
@@ -276,7 +271,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
                                 filteredSelectablePokemons.add(pokemon)
                         }
 
-                        if (filteredSelectablePokemons[filteredSelectablePokemons.size - 1] === fakePokemons[1])
+                        if (filteredSelectablePokemons.isNotEmpty() && filteredSelectablePokemons[filteredSelectablePokemons.size - 1] === fakePokemons[1])
                             filteredSelectablePokemons.removeAt(filteredSelectablePokemons.size - 1)
 
                         if (showIncompatible) {
@@ -293,7 +288,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
                             }
 
-                            if (filteredSelectablePokemons[filteredSelectablePokemons.size - 1] === fakePokemons[2])
+                            if (filteredSelectablePokemons.isNotEmpty() && filteredSelectablePokemons[filteredSelectablePokemons.size - 1] === fakePokemons[2])
                                 filteredSelectablePokemons.removeAt(filteredSelectablePokemons.size - 1)
                         }
 

@@ -20,9 +20,11 @@ This application assists Pokemon breeders by analyzing their Pokemon collection 
 
 This is an Android application built with:
 - **Language**: Kotlin (with some Java components)
-- **Architecture**: MVP (Model-View-Presenter) pattern with dependency injection using Dagger 2
-- **Minimum SDK**: Android API 21 (Lollipop)
-- **Target SDK**: Android API 27 (Oreo)
+- **Architecture**: MVP (Model-View-Presenter) pattern with dependency injection using Dagger 2 (KSP)
+- **UI toolkit**: AndroidX, Material Components, and ViewBinding
+- **Minimum SDK**: Android API 23 (Marshmallow)
+- **Target SDK**: Android API 37 (Android 17)
+- **Toolchain**: Gradle 9.8, Android Gradle Plugin 9.4, Kotlin 2.4, JDK 17 or later
 
 ### Key Components
 
@@ -42,7 +44,9 @@ This is the first iteration of the project. The application provides core breedi
 1. Clone the repository
 2. Open the project in Android Studio
 3. Sync Gradle dependencies
-4. Build and run on an Android device or emulator with API level 21 or higher
+4. Build and run on an Android device or emulator with API level 23 or higher
+
+From the command line, run `./gradlew assembleDebug`. The Gradle versions are in `gradle/libs.versions.toml`.
 
 ## Data Sources
 

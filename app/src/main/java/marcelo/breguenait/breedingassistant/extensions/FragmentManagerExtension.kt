@@ -1,7 +1,7 @@
 package marcelo.breguenait.breedingassistant.extensions
 
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 
 fun FragmentManager.inTransaction(body: FragmentTransaction.() -> Unit) {
     beginTransaction().apply {

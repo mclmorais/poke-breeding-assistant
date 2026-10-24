@@ -21,7 +21,7 @@ class IvChanceChecker @Inject constructor() {
 
         val ivs = 0..5
 
-        return destinyKnotCombinations.sumByDouble { currentCombination ->
+        return destinyKnotCombinations.sumOf { currentCombination ->
             ivs.fold(1.0, { total, currentIV ->
                 total *
                         if (goalIVs[currentIV] != 1)
@@ -47,7 +47,7 @@ class IvChanceChecker @Inject constructor() {
 
         val ivs = 0..5
 
-        return destinyKnotCombinations.sumByDouble { currentCombination ->
+        return destinyKnotCombinations.sumOf { currentCombination ->
 
             ivs.fold(1.0, { total, currentIV ->
                 total *

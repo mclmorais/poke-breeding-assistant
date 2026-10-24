@@ -3,12 +3,13 @@ package marcelo.breguenait.breedingassistant.screens.goals
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationBarView
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.goals_activity.*
 import marcelo.breguenait.breedingassistant.R
+import marcelo.breguenait.breedingassistant.extensions.padTopForStatusBar
+import marcelo.breguenait.breedingassistant.databinding.GoalsActivityBinding
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
 import marcelo.breguenait.breedingassistant.extensions.active
 import marcelo.breguenait.breedingassistant.extensions.inAnimatedTransaction
@@ -20,12 +21,14 @@ import javax.inject.Inject
 
 class GoalsActivity :
     AppCompatActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener,
+    NavigationBarView.OnItemSelectedListener,
     StoredPokemonFragment.PresenterCallback {
 
 
     @Inject
     lateinit var goalsPresenter: GoalsPresenter
+
+    internal lateinit var binding: GoalsActivityBinding
 
     private var goalsFragment: GoalsFragment? = null
 
@@ -33,13 +36,15 @@ class GoalsActivity :
 
 
     private fun initBottomNavigation() {
-        bottom_navigation.active(navPosition)
-        bottom_navigation.setOnNavigationItemSelectedListener(this)
+        binding.bottomNavigation.active(navPosition)
+        binding.bottomNavigation.setOnItemSelectedListener(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.goals_activity)
+        binding = GoalsActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.appbar.padTopForStatusBar()
 
         //Builds Dagger injection components
         DaggerGoalsComponent.builder()
@@ -47,11 +52,11 @@ class GoalsActivity :
             .build()
             .inject(this)
 
-        //Sets the custom XML toolbar as the action bar
-        setSupportActionBar(toolbar)
+        //Sets the custom XML binding.toolbar as the action bar
+        setSupportActionBar(binding.toolbar)
 
         //Adds the version name next to the title. If the version name can't be found, leaves it empty
-        activity_version_label.text = try {
+        binding.activityVersionLabel.text = try {
             packageManager.getPackageInfo(packageName, 0).versionName
         } catch (e: PackageManager.NameNotFoundException) {
             ""
@@ -81,15 +86,15 @@ class GoalsActivity :
         goalsFragment?.fastUpdateGoals()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         // Store the current navigation position.
-        outState?.putInt(KEY_POSITION, navPosition)
+        outState.putInt(KEY_POSITION, navPosition)
         super.onSaveInstanceState(outState)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        // Restore the current navigation position.
-        savedInstanceState?.let {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.let {
             val id = it.getInt(KEY_POSITION, NAV_GOALS)
             navPosition = when (id) {
                 R.id.nav_goals    -> NAV_GOALS
@@ -166,16 +171,16 @@ class GoalsActivity :
 
     private fun switchTitle(position: Int) = when (position) {
         NAV_GOALS    -> {
-            activity_title.text = getString(R.string.goals_activity_label)
-            activity_background_symbol.setImageResource(R.drawable.ic_goal)
+            binding.activityTitle.text = getString(R.string.goals_activity_label)
+            binding.activityBackgroundSymbol.setImageResource(R.drawable.ic_goal)
         }
         NAV_BOX      -> {
-            activity_title.text = getString(R.string.box_activity_label)
-            activity_background_symbol.setImageResource(R.drawable.ic_grid_on_black_24dp)
+            binding.activityTitle.text = getString(R.string.box_activity_label)
+            binding.activityBackgroundSymbol.setImageResource(R.drawable.ic_grid_on_black_24dp)
         }
         NAV_TUTORIAL -> {
-            activity_title.text = getString(R.string.tutorial_activity_label)
-            activity_background_symbol.setImageResource(R.drawable.ic_school_black_24dp)
+            binding.activityTitle.text = getString(R.string.tutorial_activity_label)
+            binding.activityBackgroundSymbol.setImageResource(R.drawable.ic_school_black_24dp)
         }
         else         -> {
         }

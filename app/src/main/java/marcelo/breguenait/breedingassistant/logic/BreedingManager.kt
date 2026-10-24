@@ -1,6 +1,6 @@
 package marcelo.breguenait.breedingassistant.logic
 
-import android.support.annotation.IntDef
+import androidx.annotation.IntDef
 import marcelo.breguenait.breedingassistant.data.external.ExternalRepository
 import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
 import marcelo.breguenait.breedingassistant.data.internal.InternalRepository
@@ -150,7 +150,7 @@ class BreedingManager @Inject constructor(private val externalRepository: Extern
 
     }
 
-    @IntDef(flag = true, value = [(CONSIDER_STRICT_IVS.toLong()), (CONSIDER_STRICT_NATURE.toLong()), (CONSIDER_ABILITY.toLong()), (CONSIDER_GENDER.toLong())])
+    @IntDef(flag = true, value = [CONSIDER_STRICT_IVS, CONSIDER_STRICT_NATURE, CONSIDER_ABILITY, CONSIDER_GENDER])
     internal annotation class ChanceFlags
 
     companion object {

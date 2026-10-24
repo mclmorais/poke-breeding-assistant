@@ -1,6 +1,7 @@
 package marcelo.breguenait.breedingassistant.screens.assistant
 
-import android.os.AsyncTask
+import android.os.Handler
+import android.os.Looper
 import marcelo.breguenait.breedingassistant.data.external.ExternalRepository
 import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
 import marcelo.breguenait.breedingassistant.data.internal.InternalRepository
@@ -8,7 +9,7 @@ import marcelo.breguenait.breedingassistant.logic.AssistantAi
 import marcelo.breguenait.breedingassistant.logic.CompatibilityChecker
 import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
 import marcelo.breguenait.breedingassistant.utils.CachedPokemonIcons
-import javax.annotation.Resource
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 
@@ -22,9 +23,7 @@ constructor(private val internalRepository: InternalRepository,
 
     private val compatibilityChecker: CompatibilityChecker = CompatibilityChecker(externalRepository) //TODO: inject?
 
-    @Resource
     private lateinit var assistantView: AssistantContract.AssistantView
-    @Resource
     private lateinit var boxView: BoxContract.BoxView
 
     override fun setAssistantView(assistantView: AssistantContract.AssistantView) {
@@ -98,7 +97,7 @@ constructor(private val internalRepository: InternalRepository,
 
     override fun requestChancesUpdate() {
         assistantView.showLoading()
-        Calculations(assistantAi, internalRepository, assistantView).execute()
+        calculateBestMatches()
     }
 
     override fun getNatureName(natureId: Int): String {
@@ -118,31 +117,24 @@ constructor(private val internalRepository: InternalRepository,
         requestChancesUpdate()
     }
 
-    companion object {
-        class Calculations(private val assistantAi: AssistantAi,
-                           private val internalRepository: InternalRepository,
-                           private val assistantView: AssistantContract.AssistantView) :
-            AsyncTask<Int, Int, Int>() {
-
-            override fun doInBackground(vararg params: Int?): Int? {
-
-                assistantAi.calculateBestMatches(internalRepository.currentGoal ?: return 0)
-
+    private fun calculateBestMatches() {
+        val view = assistantView
+        calculations.execute {
+            internalRepository.currentGoal?.let {
+                assistantAi.calculateBestMatches(it)
                 Thread.sleep(500) //TODO: Switch to a more elegant solution to always delay at least 500ms before giving results
-
-                return 0
             }
-
-            override fun onPostExecute(integer: Int) {
-                super.onPostExecute(integer)
-
-                assistantView.provideDirectItems(assistantAi.directCombinations, assistantAi.directFlag)
-
-                assistantView.provideImprovementItems(assistantAi.improvementCombinations)
-
-                assistantView.runLayoutAnimation()
+            mainThread.post {
+                view.provideDirectItems(assistantAi.directCombinations, assistantAi.directFlag)
+                view.provideImprovementItems(assistantAi.improvementCombinations)
+                view.runLayoutAnimation()
             }
         }
+    }
+
+    companion object {
+        private val calculations = Executors.newSingleThreadExecutor()
+        private val mainThread = Handler(Looper.getMainLooper())
     }
 
 }

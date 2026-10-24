@@ -1,6 +1,6 @@
 package marcelo.breguenait.breedingassistant.utils;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 /**
  * Created by Marcelo on 19/03/2017.

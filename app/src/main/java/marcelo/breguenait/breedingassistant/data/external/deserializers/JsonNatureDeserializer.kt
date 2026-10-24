@@ -2,7 +2,7 @@ package marcelo.breguenait.breedingassistant.data.external.deserializers
 
 import android.util.SparseArray
 import android.util.SparseIntArray
-import androidx.util.set
+import androidx.core.util.set
 import com.google.gson.JsonArray
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement

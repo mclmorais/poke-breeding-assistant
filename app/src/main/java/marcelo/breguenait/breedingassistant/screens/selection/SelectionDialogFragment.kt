@@ -2,11 +2,11 @@ package marcelo.breguenait.breedingassistant.screens.selection
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +15,9 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.miguelcatalan.materialsearchview.MaterialSearchView
-import kotlinx.android.synthetic.main.selection_dialog_fragment.view.*
+import androidx.appcompat.widget.SearchView
 import marcelo.breguenait.breedingassistant.R
+import marcelo.breguenait.breedingassistant.databinding.SelectionDialogFragmentBinding
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalPokemon
 import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
 import marcelo.breguenait.breedingassistant.utils.Utility
@@ -71,9 +71,10 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
         toolbar.inflateMenu(R.menu.menu_select_pokemon)
     }
 
-    private fun initSearch(searchView: MaterialSearchView, toolbar: Toolbar) {
-
-        searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
+    private fun initSearch(toolbar: Toolbar) {
+        val searchView = toolbar.menu.findItem(R.id.menu_search).actionView as SearchView
+        searchView.queryHint = getString(R.string.search_hint)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -82,10 +83,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
                 adapter.filter.filter(newText)
                 return true
             }
-
         })
-
-        searchView.setMenuItem(toolbar.menu.findItem(R.id.menu_search))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,19 +91,19 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
         presenter = (activity as CreationActivity).selectionPresenter
         presenter.setView(this)
 
-        if(targetFragment !is PokemonSelectionListener)
+        if(parentFragment !is PokemonSelectionListener)
             throw Exception("the base fragment must implement PokemonSelectionListener!")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        val root = inflater.inflate(R.layout.selection_dialog_fragment, container, false)
+        val binding = SelectionDialogFragmentBinding.inflate(inflater, container, false)
 
-        initList(root.list_selectable_pokemon)
-        initToolbar(root.toolbar)
-        initSearch(root.search_view, root.toolbar)
+        initList(binding.listSelectablePokemon)
+        initToolbar(binding.toolbar)
+        initSearch(binding.toolbar)
 
-        return root
+        return binding.root
     }
 
     override fun onStart() {
@@ -113,9 +111,9 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        val listener = targetFragment as PokemonSelectionListener
+        val listener = parentFragment as PokemonSelectionListener
         listener.onSelectorDismissed()
     }
 
@@ -225,7 +223,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
             filteredSelectableList.addAll(newFiltered)
 
             diffResult.dispatchUpdatesTo(this)
-            view?.list_selectable_pokemon?.scrollToPosition(0)
+            view?.findViewById<RecyclerView>(R.id.list_selectable_pokemon)?.scrollToPosition(0)
         }
 
         override fun getFilter(): Filter {
@@ -234,7 +232,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
                     var superConstraint = constraint
 
                     if (superConstraint != null)
-                        superConstraint = superConstraint.toString().toLowerCase()
+                        superConstraint = superConstraint.toString().lowercase()
 
                     val filteredSelectablePokemons = ArrayList<ExternalPokemon>()
 
@@ -252,9 +250,9 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
                         for (pokemon in familyList) {
                             if (superConstraint == null) superConstraint = ""
 
-                            if (pokemon.name.toLowerCase().contains(superConstraint))
+                            if (pokemon.name.lowercase().contains(superConstraint))
                                 filteredSelectablePokemons.add(pokemon)
-                            else if (Integer.toString(pokemon.id).contains(superConstraint))
+                            else if (pokemon.id.toString().contains(superConstraint))
                                 filteredSelectablePokemons.add(pokemon)
                         }
 
@@ -270,9 +268,9 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
                             if (superConstraint == null) superConstraint = ""
 
-                            if (pokemon.name.toLowerCase().contains(superConstraint))
+                            if (pokemon.name.lowercase().contains(superConstraint))
                                 filteredSelectablePokemons.add(pokemon)
-                            else if (Integer.toString(pokemon.id).contains(superConstraint))
+                            else if (pokemon.id.toString().contains(superConstraint))
                                 filteredSelectablePokemons.add(pokemon)
                         }
 
@@ -286,9 +284,9 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
                                 if (superConstraint == null) superConstraint = ""
 
-                                if (pokemon.name.toLowerCase().contains(superConstraint))
+                                if (pokemon.name.lowercase().contains(superConstraint))
                                     filteredSelectablePokemons.add(pokemon)
-                                else if (Integer.toString(pokemon.id).contains(superConstraint))
+                                else if (pokemon.id.toString().contains(superConstraint))
                                     filteredSelectablePokemons.add(pokemon)
 
                             }
@@ -306,9 +304,9 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
                             if (superConstraint == null) superConstraint = ""
 
-                            if (pokemon.name.toLowerCase().contains(superConstraint))
+                            if (pokemon.name.lowercase().contains(superConstraint))
                                 filteredSelectablePokemons.add(pokemon)
-                            else if (Integer.toString(pokemon.id).contains(superConstraint))
+                            else if (pokemon.id.toString().contains(superConstraint))
                                 filteredSelectablePokemons.add(pokemon)
                         }
 
@@ -320,7 +318,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
                 }
 
-                override fun publishResults(constraint: CharSequence, results: Filter.FilterResults) {
+                override fun publishResults(constraint: CharSequence?, results: Filter.FilterResults) {
                     @Suppress("UNCHECKED_CAST")
                     updateItems(results.values as ArrayList<ExternalPokemon>)
                 }
@@ -344,7 +342,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
             }
 
             override fun onClick(v: View) {
-                presenter.finishSelection(itemAt(adapterPosition).id)
+                presenter.finishSelection(itemAt(bindingAdapterPosition).id)
             }
         }
 
@@ -375,7 +373,7 @@ class SelectionDialogFragment : DialogFragment(), SelectionContract.View {
 
 
     override fun sendSelectedPokemonId(id: Int) {
-        (targetFragment as PokemonSelectionListener).onPokemonSelected(id)
+        (parentFragment as PokemonSelectionListener).onPokemonSelected(id)
         dismiss()
     }
 }

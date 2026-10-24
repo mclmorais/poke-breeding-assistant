@@ -1,6 +1,6 @@
 package marcelo.breguenait.breedingassistant.utils;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 
 public class Genders {

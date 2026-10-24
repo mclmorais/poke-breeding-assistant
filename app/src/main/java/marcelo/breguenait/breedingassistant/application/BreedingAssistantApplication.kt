@@ -2,7 +2,6 @@ package marcelo.breguenait.breedingassistant.application
 
 import android.app.Activity
 import android.app.Application
-import android.preference.PreferenceManager
 import marcelo.breguenait.breedingassistant.application.injection.ApplicationComponent
 import marcelo.breguenait.breedingassistant.application.injection.ApplicationModule
 import marcelo.breguenait.breedingassistant.application.injection.DaggerApplicationComponent
@@ -28,8 +27,7 @@ class BreedingAssistantApplication : Application() {
     private fun initDagger(app: BreedingAssistantApplication) {
         component = DaggerApplicationComponent
             .builder()
-            .applicationModule(ApplicationModule(app, PreferenceManager
-                .getDefaultSharedPreferences(this)))
+            .applicationModule(ApplicationModule(app, getSharedPreferences("${packageName}_preferences", MODE_PRIVATE)))
             .internalPokemonModule(InternalPokemonModule())
             .externalPokemonModule(ExternalPokemonModule(assets))
             .cachedPokemonIconsModule(CachedPokemonIconsModule(this))

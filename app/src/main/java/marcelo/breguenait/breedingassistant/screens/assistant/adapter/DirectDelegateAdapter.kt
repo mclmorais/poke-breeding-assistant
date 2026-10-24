@@ -1,14 +1,14 @@
 package marcelo.breguenait.breedingassistant.screens.assistant.adapter
 
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.assistant_item_direct.view.*
 import marcelo.breguenait.breedingassistant.R
+import marcelo.breguenait.breedingassistant.databinding.AssistantItemDirectBinding
 import marcelo.breguenait.breedingassistant.logic.CombinationHolder
 import marcelo.breguenait.breedingassistant.screens.assistant.AssistantContract
 import marcelo.breguenait.breedingassistant.utils.Genders
@@ -29,36 +29,38 @@ class DirectDelegateAdapter(val assistantPresenter: AssistantContract.Presenter)
     inner class DirectViewHolder(parent: ViewGroup) :
         RecyclerView.ViewHolder(parent.inflate(R.layout.assistant_item_direct)) {
 
-        private val related: ImageView = itemView.related_icon
-        private val compatible: ImageView = itemView.compatible_icon
+        private val itemBinding = AssistantItemDirectBinding.bind(itemView)
 
-        private val relatedInfo: TextView = itemView.related_info
-        private val compatibleInfo: TextView = itemView.compatible_info
+        private val related: ImageView = itemBinding.relatedIcon
+        private val compatible: ImageView = itemBinding.compatibleIcon
 
-        private val totalChanceFraction: TextView = itemView.total_chance
-        private val totalChancePercentage: TextView = itemView.total_percentage
+        private val relatedInfo: TextView = itemBinding.relatedInfo
+        private val compatibleInfo: TextView = itemBinding.compatibleInfo
+
+        private val totalChanceFraction: TextView = itemBinding.totalChance
+        private val totalChancePercentage: TextView = itemBinding.totalPercentage
 
         private val relatedIVs = arrayOf(
-            itemView.related_iv_hp,
-            itemView.related_iv_atk,
-            itemView.related_iv_def,
-            itemView.related_iv_satk,
-            itemView.related_iv_sdef,
-            itemView.related_iv_spd)
+            itemBinding.relatedIvHp,
+            itemBinding.relatedIvAtk,
+            itemBinding.relatedIvDef,
+            itemBinding.relatedIvSatk,
+            itemBinding.relatedIvSdef,
+            itemBinding.relatedIvSpd)
 
         private val compatibleIVs = arrayOf(
-            itemView.compatible_iv_hp,
-            itemView.compatible_iv_atk,
-            itemView.compatible_iv_def,
-            itemView.compatible_iv_satk,
-            itemView.compatible_iv_sdef,
-            itemView.compatible_iv_spd)
+            itemBinding.compatibleIvHp,
+            itemBinding.compatibleIvAtk,
+            itemBinding.compatibleIvDef,
+            itemBinding.compatibleIvSatk,
+            itemBinding.compatibleIvSdef,
+            itemBinding.compatibleIvSpd)
 
-        private val problemNature: TextView = itemView.problem_nature
-        private val problemAbility: TextView = itemView.problem_ability
-        private val problemIVs: TextView = itemView.problem_ivs
+        private val problemNature: TextView = itemBinding.problemNature
+        private val problemAbility: TextView = itemBinding.problemAbility
+        private val problemIVs: TextView = itemBinding.problemIvs
 
-        private val problemsLayout: View = itemView.problems_layout
+        private val problemsLayout: View = itemBinding.problemsLayout
 
         private fun setGenderBackground(@Genders.GendersFlag gender: Int, view: ImageView) {
 

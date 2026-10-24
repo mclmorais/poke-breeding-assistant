@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,7 +9,7 @@
     </style>
 
 
-    <style name="AssistantThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AssistantThemeLight" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -26,7 +26,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="SmallLabel">
-        <item name="android:textColor">@android:color/tertiary_text_light</item>
+        <item name="android:textColor">@color/tertiary_text</item>
         <item name="android:textSize">12sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:fontFamily">sans-serif-light</item>

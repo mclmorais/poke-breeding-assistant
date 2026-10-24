@@ -1,6 +1,6 @@
 package marcelo.breguenait.breedingassistant.data.internal
 
-import android.support.annotation.IntDef
+import androidx.annotation.IntDef
 import java.util.*
 
 class InternalRepository(private val mDataSource: InternalPokemonDataSource) {
@@ -86,7 +86,7 @@ class InternalRepository(private val mDataSource: InternalPokemonDataSource) {
 
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
-    @IntDef(INTERNAL_GOAL.toLong(), INTERNAL_STORED.toLong())
+    @IntDef(INTERNAL_GOAL, INTERNAL_STORED)
     internal annotation class InternalPokemonFlag
 
     companion object {

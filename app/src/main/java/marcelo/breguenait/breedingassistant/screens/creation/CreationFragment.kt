@@ -6,32 +6,22 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.FloatingActionButton
-import android.support.graphics.drawable.VectorDrawableCompat
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.*
-import androidx.view.doOnLayout
-import kotlinx.android.synthetic.main.creation_activity.*
-import kotlinx.android.synthetic.main.creation_fragment.*
-import kotlinx.android.synthetic.main.creation_fragment.view.*
-import kotlinx.android.synthetic.main.creation_item_nature_selection.view.*
-import kotlinx.android.synthetic.main.creation_item_stat_bars.view.*
-import kotlinx.android.synthetic.main.creation_module_ability.*
-import kotlinx.android.synthetic.main.creation_module_ability.view.*
-import kotlinx.android.synthetic.main.creation_module_info.*
-import kotlinx.android.synthetic.main.creation_module_info.view.*
-import kotlinx.android.synthetic.main.creation_module_ivs.view.*
-import kotlinx.android.synthetic.main.creation_module_nature.*
-import kotlinx.android.synthetic.main.creation_module_nature.view.*
+import androidx.core.view.doOnLayout
 import marcelo.breguenait.breedingassistant.R
+import marcelo.breguenait.breedingassistant.databinding.CreationFragmentBinding
+import marcelo.breguenait.breedingassistant.databinding.CreationItemNatureSelectionBinding
 import marcelo.breguenait.breedingassistant.data.external.datablocks.ExternalNature
 import marcelo.breguenait.breedingassistant.screens.selection.SelectionDialogFragment
 import marcelo.breguenait.breedingassistant.utils.Genders
@@ -53,6 +43,11 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     private lateinit var presenter: CreationContract.Presenter
 
+    private var _binding: CreationFragmentBinding? = null
+    private val binding get() = _binding!!
+
+    private val activityBinding get() = (activity as CreationActivity?)?.binding
+
     private var isFemale = false
 
     @Suppress("PrivatePropertyName")
@@ -73,16 +68,16 @@ class CreationFragment : Fragment(), CreationContract.View,
         }
 
     override val selectedNatureId: Int
-        get() = (spinner_nature.selectedItem as ExternalNature?)?.id ?: -1
+        get() = (binding.natureModule.spinnerNature.selectedItem as ExternalNature?)?.id ?: -1
 
 
-    private fun initIVs(root: View) {
-        IVs[0] = root.ivs_module.pokemon_iv_hp
-        IVs[1] = root.ivs_module.pokemon_iv_atk
-        IVs[2] = root.ivs_module.pokemon_iv_def
-        IVs[3] = root.ivs_module.pokemon_iv_satk
-        IVs[4] = root.ivs_module.pokemon_iv_sdef
-        IVs[5] = root.ivs_module.pokemon_iv_spd
+    private fun initIVs() {
+        IVs[0] = binding.ivsModule.pokemonIvHp
+        IVs[1] = binding.ivsModule.pokemonIvAtk
+        IVs[2] = binding.ivsModule.pokemonIvDef
+        IVs[3] = binding.ivsModule.pokemonIvSatk
+        IVs[4] = binding.ivsModule.pokemonIvSdef
+        IVs[5] = binding.ivsModule.pokemonIvSpd
 
 
         val ivListener = View.OnClickListener {
@@ -95,37 +90,37 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     }
 
-    private fun initStats(root: View) {
-        statBars[0] = root.bar_hp
-        statBars[1] = root.bar_atk
-        statBars[2] = root.bar_def
-        statBars[3] = root.bar_satk
-        statBars[4] = root.bar_sdef
-        statBars[5] = root.bar_spd
+    private fun initStats() {
+        statBars[0] = binding.infoInclude.statBarsModule.barHp
+        statBars[1] = binding.infoInclude.statBarsModule.barAtk
+        statBars[2] = binding.infoInclude.statBarsModule.barDef
+        statBars[3] = binding.infoInclude.statBarsModule.barSatk
+        statBars[4] = binding.infoInclude.statBarsModule.barSdef
+        statBars[5] = binding.infoInclude.statBarsModule.barSpd
 
-        statTexts[0] = root.value_hp
-        statTexts[1] = root.value_atk
-        statTexts[2] = root.value_def
-        statTexts[3] = root.value_satk
-        statTexts[4] = root.value_sdef
-        statTexts[5] = root.value_spd
+        statTexts[0] = binding.infoInclude.statBarsModule.valueHp
+        statTexts[1] = binding.infoInclude.statBarsModule.valueAtk
+        statTexts[2] = binding.infoInclude.statBarsModule.valueDef
+        statTexts[3] = binding.infoInclude.statBarsModule.valueSatk
+        statTexts[4] = binding.infoInclude.statBarsModule.valueSdef
+        statTexts[5] = binding.infoInclude.statBarsModule.valueSpd
 
-        statLabels[0] = root.stat_bar_label_hp
-        statLabels[1] = root.stat_bar_label_atk
-        statLabels[2] = root.stat_bar_label_def
-        statLabels[3] = root.stat_bar_label_satk
-        statLabels[4] = root.stat_bar_label_sdef
-        statLabels[5] = root.stat_bar_label_spd
+        statLabels[0] = binding.infoInclude.statBarsModule.statBarLabelHp
+        statLabels[1] = binding.infoInclude.statBarsModule.statBarLabelAtk
+        statLabels[2] = binding.infoInclude.statBarsModule.statBarLabelDef
+        statLabels[3] = binding.infoInclude.statBarsModule.statBarLabelSatk
+        statLabels[4] = binding.infoInclude.statBarsModule.statBarLabelSdef
+        statLabels[5] = binding.infoInclude.statBarsModule.statBarLabelSpd
     }
 
-    private fun initNatures(root: View) {
-        root.spinner_nature.adapter = NatureSpinnerAdapter(presenter.natures)
-        root.spinner_nature.setSelection(0, false)
+    private fun initNatures() {
+        binding.natureModule.spinnerNature.adapter = NatureSpinnerAdapter(presenter.natures)
+        binding.natureModule.spinnerNature.setSelection(0, false)
 
-        root.spinner_nature.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+        binding.natureModule.spinnerNature.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
 
-                val nature = root.spinner_nature.adapter.getItem(position) as ExternalNature
+                val nature = binding.natureModule.spinnerNature.adapter.getItem(position) as ExternalNature
                 presenter.notifyStatChanged(nature.increasedStatId)
                 presenter.notifyStatChanged(nature.decreasedStatId)
                 if (lastIncreasedStat != -1 &&
@@ -149,34 +144,34 @@ class CreationFragment : Fragment(), CreationContract.View,
         }
     }
 
-    private fun initAbilities(root: View) {
+    private fun initAbilities() {
         val radioClickListener = View.OnClickListener { v ->
             when {
-                v === radio_1st_ability    -> {
-                    radio_2nd_ability.isChecked = false
-                    radio_hidden_ability.isChecked = false
+                v === binding.abilityModule.radio1stAbility    -> {
+                    binding.abilityModule.radio2ndAbility.isChecked = false
+                    binding.abilityModule.radioHiddenAbility.isChecked = false
                 }
-                v === radio_2nd_ability    -> {
-                    radio_1st_ability.isChecked = false
-                    radio_hidden_ability.isChecked = false
+                v === binding.abilityModule.radio2ndAbility    -> {
+                    binding.abilityModule.radio1stAbility.isChecked = false
+                    binding.abilityModule.radioHiddenAbility.isChecked = false
                 }
-                v === radio_hidden_ability -> {
-                    radio_1st_ability.isChecked = false
-                    radio_2nd_ability.isChecked = false
+                v === binding.abilityModule.radioHiddenAbility -> {
+                    binding.abilityModule.radio1stAbility.isChecked = false
+                    binding.abilityModule.radio2ndAbility.isChecked = false
                 }
             }
         }
 
-        root.radio_1st_ability.setOnClickListener(radioClickListener)
-        root.radio_2nd_ability.setOnClickListener(radioClickListener)
-        root.radio_hidden_ability.setOnClickListener(radioClickListener)
+        binding.abilityModule.radio1stAbility.setOnClickListener(radioClickListener)
+        binding.abilityModule.radio2ndAbility.setOnClickListener(radioClickListener)
+        binding.abilityModule.radioHiddenAbility.setOnClickListener(radioClickListener)
     }
 
     private fun initGenderFab(floatingActionButton: FloatingActionButton?) {
         val params = floatingActionButton?.layoutParams as CoordinatorLayout.LayoutParams
         params.anchorId = R.id.main_card
-        val maleColor = ContextCompat.getColor(context!!, R.color.male)
-        val femaleColor = ContextCompat.getColor(context!!, R.color.female)
+        val maleColor = ContextCompat.getColor(requireContext(), R.color.male)
+        val femaleColor = ContextCompat.getColor(requireContext(), R.color.female)
 
         //TODO: UNGARBAGIZE
         floatingActionButton.setOnClickListener {
@@ -216,19 +211,19 @@ class CreationFragment : Fragment(), CreationContract.View,
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.creation_fragment, container, false)
+        _binding = CreationFragmentBinding.inflate(inflater, container, false)
 
         presenter = (activity as CreationActivity).creationPresenter
         presenter.setView(this)
 
-        root.selected_pokemon_edit.setOnClickListener { presenter.selectPokemon() }
+        binding.infoInclude.selectedPokemonEdit.setOnClickListener { presenter.selectPokemon() }
 
-        initIVs(root)
-        initStats(root)
-        initNatures(root)
-        initAbilities(root)
-        initGenderFab(activity?.gender_fab)
-        initFinishFab(activity?.finish_fab)
+        initIVs()
+        initStats()
+        initNatures()
+        initAbilities()
+        initGenderFab(activityBinding?.genderFab)
+        initFinishFab(activityBinding?.finishFab)
 
         val actionBar = (activity as AppCompatActivity).supportActionBar
         if (actionBar != null) {
@@ -249,7 +244,12 @@ class CreationFragment : Fragment(), CreationContract.View,
             }
         }
 
-        return root
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onResume() {
@@ -258,12 +258,12 @@ class CreationFragment : Fragment(), CreationContract.View,
     }
 
     override fun updateSelectedPokemonName(name: String) {
-        selected_pokemon_name.text = name
+        binding.selectedPokemonName.text = name
     }
 
     override fun updateSelectedPokemonIcon(iconId: Int) {
         val icon = context?.getDrawable(iconId)
-        selected_pokemon_icon?.setImageDrawable(icon)
+        binding.infoInclude.selectedPokemonIcon?.setImageDrawable(icon)
         //val icon = ContextCompat.getDrawable(context, iconId)
     }
 
@@ -288,20 +288,20 @@ class CreationFragment : Fragment(), CreationContract.View,
     override fun updateSelectedPokemonAbilities(abilities: Array<String?>) {
 
         if (abilities[0] != null) {
-            radio_1st_ability.text = abilities[0]
+            binding.abilityModule.radio1stAbility.text = abilities[0]
         }
 
         if (abilities[1] != null) {
-            radio_2nd_ability.visibility = View.VISIBLE
-            radio_2nd_ability.text = abilities[1]
+            binding.abilityModule.radio2ndAbility.visibility = View.VISIBLE
+            binding.abilityModule.radio2ndAbility.text = abilities[1]
         } else
-            radio_2nd_ability.visibility = View.GONE
+            binding.abilityModule.radio2ndAbility.visibility = View.GONE
 
         if (abilities[2] != null) {
-            radio_hidden_ability.visibility = View.VISIBLE
-            radio_hidden_ability.text = String.format(getString(R.string.label_hidden), abilities[2])
+            binding.abilityModule.radioHiddenAbility.visibility = View.VISIBLE
+            binding.abilityModule.radioHiddenAbility.text = String.format(getString(R.string.label_hidden), abilities[2])
         } else {
-            radio_hidden_ability.visibility = View.GONE
+            binding.abilityModule.radioHiddenAbility.visibility = View.GONE
         }
 
 
@@ -309,11 +309,11 @@ class CreationFragment : Fragment(), CreationContract.View,
 
     override fun updateGenderRestrictions(restriction: Int) {
 
-        val genderFab = activity?.gender_fab
+        val genderFab = activityBinding?.genderFab
 
         when (restriction) {
             0    -> {
-                val maleColor = ContextCompat.getColor(context!!, R.color.male_strong)
+                val maleColor = ContextCompat.getColor(requireContext(), R.color.male_strong)
                 genderFab?.backgroundTintList = ColorStateList.valueOf(maleColor)
                 genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_male,
                     activity?.theme))
@@ -321,7 +321,7 @@ class CreationFragment : Fragment(), CreationContract.View,
                 isFemale = false
             }
             1000 -> {
-                val femaleColor = ContextCompat.getColor(context!!, R.color.female_strong)
+                val femaleColor = ContextCompat.getColor(requireContext(), R.color.female_strong)
                 genderFab?.backgroundTintList = ColorStateList.valueOf(femaleColor)
                 genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_female,
                     activity?.theme))
@@ -329,14 +329,14 @@ class CreationFragment : Fragment(), CreationContract.View,
                 isFemale = true
             }
             2000 -> {
-                val genderlessColor = ContextCompat.getColor(context!!, R.color.genderless)
+                val genderlessColor = ContextCompat.getColor(requireContext(), R.color.genderless)
                 genderFab?.backgroundTintList = ColorStateList.valueOf(genderlessColor)
                 genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_genderless,
                     activity?.theme))
                 genderFab?.isClickable = false
             }
             3000 -> {
-                val dittoColor = ContextCompat.getColor(context!!, R.color.ditto)
+                val dittoColor = ContextCompat.getColor(requireContext(), R.color.ditto)
                 genderFab?.backgroundTintList = ColorStateList.valueOf(dittoColor)
                 genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_genderless,
                     activity?.theme))
@@ -344,12 +344,12 @@ class CreationFragment : Fragment(), CreationContract.View,
             }
             else -> {
                 if (isFemale) {
-                    val maleColor = ContextCompat.getColor(context!!, R.color.female)
+                    val maleColor = ContextCompat.getColor(requireContext(), R.color.female)
                     genderFab?.backgroundTintList = ColorStateList.valueOf(maleColor)
                     genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_female,
                         activity?.theme))
                 } else {
-                    val maleColor = ContextCompat.getColor(context!!, R.color.male)
+                    val maleColor = ContextCompat.getColor(requireContext(), R.color.male)
                     genderFab?.backgroundTintList = ColorStateList.valueOf(maleColor)
                     genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_male,
                         activity?.theme))
@@ -365,9 +365,9 @@ class CreationFragment : Fragment(), CreationContract.View,
             isFemale = true
         } else {
             isFemale = false
-            val maleColor = ContextCompat.getColor(context!!, R.color.male)
-            activity?.gender_fab?.backgroundTintList = ColorStateList.valueOf(maleColor)
-            activity?.gender_fab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_male,
+            val maleColor = ContextCompat.getColor(requireContext(), R.color.male)
+            activityBinding?.genderFab?.backgroundTintList = ColorStateList.valueOf(maleColor)
+            activityBinding?.genderFab?.setImageDrawable(VectorDrawableCompat.create(resources, R.drawable.ic_gender_male,
                 activity?.theme))
         }
     }
@@ -376,19 +376,19 @@ class CreationFragment : Fragment(), CreationContract.View,
         //TODO: check if not invalid
         when (slot) {
             0 -> {
-                radio_1st_ability.isChecked = true
-                radio_2nd_ability.isChecked = false
-                radio_hidden_ability.isChecked = false
+                binding.abilityModule.radio1stAbility.isChecked = true
+                binding.abilityModule.radio2ndAbility.isChecked = false
+                binding.abilityModule.radioHiddenAbility.isChecked = false
             }
             1 -> {
-                radio_1st_ability.isChecked = false
-                radio_2nd_ability.isChecked = true
-                radio_hidden_ability.isChecked = false
+                binding.abilityModule.radio1stAbility.isChecked = false
+                binding.abilityModule.radio2ndAbility.isChecked = true
+                binding.abilityModule.radioHiddenAbility.isChecked = false
             }
             2 -> {
-                radio_1st_ability.isChecked = false
-                radio_2nd_ability.isChecked = false
-                radio_hidden_ability.isChecked = true
+                binding.abilityModule.radio1stAbility.isChecked = false
+                binding.abilityModule.radio2ndAbility.isChecked = false
+                binding.abilityModule.radioHiddenAbility.isChecked = true
             }
         }
     }
@@ -397,15 +397,15 @@ class CreationFragment : Fragment(), CreationContract.View,
 
         var index = 0
 
-        for (i in 0 until spinner_nature.count) {
-            val nature = spinner_nature.getItemAtPosition(i) as ExternalNature
+        for (i in 0 until binding.natureModule.spinnerNature.count) {
+            val nature = binding.natureModule.spinnerNature.getItemAtPosition(i) as ExternalNature
             if (nature.id == natureId) {
                 index = i
                 break
             }
         }
 
-        spinner_nature.setSelection(index, false)
+        binding.natureModule.spinnerNature.setSelection(index, false)
     }
 
     override fun updateSelectedPokemonChosenIVs(IVs: IntArray) {
@@ -426,8 +426,7 @@ class CreationFragment : Fragment(), CreationContract.View,
     override fun showSelectPokemonFragment() {
 
         val selectionFragment = SelectionDialogFragment()
-        selectionFragment.setTargetFragment(this, 300)
-        selectionFragment.show(fragmentManager, "fragment_edit_name")
+        selectionFragment.show(childFragmentManager, "fragment_edit_name")
 
     }
 
@@ -517,13 +516,13 @@ class CreationFragment : Fragment(), CreationContract.View,
         if (context == null) return
 
         if (IVs[statId]?.isChecked ?: return)
-            statLabels[statId]?.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimaryDark))
+            statLabels[statId]?.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark))
         else
-            statLabels[statId]?.setTextColor(ContextCompat.getColor(context!!, android.R.color.tertiary_text_light))
+            statLabels[statId]?.setTextColor(ContextCompat.getColor(requireContext(), R.color.tertiary_text))
     }
 
     private fun colorNatureBars() {
-        val nature = spinner_nature?.selectedItem as ExternalNature?
+        val nature = binding.natureModule.spinnerNature?.selectedItem as ExternalNature?
         for (i in 0..5) {
             statLabels[i]?.typeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL)
 
@@ -545,9 +544,9 @@ class CreationFragment : Fragment(), CreationContract.View,
     override val selectedAbilitySlot: Int
         get() {
             return when {
-                radio_1st_ability.isChecked    -> 0
-                radio_2nd_ability.isChecked    -> 1
-                radio_hidden_ability.isChecked -> 2
+                binding.abilityModule.radio1stAbility.isChecked    -> 0
+                binding.abilityModule.radio2ndAbility.isChecked    -> 1
+                binding.abilityModule.radioHiddenAbility.isChecked -> 2
                 else                           -> -1
             }
         }
@@ -588,12 +587,13 @@ class CreationFragment : Fragment(), CreationContract.View,
             val holder: ViewHolder
 
             if (natureView == null) {
-                val safeNature = LayoutInflater.from(parent.context).inflate(R.layout.creation_item_nature_selection, parent, false)
+                val natureBinding = CreationItemNatureSelectionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val safeNature = natureBinding.root
                 holder = ViewHolder()
 
-                holder.viewNatureName = safeNature.nature_name
-                holder.viewIncreasedStatName = safeNature.nature_inc_stat
-                holder.viewDecreasedStatName = safeNature.nature_dec_stat
+                holder.viewNatureName = natureBinding.natureName
+                holder.viewIncreasedStatName = natureBinding.natureIncStat
+                holder.viewDecreasedStatName = natureBinding.natureDecStat
 
 
                 natureView = safeNature

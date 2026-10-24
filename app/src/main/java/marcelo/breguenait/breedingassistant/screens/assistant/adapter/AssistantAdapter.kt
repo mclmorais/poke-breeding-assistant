@@ -1,7 +1,7 @@
 package marcelo.breguenait.breedingassistant.screens.assistant.adapter
 
-import android.support.v4.util.SparseArrayCompat
-import android.support.v7.widget.RecyclerView
+import androidx.collection.SparseArrayCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import marcelo.breguenait.breedingassistant.logic.CombinationHolder
 import marcelo.breguenait.breedingassistant.screens.assistant.AssistantContract
@@ -73,10 +73,10 @@ class AssistantAdapter(val presenter: AssistantContract.Presenter) : RecyclerVie
     override fun getItemViewType(position: Int) = items[position].viewType
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        delegateAdapters.get(viewType).onCreateViewHolder(parent)
+        delegateAdapters[viewType]!!.onCreateViewHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) =
-        delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, items[position])
+        delegateAdapters[getItemViewType(position)]!!.onBindViewHolder(holder, items[position])
 
 
 }

@@ -3,23 +3,23 @@ package marcelo.breguenait.breedingassistant.screens.assistant
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.util.DiffUtil
-import android.support.v7.view.ActionMode
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DiffUtil
+import androidx.appcompat.view.ActionMode
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.assistant_activity.*
-import kotlinx.android.synthetic.main.assistant_item_stored_small.view.*
-import kotlinx.android.synthetic.main.assistant_stored_fragment.view.*
 import marcelo.breguenait.breedingassistant.R
+import marcelo.breguenait.breedingassistant.databinding.AssistantItemStoredSmallBinding
+import marcelo.breguenait.breedingassistant.databinding.AssistantStoredFragmentBinding
 import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
 import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
 import marcelo.breguenait.breedingassistant.utils.Genders
@@ -44,6 +44,10 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
     private var storedPokemonsAdapter: StoredPokemonsAdapter? = null
 
     private var selectionMode: ActionMode? = null
+
+    private val editStoredLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        presenter.result(CreationActivity.REQUEST_EDIT_STORED, it.resultCode)
+    }
 
     internal var selectionCallback: ActionMode.Callback = object : ActionMode.Callback {
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -79,7 +83,7 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
         }
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         try {
@@ -94,7 +98,7 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.assistant_stored_fragment, container, false)
+        val binding = AssistantStoredFragmentBinding.inflate(inflater, container, false)
 
         presenter = presenterCallback.setPresenter()
         presenter.setStorageView(this)
@@ -106,10 +110,10 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
         gridLayoutManager = GridLayoutManager(context, numberOfColumns)
         linearLayoutManager = LinearLayoutManager(context)
 
-        view.stored_pokemon_list.adapter = storedPokemonsAdapter
-        view.stored_pokemon_list.layoutManager = gridLayoutManager
+        binding.storedPokemonList.adapter = storedPokemonsAdapter
+        binding.storedPokemonList.layoutManager = gridLayoutManager
 
-        return view
+        return binding.root
     }
 
     override fun onResume() {
@@ -126,12 +130,8 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
         storedPokemonsAdapter!!.updateItems(storedPokemons)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        presenter.result(requestCode, resultCode)
-    }
-
     override fun showSuccessfulStorage() {
-        activity?.let { Snackbar.make(it.fab_add, "Pokémon Stored!", Snackbar.LENGTH_LONG).show() }
+        activity?.findViewById<View>(R.id.fab_add)?.let { Snackbar.make(it, "Pokémon Stored!", Snackbar.LENGTH_LONG).show() }
     }
 
 
@@ -140,7 +140,7 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
         intent.putExtra(CreationActivity.TYPE_ID, CreationActivity.STORED)
         intent.putExtra(CreationActivity.FILTER_ID, internalPokemon.externalId)
         intent.putExtra(CreationActivity.EXISTENT_ID, internalPokemon.internalId)
-        startActivityForResult(intent, CreationActivity.REQUEST_EDIT_STORED)
+        editStoredLauncher.launch(intent)
     }
 
     internal inner class StoredPokemonsAdapter : RecyclerView.Adapter<StoredPokemonsAdapter.ViewHolder>() {
@@ -188,22 +188,22 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
             if (selectionsList.contains(position)) {
                 var drawable = holder.viewIcon.background
                 drawable = DrawableCompat.wrap(drawable)
-                DrawableCompat.setTint(drawable.mutate(), ContextCompat.getColor(context!!, R.color
+                DrawableCompat.setTint(drawable.mutate(), ContextCompat.getColor(requireContext(), R.color
                     .colorPrimaryLight))
             } else {
                 var drawable = holder.viewIcon.background
                 drawable = DrawableCompat.wrap(drawable)
-                DrawableCompat.setTint(drawable.mutate(), ContextCompat.getColor(context!!, R.color.colorPrimary))
+                DrawableCompat.setTint(drawable.mutate(), ContextCompat.getColor(requireContext(), R.color.colorPrimary))
             }
 
             val genderColor: Int
 
             genderColor = when (gender) {
-                Genders.MALE       -> ContextCompat.getColor(context!!, R.color.male)
-                Genders.FEMALE     -> ContextCompat.getColor(context!!, R.color.female)
-                Genders.GENDERLESS -> ContextCompat.getColor(context!!, R.color.genderless)
-                Genders.DITTO      -> ContextCompat.getColor(context!!, R.color.ditto)
-                else               -> ContextCompat.getColor(context!!, android.R.color.black)
+                Genders.MALE       -> ContextCompat.getColor(requireContext(), R.color.male)
+                Genders.FEMALE     -> ContextCompat.getColor(requireContext(), R.color.female)
+                Genders.GENDERLESS -> ContextCompat.getColor(requireContext(), R.color.genderless)
+                Genders.DITTO      -> ContextCompat.getColor(requireContext(), R.color.ditto)
+                else               -> ContextCompat.getColor(requireContext(), android.R.color.black)
             }
 
             var genderDrawable = holder.viewGender.drawable
@@ -211,11 +211,11 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
             DrawableCompat.setTint(genderDrawable.mutate(), genderColor)
 
 
-            val activeColor = ContextCompat.getColor(context!!, R.color.iv_enabled_light)
-            val inactiveColor = ContextCompat.getColor(context!!, R.color.iv_disabled_light)
+            val activeColor = ContextCompat.getColor(requireContext(), R.color.iv_enabled_light)
+            val inactiveColor = ContextCompat.getColor(requireContext(), R.color.iv_disabled_light)
 
-            val activeIndicatorColor = ContextCompat.getColor(context!!, R.color.colorPrimaryLight)
-            val inactiveIndicatorColor = ContextCompat.getColor(context!!, R.color.colorDisabled)
+            val activeIndicatorColor = ContextCompat.getColor(requireContext(), R.color.colorPrimaryLight)
+            val inactiveIndicatorColor = ContextCompat.getColor(requireContext(), R.color.colorDisabled)
 
 
             val abilityBackground = DrawableCompat.wrap(holder.abilityIndicator.background).mutate()
@@ -297,13 +297,15 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
 
         internal inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
 
+            private val itemBinding = AssistantItemStoredSmallBinding.bind(itemView)
+
             val viewIVs = arrayOf(
-                itemView.stored_iv_hp,
-                itemView.stored_iv_atk,
-                itemView.stored_iv_def,
-                itemView.stored_iv_satk,
-                itemView.stored_iv_sdef,
-                itemView.stored_iv_spd)
+                itemBinding.storedIvHp,
+                itemBinding.storedIvAtk,
+                itemBinding.storedIvDef,
+                itemBinding.storedIvSatk,
+                itemBinding.storedIvSdef,
+                itemBinding.storedIvSpd)
 
             val viewIcon: ImageView = itemView.findViewById(R.id.stored_icon)
 
@@ -319,9 +321,9 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
 
             override fun onClick(v: View) {
                 if (selectionMode == null) {
-                    showEditStored(storedPokemons[adapterPosition])
+                    showEditStored(storedPokemons[bindingAdapterPosition])
                 } else {
-                    setSelection(adapterPosition)
+                    setSelection(bindingAdapterPosition)
                 }
             }
 
@@ -329,7 +331,7 @@ class StoredPokemonFragment : Fragment(), BoxContract.BoxView {
                 if (selectionMode == null)
                     selectionMode = (activity as AppCompatActivity).startSupportActionMode(selectionCallback)
 
-                setSelection(adapterPosition)
+                setSelection(bindingAdapterPosition)
 
                 return true
             }

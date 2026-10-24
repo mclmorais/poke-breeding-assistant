@@ -3,19 +3,18 @@ package marcelo.breguenait.breedingassistant.screens.goals
 
 import android.app.ActivityOptions
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.IntDef
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.util.DiffUtil
-import android.support.v7.view.ActionMode
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.IntDef
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DiffUtil
+import androidx.appcompat.view.ActionMode
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
@@ -24,11 +23,9 @@ import android.util.Pair
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.goals_activity.*
-import kotlinx.android.synthetic.main.goals_fragment.*
-import kotlinx.android.synthetic.main.goals_fragment.view.*
-import kotlinx.android.synthetic.main.goals_item.view.*
 import marcelo.breguenait.breedingassistant.R
+import marcelo.breguenait.breedingassistant.databinding.GoalsFragmentBinding
+import marcelo.breguenait.breedingassistant.databinding.GoalsItemBinding
 import marcelo.breguenait.breedingassistant.data.internal.InternalPokemon
 import marcelo.breguenait.breedingassistant.screens.assistant.AssistantActivity
 import marcelo.breguenait.breedingassistant.screens.creation.CreationActivity
@@ -41,6 +38,11 @@ class GoalsFragment : Fragment(), GoalsContract.View {
     private lateinit var presenter: GoalsContract.Presenter
 
     private lateinit var goalsAdapter: GoalsAdapter
+
+    private var _binding: GoalsFragmentBinding? = null
+    private val binding get() = _binding!!
+
+    private val activityBinding get() = (activity as GoalsActivity?)?.binding
 
     var selectionMode: ActionMode? = null
         private set
@@ -80,31 +82,31 @@ class GoalsFragment : Fragment(), GoalsContract.View {
         }
     }
 
-    private fun initGoalsAdapter(root: View) {
+    private fun initGoalsAdapter() {
         goalsAdapter = GoalsAdapter(presenter.goals as ArrayList<InternalPokemon>)
         goalsAdapter.setHasStableIds(true)
 
-        root.goals_list.adapter = goalsAdapter
-        root.goals_list.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN && root.goals_list.findChildViewUnder(event.x, event.y) == null) {
+        binding.goalsList.adapter = goalsAdapter
+        binding.goalsList.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN && binding.goalsList.findChildViewUnder(event.x, event.y) == null) {
                 selectionMode?.finish()
             }
             false
         }
-        root.goals_list.setHasFixedSize(true)
+        binding.goalsList.setHasFixedSize(true)
 
         val linearLayoutManager = LinearLayoutManager(context)
 
-        val dividerItemDecoration = DividerItemDecoration(root.goals_list.context, linearLayoutManager.orientation)
-        root.goals_list.addItemDecoration(dividerItemDecoration)
+        val dividerItemDecoration = DividerItemDecoration(binding.goalsList.context, linearLayoutManager.orientation)
+        binding.goalsList.addItemDecoration(dividerItemDecoration)
 
-        root.goals_list.layoutManager = linearLayoutManager
+        binding.goalsList.layoutManager = linearLayoutManager
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         // Inflate the layout for this fragment
-        val root = inflater.inflate(R.layout.goals_fragment, container, false)
+        _binding = GoalsFragmentBinding.inflate(inflater, container, false)
 
         //Recovers a reference to the presenter injected in the activity
         presenter = (activity as GoalsActivity).goalsPresenter
@@ -112,11 +114,16 @@ class GoalsFragment : Fragment(), GoalsContract.View {
         //Links this view to the presenter
         presenter.setGoalsView(this)
 
-        initGoalsAdapter(root)
+        initGoalsAdapter()
 
-        (activity as GoalsActivity).add_goal_fab.setOnClickListener { presenter.addNewGoal() }
+        activityBinding?.addGoalFab?.setOnClickListener { presenter.addNewGoal() }
 
-        return root
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onResume() {
@@ -142,11 +149,11 @@ class GoalsFragment : Fragment(), GoalsContract.View {
         if (animate) {
             val transitionActivityOptions: ActivityOptions =
                 ActivityOptions.makeSceneTransitionAnimation(
-                    activity,
+                    requireActivity(),
 //                    Pair.create<View, String>
 //                        (activity?.findViewById(android.R.id.navigationBarBackground), Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME), //TODO: check for null
                     Pair.create<View, String>
-                        (activity?.appbar, "top"),
+                        (activityBinding?.appbar, "top"),
                     Pair.create<View, String>
                         (goalsAdapter.clickedPokemonView, "profile"),
                     Pair.create<View, String>
@@ -159,7 +166,7 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
     override fun updateGoalsList() {
         goalsAdapter.updateItems(presenter.goals)
-        goals_list.smoothScrollToPosition(0)
+        binding.goalsList.smoothScrollToPosition(0)
     }
 
     fun fastUpdateGoals() {
@@ -170,9 +177,9 @@ class GoalsFragment : Fragment(), GoalsContract.View {
     override fun showBackgroundHint(show: Boolean) {
 
         if (show) {
-            goals_list.visibility = View.GONE
-            hint_no_goals.visibility = View.VISIBLE
-            val spannable = hint_no_goals.findViewById(R.id.spannable) as TextView
+            binding.goalsList.visibility = View.GONE
+            binding.hintNoGoals.root.visibility = View.VISIBLE
+            val spannable = binding.hintNoGoals.spannable
             spannable.movementMethod = LinkMovementMethod.getInstance()
 
             val text = getString(R.string.hint_no_goals)
@@ -193,20 +200,20 @@ class GoalsFragment : Fragment(), GoalsContract.View {
             )
             spannable.text = ssBuilder
         } else {
-            hint_no_goals.visibility = View.GONE
-            goals_list.visibility = View.VISIBLE
+            binding.hintNoGoals.root.visibility = View.GONE
+            binding.goalsList.visibility = View.VISIBLE
         }
     }
 
     override fun showUndoAction() {
 
-        val snackbar = activity?.add_goal_fab?.let {
+        val snackbar = activityBinding?.addGoalFab?.let {
             Snackbar.make(it, R.string.snack_goals_removed, 10000).setAction(R.string.label_undo) {
                 presenter.restoreRemovedGoals()
             }
         }
 
-        val text = snackbar?.view?.findViewById<TextView>(android.support.design.R.id.snackbar_text)
+        val text = snackbar?.view?.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
 
         text?.gravity = Gravity.CENTER_HORIZONTAL
 
@@ -228,7 +235,7 @@ class GoalsFragment : Fragment(), GoalsContract.View {
     }
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
-    @IntDef(GoalsFragment.SORT_DATE.toLong(), GoalsFragment.SORT_IVS.toLong())
+    @IntDef(GoalsFragment.SORT_DATE, GoalsFragment.SORT_IVS)
     internal annotation class SortFlag
 
 
@@ -362,16 +369,18 @@ class GoalsFragment : Fragment(), GoalsContract.View {
 
         internal inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
 
-            private val goalIVs = arrayOf(itemView.pokemon_iv_hp,
-                itemView.pokemon_iv_atk,
-                itemView.pokemon_iv_def,
-                itemView.pokemon_iv_satk,
-                itemView.pokemon_iv_sdef,
-                itemView.pokemon_iv_spd)
+            private val itemBinding = GoalsItemBinding.bind(itemView)
 
-            private val goalIcon: ImageView = itemView.pokemon_icon
+            private val goalIVs = arrayOf(itemBinding.pokemonIvHp,
+                itemBinding.pokemonIvAtk,
+                itemBinding.pokemonIvDef,
+                itemBinding.pokemonIvSatk,
+                itemBinding.pokemonIvSdef,
+                itemBinding.pokemonIvSpd)
 
-            val goalBackground: View = itemView.pokemon_background
+            private val goalIcon: ImageView = itemBinding.pokemonIcon
+
+            val goalBackground: View = itemBinding.pokemonBackground
 
 
             init {
@@ -380,16 +389,16 @@ class GoalsFragment : Fragment(), GoalsContract.View {
             }
 
             fun bindGoal(goal: InternalPokemon) {
-                itemView.pokemon_name.text = presenter.getExternalPokemon(goal.externalId)?.name ?: getString(R.string.invalid_pokemon)
+                itemBinding.pokemonName.text = presenter.getExternalPokemon(goal.externalId)?.name ?: getString(R.string.invalid_pokemon)
 
                 val iconId = presenter.getPokemonIconId(goal.externalId)
                 val icon = context?.let { ContextCompat.getDrawable(it, iconId) }
-                itemView.pokemon_icon.setImageDrawable(icon)
+                itemBinding.pokemonIcon.setImageDrawable(icon)
 
-                val nature = presenter.getNature(goal.natureId)?.name?.capitalize() ?: getString(R.string.invalid_nature)
+                val nature = presenter.getNature(goal.natureId)?.name?.replaceFirstChar { it.titlecase() } ?: getString(R.string.invalid_nature)
                 val ability = presenter.getAbilityName(goal.externalId, goal.abilitySlot) ?: getString(R.string.invalid_ability)
 
-                itemView.pokemon_extra_info.text = getString(R.string.goal_extra_info, nature, ability)
+                itemBinding.pokemonExtraInfo.text = getString(R.string.goal_extra_info, nature, ability)
 
                 //Tints the IV drawable according to if the selected goal has it
                 for (i in goalIVs.indices) {
@@ -410,20 +419,18 @@ class GoalsFragment : Fragment(), GoalsContract.View {
             override fun onClick(v: View) {
 
                 if (selectionMode == null) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        goalIcon.transitionName = "profile"
-                        goalBackground.transitionName = "pokemon_background_transition"
-                    }
-                    saveLastClicked(itemAt(adapterPosition), goalIcon, goalBackground)
+                    goalIcon.transitionName = "profile"
+                    goalBackground.transitionName = "pokemon_background_transition"
+                    saveLastClicked(itemAt(bindingAdapterPosition), goalIcon, goalBackground)
                 } else {
-                    setSelection(adapterPosition)
+                    setSelection(bindingAdapterPosition)
                 }
             }
 
             override fun onLongClick(v: View): Boolean {
                 if (selectionMode == null)
                     startSelectionMode()
-                setSelection(adapterPosition)
+                setSelection(bindingAdapterPosition)
 
                 return true
             }

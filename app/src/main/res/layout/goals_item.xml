@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -134,11 +134,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-        android:textColor="@android:color/tertiary_text_light"
+        android:textColor="@color/tertiary_text"
         app:layout_constraintBottom_toBottomOf="@+id/pokemon_iv_hp"
         app:layout_constraintLeft_toRightOf="@+id/pokemon_iv_spd"
         app:layout_constraintTop_toTopOf="@+id/pokemon_iv_hp"
         tools:text="• Adamant • Gale Wings"/>
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

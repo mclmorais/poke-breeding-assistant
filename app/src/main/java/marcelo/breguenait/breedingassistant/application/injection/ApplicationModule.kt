@@ -10,7 +10,6 @@ import javax.inject.Singleton
 /**
  * Created by Marcelo on 17/01/2018.
  */
-@ApplicationScope
 @Module
 class ApplicationModule(private val app: Application, private val sharedPreferences: SharedPreferences) {
 

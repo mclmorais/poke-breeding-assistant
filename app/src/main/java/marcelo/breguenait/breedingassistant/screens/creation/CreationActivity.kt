@@ -1,12 +1,13 @@
 package marcelo.breguenait.breedingassistant.screens.creation
 
 import android.os.Bundle
-import android.support.graphics.drawable.VectorDrawableCompat
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.creation_activity.*
 import marcelo.breguenait.breedingassistant.R
+import marcelo.breguenait.breedingassistant.extensions.padTopForStatusBar
+import marcelo.breguenait.breedingassistant.databinding.CreationActivityBinding
 import marcelo.breguenait.breedingassistant.application.BreedingAssistantApplication
 import marcelo.breguenait.breedingassistant.screens.creation.injection.DaggerCreationComponent
 import marcelo.breguenait.breedingassistant.screens.selection.SelectionPresenter
@@ -19,6 +20,8 @@ class CreationActivity : AppCompatActivity() {
 
     @Inject
     internal lateinit var selectionPresenter: SelectionPresenter
+
+    internal lateinit var binding: CreationActivityBinding
 
     private var creationFragment: CreationFragment? = null
 
@@ -40,10 +43,12 @@ class CreationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.creation_activity)
+        binding = CreationActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.appbar.padTopForStatusBar()
 
         /*Sets support action bar for activity*/
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         /*Changes indicator to the 'clear' cross and tints it white*/
@@ -66,7 +71,7 @@ class CreationActivity : AppCompatActivity() {
             creationFragment = CreationFragment.newInstance()
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.content_frame, creationFragment)
+                .add(R.id.content_frame, creationFragment!!)
                 .commit()
         }
     }
@@ -74,7 +79,7 @@ class CreationActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
                 return true
             }
         }
